@@ -1,9 +1,11 @@
-package edu.rosehulman.andreaspalsson.androidproject;
+package edu.rosehulman.andreaspalsson.androidproject.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import edu.rosehulman.andreaspalsson.androidproject.R;
 
 
 public class MainActivity extends ActionBarActivity {
