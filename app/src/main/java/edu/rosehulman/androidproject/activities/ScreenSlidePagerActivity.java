@@ -1,4 +1,4 @@
-package edu.rosehulman.androidproject;
+package edu.rosehulman.androidproject.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,11 +8,20 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import edu.rosehulman.androidproject.R;
+import edu.rosehulman.androidproject.fragments.HomeContainerFragment;
+import edu.rosehulman.androidproject.fragments.ListContainerFragment;
+import edu.rosehulman.androidproject.fragments.GraphContainerFragment;
+
 public class ScreenSlidePagerActivity extends FragmentActivity {
+
+    public static final int HOME_ID = 0;
+    public static final int LIST_ID = 1;
+    public static final int GRAPH_ID = 2;
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 2;
+    private static final int NUM_PAGES = 3;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -25,12 +34,20 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
      */
     private PagerAdapter mPagerAdapter;
 
+
+    //TODO: bottom fragment is added dynamically everywhere even though it's the same fragment on every page. should probably not be that way
+    //TODO: add getInstance() method to all fragments
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen_slide);
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
+
+        //TODO: if this is set to 1 (default), then when we're on page 3 (graph), page 1 (home) gets invisible and then recreated, which created page 1 twice next time. dno how to fix. this might kill performance
+        mPager.setOffscreenPageLimit(2);
+
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
     }
@@ -66,12 +83,14 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
         public Fragment getItem(int position) {
             switch(position) {
                 case 0:
-                    return new ScreenSlidePageFragment();
+                    return HomeContainerFragment.getInstance();
                 case 1:
-                    return new ScreenSlidePageFragment2();
+                    return ListContainerFragment.getInstance();
+                case 2:
+                    return GraphContainerFragment.getInstance();
 
             }
-            return new ScreenSlidePageFragment();
+            return new ListContainerFragment();
         }
 
         @Override

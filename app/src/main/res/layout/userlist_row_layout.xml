@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/abc_popup_background_mtrl_mult" />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="knarckare" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:layout_marginBottom="-50dip"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/doSomething1"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:text="Harder" />
+
+        <Button
+            android:id="@+id/doSomething2"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:text="Better" />
+
+        <Button
+            android:id="@+id/doSomething3"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:text="Faster" />
+
+        <Button
+            android:id="@+id/doSomething4"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:text="Stronger" />
+
+    </LinearLayout>
+</LinearLayout>
