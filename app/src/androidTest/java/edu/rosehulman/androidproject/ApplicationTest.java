@@ -1,5 +1,4 @@
-package edu.rosehulman.andreaspalsson.androidproject;
-
+package edu.rosehulman.androidproject;
 import android.app.Application;
 import android.test.ApplicationTestCase;
 

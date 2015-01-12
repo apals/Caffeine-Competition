@@ -4,5 +4,6 @@
     <string name="app_name">AndroidProject</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="url">https://api.imgur.com/3/gallery/hot/viral/0.json</string>
 
 </resources>
