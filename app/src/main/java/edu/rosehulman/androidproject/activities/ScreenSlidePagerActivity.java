@@ -87,7 +87,8 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
                 case 1:
                     return ListContainerFragment.getInstance();
                 case 2:
-                    return GraphContainerFragment.getInstance();
+                    GraphContainerFragment gcf = GraphContainerFragment.getInstance();
+                    return gcf;
 
             }
             return new ListContainerFragment();

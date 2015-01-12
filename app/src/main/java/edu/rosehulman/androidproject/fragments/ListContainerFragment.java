@@ -31,7 +31,6 @@ public class ListContainerFragment extends Fragment {
         transaction.add(rootView.getId(), userListFragment);
 
         BottomFragment bottomFragment = new BottomFragment();
-        bottomFragment.setPage(ScreenSlidePagerActivity.LIST_ID);
         transaction.add(rootView.getId(), bottomFragment).commit();
 
         return rootView;

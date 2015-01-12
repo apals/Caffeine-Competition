@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.List;
+
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.activities.ScreenSlidePagerActivity;
 
@@ -32,6 +34,14 @@ public class BottomFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(
                 R.layout.fragment_bottom, container, false);
+        if(getParentFragment() instanceof GraphContainerFragment) {
+            setPage(ScreenSlidePagerActivity.GRAPH_ID);
+        } else if(getParentFragment() instanceof HomeContainerFragment) {
+            setPage(ScreenSlidePagerActivity.HOME_ID);
+        } else if(getParentFragment() instanceof ListContainerFragment) {
+            setPage(ScreenSlidePagerActivity.LIST_ID);
+        }
+
 
         ((Button) rootView.findViewById(R.id.previous_page_button)).setOnClickListener(new View.OnClickListener() {
             @Override

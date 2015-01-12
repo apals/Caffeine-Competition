@@ -34,7 +34,6 @@ public class GraphContainerFragment extends Fragment {
         transaction.add(rootView.getId(), graphFragment);
 
         BottomFragment bottomFragment = new BottomFragment();
-        bottomFragment.setPage(ScreenSlidePagerActivity.GRAPH_ID);
         transaction.add(rootView.getId(), bottomFragment).commit();
 
         return rootView;

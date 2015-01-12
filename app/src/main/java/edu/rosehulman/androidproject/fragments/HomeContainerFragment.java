@@ -29,12 +29,11 @@ public class HomeContainerFragment extends Fragment {
                 R.layout.fragment_screen_slide_page, container, false);
         System.out.println("Creating new home container fragment");
 
-        HomeFragment userListFragment = new HomeFragment();
+        HomeFragment homeFragment = new HomeFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(rootView.getId(), userListFragment);
+        transaction.add(rootView.getId(), homeFragment);
 
         BottomFragment bottomFragment = new BottomFragment();
-        bottomFragment.setPage(ScreenSlidePagerActivity.HOME_ID);
         transaction.add(rootView.getId(), bottomFragment).commit();
 
         return rootView;
