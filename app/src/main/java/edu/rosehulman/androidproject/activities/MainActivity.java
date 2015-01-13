@@ -8,30 +8,25 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.TitlePageIndicator;
+
 import edu.rosehulman.androidproject.R;
+import edu.rosehulman.androidproject.fragments.GraphFragment;
 import edu.rosehulman.androidproject.fragments.HomeContainerFragment;
+import edu.rosehulman.androidproject.fragments.HomeFragment;
 import edu.rosehulman.androidproject.fragments.ListContainerFragment;
 import edu.rosehulman.androidproject.fragments.GraphContainerFragment;
+import edu.rosehulman.androidproject.fragments.UserListFragment;
 
-public class ScreenSlidePagerActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity {
 
     public static final int HOME_ID = 0;
     public static final int LIST_ID = 1;
     public static final int GRAPH_ID = 2;
-    /**
-     * The number of pages (wizard steps) to show in this demo.
-     */
+
     private static final int NUM_PAGES = 3;
-
-    /**
-     * The pager widget, which handles animation and allows swiping horizontally to access previous
-     * and next wizard steps.
-     */
     private ViewPager mPager;
-
-    /**
-     * The pager adapter, which provides the pages to the view pager widget.
-     */
     private PagerAdapter mPagerAdapter;
 
 
@@ -50,6 +45,9 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
 
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+
+        CirclePageIndicator titleIndicator = (CirclePageIndicator)findViewById(R.id.titles);
+        titleIndicator.setViewPager(mPager);
     }
 
     public ViewPager getPager() {
@@ -83,12 +81,15 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
         public Fragment getItem(int position) {
             switch(position) {
                 case 0:
-                    return HomeContainerFragment.getInstance();
+                    return new HomeFragment();
+                    //return HomeContainerFragment.getInstance();
                 case 1:
-                    return ListContainerFragment.getInstance();
+                    return new UserListFragment();
+                    //return ListContainerFragment.getInstance();
                 case 2:
-                    GraphContainerFragment gcf = GraphContainerFragment.getInstance();
-                    return gcf;
+                    return new GraphFragment();
+                    //GraphContainerFragment gcf = GraphContainerFragment.getInstance();
+                    //return gcf;
 
             }
             return new ListContainerFragment();

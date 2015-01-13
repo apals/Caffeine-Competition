@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import edu.rosehulman.androidproject.R;
-import edu.rosehulman.androidproject.activities.ScreenSlidePagerActivity;
 
 public class ListContainerFragment extends Fragment {
 

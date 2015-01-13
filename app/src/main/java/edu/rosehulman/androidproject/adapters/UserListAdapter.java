@@ -1,14 +1,57 @@
 package edu.rosehulman.androidproject.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import edu.rosehulman.androidproject.ExpandAnimation;
+import edu.rosehulman.androidproject.R;
 
 /**
- * Created by palssoa on 1/11/2015.
+ * A simple implementation of list adapter.
  */
 public class UserListAdapter extends ArrayAdapter<String> {
 
-    public UserListAdapter(Context context, int resource) {
-        super(context, resource);
+    private Activity context;
+
+    public UserListAdapter(Context context, int textViewResourceId) {
+        super(context, textViewResourceId);
+        this.context = (Activity) context;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        if (convertView == null) {
+            convertView = context.getLayoutInflater().inflate(R.layout.userlist_row_layout, null);
+            final View a = convertView;
+
+            //the following code should probably be in onitemclick up there but the collapse of the item didn't work
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    View toolbar = a.findViewById(R.id.toolbar);
+
+                    // Creating the expand animation for the item
+                    ExpandAnimation expandAni = new ExpandAnimation(toolbar, 500);
+
+                    // Start the animation on the toolbar
+                    toolbar.startAnimation(expandAni);
+                }
+            });
+        }
+
+        ((TextView)convertView.findViewById(R.id.username)).setText(getItem(position));
+
+        // Resets the toolbar to be closed
+        View toolbar = convertView.findViewById(R.id.toolbar);
+        ((LinearLayout.LayoutParams) toolbar.getLayoutParams()).bottomMargin = -50;
+        toolbar.setVisibility(View.GONE);
+
+        return convertView;
     }
 }

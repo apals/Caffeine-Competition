@@ -8,9 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import edu.rosehulman.androidproject.R;
-import edu.rosehulman.androidproject.activities.ScreenSlidePagerActivity;
-import edu.rosehulman.androidproject.fragments.BottomFragment;
-import edu.rosehulman.androidproject.fragments.GraphFragment;
 
 public class GraphContainerFragment extends Fragment {
 
