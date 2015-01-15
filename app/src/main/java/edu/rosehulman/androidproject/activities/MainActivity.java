@@ -29,6 +29,7 @@ public class MainActivity extends FragmentActivity {
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
 
+    
 
     //TODO: bottom fragment is added dynamically everywhere even though it's the same fragment on every page. should probably not be that way
     //TODO: add getInstance() method to all fragments
@@ -47,6 +48,7 @@ public class MainActivity extends FragmentActivity {
         mPager.setAdapter(mPagerAdapter);
 
         CirclePageIndicator titleIndicator = (CirclePageIndicator)findViewById(R.id.titles);
+        titleIndicator.setRadius(12);
         titleIndicator.setViewPager(mPager);
     }
 

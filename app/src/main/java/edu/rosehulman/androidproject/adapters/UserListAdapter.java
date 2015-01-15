@@ -2,13 +2,23 @@ package edu.rosehulman.androidproject.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.model.TimeSeries;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
+
 import edu.rosehulman.androidproject.ExpandAnimation;
+import edu.rosehulman.androidproject.GraphUtils;
 import edu.rosehulman.androidproject.R;
 
 /**
@@ -17,6 +27,8 @@ import edu.rosehulman.androidproject.R;
 public class UserListAdapter extends ArrayAdapter<String> {
 
     private Activity context;
+    private GraphicalView mLineChart;
+
 
     public UserListAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
@@ -34,8 +46,10 @@ public class UserListAdapter extends ArrayAdapter<String> {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    View toolbar = a.findViewById(R.id.toolbar);
+                    LinearLayout toolbar = (LinearLayout) a.findViewById(R.id.toolbar);
 
+                    mLineChart = ChartFactory.getLineChartView(context, GraphUtils.getDataset(), GraphUtils.getRenderer());
+                    toolbar.addView(mLineChart);
                     // Creating the expand animation for the item
                     ExpandAnimation expandAni = new ExpandAnimation(toolbar, 500);
 
@@ -45,7 +59,7 @@ public class UserListAdapter extends ArrayAdapter<String> {
             });
         }
 
-        ((TextView)convertView.findViewById(R.id.username)).setText(getItem(position));
+        ((TextView) convertView.findViewById(R.id.username)).setText(getItem(position));
 
         // Resets the toolbar to be closed
         View toolbar = convertView.findViewById(R.id.toolbar);
