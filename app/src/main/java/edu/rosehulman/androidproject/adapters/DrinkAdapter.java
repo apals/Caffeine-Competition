@@ -7,13 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.achartengine.ChartFactory;
-import org.achartengine.GraphicalView;
-
 import java.util.ArrayList;
 
-import edu.rosehulman.androidproject.ExpandAnimation;
-import edu.rosehulman.androidproject.GraphUtils;
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.models.Drink;
 
@@ -38,7 +33,7 @@ public class DrinkAdapter extends ArrayAdapter<Drink> {
         if (convertView == null)
             convertView = context.getLayoutInflater().inflate(R.layout.drinklist_row_layout, null);
 
-        ((TextView) convertView.findViewById(R.id.date)).setText(getItem(position).getFormatedDate());
+        ((TextView) convertView.findViewById(R.id.date)).setText(getItem(position).getFormattedDate());
         ((TextView) convertView.findViewById(R.id.drink_name)).setText(getItem(position).getName());
         ((TextView) convertView.findViewById(R.id.caffeine_amount)).setText(getItem(position).getCaffeineAmount() + " mg");
 

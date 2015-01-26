@@ -50,6 +50,7 @@
 
     <ListView
         android:id="@+id/fragment_home_drink_list"
+        android:layout_marginTop="@dimen/button_margin"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"/>

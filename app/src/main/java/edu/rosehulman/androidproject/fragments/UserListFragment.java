@@ -12,9 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import edu.rosehulman.androidproject.ExpandAnimation;
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.adapters.UserListAdapter;
+import edu.rosehulman.androidproject.models.Drink;
+import edu.rosehulman.androidproject.models.User;
 
 /**
  * Created by palssoa on 12/20/2014.
@@ -29,24 +33,22 @@ public class UserListFragment extends ListFragment {
         return instance;
     }
 
-    String[] countries = new String[] {
-            "John",
-            "Percy",
-            "Honken",
-            "McLovin",
-            "Barbossa",
-            "Adhi",
-            "Mohammed",
-            "Barak",
-            "Joe",
-            "Dan"
+    User[] users = new User[] {
+            new User("John", 10),
+            new User("Percy", 15),
+            new User("Honken", 10),
+            new User("McLovin", 10),
+            new User("Barbossa", 10),
+            new User("Adhi", 10),
+            new User("Abdullah", 10),
+            new User("Zlatan", 10)
     };
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         /** Creating an array adapter to store the list of countries **/
-        ArrayAdapter<String> listAdapter = new UserListAdapter(getActivity(), R.layout.userlist_row_layout);
-        listAdapter.addAll(countries);
+        UserListAdapter listAdapter = new UserListAdapter(getActivity(), R.layout.userlist_row_layout, users);
         /** Setting the list adapter for the ListFragment */
         setListAdapter(listAdapter);
 
@@ -54,6 +56,11 @@ public class UserListFragment extends ListFragment {
 
     }
 
-
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        for(int i = 0; i < 8; i++) {
+            users[i].getDrinkHistory().add(new Drink("Drink #" + i, i*2, new Date()));
+        }
+    }
 }

@@ -10,24 +10,31 @@ public class User {
 
     private int mCaffeineLevel;
     private List<Drink> mDrinkHistory;
+    private String mUsername;
 
-    public User() {
+    public User(String username, int caffeineLevel) {
+        mUsername = username;
+        mCaffeineLevel = caffeineLevel;
         mDrinkHistory = new ArrayList<>();
     }
 
-    public int getmCaffeineLevel() {
+    public String getUsername() {
+        return mUsername;
+    }
+
+    public int getCaffeineLevel() {
         return mCaffeineLevel;
     }
 
-    public void setmCaffeineLevel(int mCaffeineLevel) {
+    public void setCaffeineLevel(int mCaffeineLevel) {
         this.mCaffeineLevel = mCaffeineLevel;
     }
 
-    public List<Drink> getmDrinkHistory() {
+    public List<Drink> getDrinkHistory() {
         return mDrinkHistory;
     }
 
-    public void setmDrinkHistory(List<Drink> mDrinkHistory) {
+    public void setDrinkHistory(List<Drink> mDrinkHistory) {
         this.mDrinkHistory = mDrinkHistory;
     }
 }
