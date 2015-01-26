@@ -6,20 +6,32 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/abc_popup_background_mtrl_mult" />
 
         <TextView
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="knarckare" />
+            android:text="Username"
+            android:layout_gravity="center_vertical|left"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:paddingLeft="20dp"
+            android:textSize="25dp"/>
+
+        <TextView
+            android:id="@+id/caffeinelevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20 mg"
+            android:layout_gravity="center_vertical|right"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingRight="20dp"
+            android:textSize="20sp"/>
+
     </LinearLayout>
 
     <LinearLayout
