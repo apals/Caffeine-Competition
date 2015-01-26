@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
 import edu.rosehulman.androidproject.R;
+import edu.rosehulman.androidproject.models.DrinkType;
 
 /**
  * Created by palssoa on 1/12/2015.
@@ -27,6 +31,17 @@ public class AddDrinkActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.add_drink_button_espresso).setOnClickListener(this);
         findViewById(R.id.add_drink_button_latte).setOnClickListener(this);
         findViewById(R.id.add_drink_button_custom).setOnClickListener(this);
+
+
+        /*
+        dynamically create buttons instead of using add_drink_button_coffee etc
+        ArrayList<DrinkType> drinkTypes = new ArrayList<DrinkType>();
+        for(DrinkType d : drinkTypes) {
+            Button b = new Button(this);
+            b.setText(d.getmDrinkName());
+            b.setOnClickListener(this);
+            //add b to parent view
+        }*/
     }
 
     @Override

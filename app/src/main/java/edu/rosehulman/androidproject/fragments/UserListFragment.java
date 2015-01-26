@@ -19,6 +19,7 @@ import edu.rosehulman.androidproject.ExpandAnimation;
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.adapters.UserListAdapter;
 import edu.rosehulman.androidproject.models.Drink;
+import edu.rosehulman.androidproject.models.DrinkType;
 import edu.rosehulman.androidproject.models.User;
 
 /**
@@ -35,14 +36,14 @@ public class UserListFragment extends ListFragment {
     }
 
     User[] users = new User[] {
-            new User("John", 10),
-            new User("Percy", 15),
-            new User("Honken", 10),
-            new User("McLovin", 17),
-            new User("Barbossa", 4),
-            new User("Adhi", 14),
-            new User("Abdullah", 29),
-            new User("Zlatan", 8)
+            new User("John"),
+            new User("Percy"),
+            new User("Honken"),
+            new User("McLovin"),
+            new User("Barbossa"),
+            new User("Adhi"),
+            new User("Abdullah"),
+            new User("Zlatan")
     };
 
 
@@ -61,7 +62,7 @@ public class UserListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         for(int i = 0; i < 8; i++) {
-            users[i].getDrinkHistory().add(new Drink("Drink #" + i, i*2, new Date()));
+            users[i].getDrinkHistory().add(new Drink(new DrinkType("Drink #" + i, i*2), new Date()));
         }
         Arrays.sort(users);
     }

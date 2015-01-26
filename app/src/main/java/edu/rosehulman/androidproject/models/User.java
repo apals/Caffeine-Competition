@@ -3,6 +3,7 @@ package edu.rosehulman.androidproject.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -10,13 +11,13 @@ import java.util.List;
  */
 public class User implements Comparable, Serializable {
 
-    private int mCaffeineLevel;
-    private List<Drink> mDrinkHistory;
+    public static final int HALF_LIFE = 1;
+
+    private ArrayList<Drink> mDrinkHistory;
     private String mUsername;
 
-    public User(String username, int caffeineLevel) {
+    public User(String username) {
         mUsername = username;
-        mCaffeineLevel = caffeineLevel;
         mDrinkHistory = new ArrayList<>();
     }
 
@@ -25,23 +26,26 @@ public class User implements Comparable, Serializable {
     }
 
     public int getCaffeineLevel() {
-        return mCaffeineLevel;
+        int caffeineLevel = 0;
+
+        for (int i = 0; i < mDrinkHistory.size(); i++) {
+            float a = mDrinkHistory.get(i).getRemainingCaffeine();
+            if(a >= 0)
+                caffeineLevel += a; //* 0.1; //tempDrink.getDrinkType().getCaffeineAmount() * (seconds/(HALF_LIFE * 10)); //3600));
+        }
+        return caffeineLevel;
     }
 
-    public void setCaffeineLevel(int mCaffeineLevel) {
-        this.mCaffeineLevel = mCaffeineLevel;
+    public void drink(Drink drink) {
+        mDrinkHistory.add(0, drink);
     }
-
-    public List<Drink> getDrinkHistory() {
+    public ArrayList<Drink> getDrinkHistory() {
         return mDrinkHistory;
-    }
-
-    public void setDrinkHistory(List<Drink> mDrinkHistory) {
-        this.mDrinkHistory = mDrinkHistory;
     }
 
     @Override
     public int compareTo(Object another) {
-        return ((User) another).getCaffeineLevel() - mCaffeineLevel;
+        return ((User) another).getCaffeineLevel() - getCaffeineLevel();
     }
+
 }

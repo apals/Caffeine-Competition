@@ -25,6 +25,7 @@
             android:orientation="vertical"
             android:layout_weight="1">
             <TextView
+                android:id="@+id/fragment_home_textview_username"
                 android:text="@string/username"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

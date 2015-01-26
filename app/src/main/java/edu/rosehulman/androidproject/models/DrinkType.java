@@ -13,7 +13,7 @@ public class DrinkType {
         this.mCaffeineAmount = mCaffeineAmount;
     }
 
-    public String getmDrinkName() {
+    public String getDrinkName() {
         return mDrinkName;
     }
 
@@ -21,7 +21,7 @@ public class DrinkType {
         this.mDrinkName = mDrinkName;
     }
 
-    public float getmCaffeineAmount() {
+    public float getCaffeineAmount() {
         return mCaffeineAmount;
     }
 

@@ -57,6 +57,9 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 System.out.println("SOMEONE DRANK SOMETHING");
+                //TODO: update graphfragment
+                //TODO: update homefragment
+                //TODO: update userlistfragment
             }
 
             @Override

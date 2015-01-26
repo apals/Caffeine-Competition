@@ -27,7 +27,7 @@ public class LoginActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                User user = new User(((AutoCompleteTextView) findViewById(R.id.email)).getText().toString(), 0);
+                User user = new User(((AutoCompleteTextView) findViewById(R.id.username)).getText().toString());
                 i.putExtra(KEY_USERNAME, user);
                 startActivity(i);
             }

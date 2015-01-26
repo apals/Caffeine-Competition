@@ -18,10 +18,10 @@ public class DrinkPackage {
 
 
     public Map<String, Object> toMap(){
-        Map<String, Object> messageMap = new HashMap<String, Object>();
-        messageMap.put("user", this.mUser);
-        messageMap.put("drink", this.mDrink);
-        return messageMap;
+        Map<String, Object> drinkMap = new HashMap<String, Object>();
+        drinkMap.put("user", this.mUser);
+        drinkMap.put("drink", this.mDrink);
+        return drinkMap;
     }
 
 }
