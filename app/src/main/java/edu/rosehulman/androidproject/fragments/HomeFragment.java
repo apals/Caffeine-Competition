@@ -1,13 +1,12 @@
 package edu.rosehulman.androidproject.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -23,6 +22,10 @@ import edu.rosehulman.androidproject.models.Drink;
  */
 public class HomeFragment extends Fragment {
 
+    public static final int DRINK_REQUEST_CODE = 0;
+    private ArrayList<Drink> mDrinks;
+    private DrinkAdapter mDrinkAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,17 +33,27 @@ public class HomeFragment extends Fragment {
         rootView.findViewById(R.id.fragment_home_button_drink).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddDrinkActivity.class));
+                startActivityForResult(new Intent(getActivity(), AddDrinkActivity.class), DRINK_REQUEST_CODE);
             }
         });
 
         ListView listView = (ListView) rootView.findViewById(R.id.fragment_home_drink_list);
-        ArrayList<Drink> drinks = new ArrayList<Drink>();
-        drinks.add(new Drink("Coffee", 10, new Date()));
-        drinks.add(new Drink("Red Bull", 15, new Date()));
-        DrinkAdapter drinkAdapter = new DrinkAdapter(getActivity(), R.layout.drinklist_row_layout, drinks);
-        listView.setAdapter(drinkAdapter);
+        mDrinks = new ArrayList<Drink>();
+        mDrinkAdapter = new DrinkAdapter(getActivity(), R.layout.drinklist_row_layout, mDrinks);
+        listView.setAdapter(mDrinkAdapter);
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode != DRINK_REQUEST_CODE || resultCode != Activity.RESULT_OK)
+            return;
+
+        mDrinks.add(new Drink(
+                data.getExtras().getString(AddDrinkActivity.KEY_DRINK_NAME),
+                data.getExtras().getInt(AddDrinkActivity.KEY_CAFFEINE_AMOUNT), new Date()));
+        mDrinkAdapter.notifyDataSetChanged();
+
     }
 }
