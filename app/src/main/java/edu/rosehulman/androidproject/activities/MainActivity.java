@@ -47,7 +47,7 @@ public class MainActivity extends ActionBarActivity {
 
 
         Firebase.setAndroidContext(this);
-        this.mRef = new Firebase("https://dazzling-inferno-2149.firebaseio.com/");
+        this.mRef = new Firebase(getString(R.string.url));
         this.mRef.child("chat").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -93,6 +93,7 @@ public class MainActivity extends ActionBarActivity {
 
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+
 
         CirclePageIndicator titleIndicator = (CirclePageIndicator)findViewById(R.id.titles);
         titleIndicator.setRadius(12);
