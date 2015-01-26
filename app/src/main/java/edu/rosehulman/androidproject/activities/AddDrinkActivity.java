@@ -50,8 +50,12 @@ public class AddDrinkActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.add_drink_button_custom:
                 mDrinkName = ((EditText) findViewById(R.id.add_drink_edittext_name)).getText().toString();
-                mCaffeineAmount = Integer.parseInt(((EditText) findViewById(R.id.add_drink_edittext_caffine_amount)).getText().toString());
-                if(mDrinkName == null || mDrinkName.equals("") || mCaffeineAmount < 0)
+                try {
+                    mCaffeineAmount = Integer.parseInt(((EditText) findViewById(R.id.add_drink_edittext_caffine_amount)).getText().toString());
+                } catch (NumberFormatException e) {
+                    mCaffeineAmount = -1;
+                }
+              if(mDrinkName == null || mDrinkName.equals("") || mCaffeineAmount < 0)
                     return;
         }
 
