@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -19,7 +20,7 @@ import edu.rosehulman.androidproject.fragments.ListContainerFragment;
 import edu.rosehulman.androidproject.fragments.GraphContainerFragment;
 import edu.rosehulman.androidproject.fragments.UserListFragment;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends ActionBarActivity {
 
     public static final int HOME_ID = 0;
     public static final int LIST_ID = 1;
@@ -49,6 +50,7 @@ public class MainActivity extends FragmentActivity {
 
         CirclePageIndicator titleIndicator = (CirclePageIndicator)findViewById(R.id.titles);
         titleIndicator.setRadius(12);
+        titleIndicator.setFillColor(getResources().getColor(R.color.blue));
         titleIndicator.setViewPager(mPager);
     }
 

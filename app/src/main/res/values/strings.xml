@@ -8,5 +8,12 @@
     <string name="username">Username</string>
     <string name="caffeine_level">Caffeine level: 0.0mg</string>
     <string name="drink">Drink</string>
+    <string name="add">ADD</string>
+    <string name="espresso">ESPRESSO</string>
+    <string name="latte">LATTE</string>
+    <string name="energy_drink">ENERGY DRINK</string>
+    <string name="coffee">COFFEE</string>
+    <string name="drink_name">NAME</string>
+    <string name="caffeine_amount">CAFFEINE AMOUNT</string>
 
 </resources>
