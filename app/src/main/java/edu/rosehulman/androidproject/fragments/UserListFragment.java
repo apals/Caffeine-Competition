@@ -22,16 +22,16 @@ import edu.rosehulman.androidproject.adapters.UserListAdapter;
 public class UserListFragment extends ListFragment {
 
     String[] countries = new String[] {
-            "India",
-            "Pakistan",
-            "Sri Lanka",
-            "China",
-            "Bangladesh",
-            "Nepal",
-            "Afghanistan",
-            "North Korea",
-            "South Korea",
-            "Japan"
+            "John",
+            "Percy",
+            "Honken",
+            "McLovin",
+            "Barbossa",
+            "Adhi",
+            "Mohammed",
+            "Barak",
+            "Joe",
+            "Dan"
     };
 
     @Override

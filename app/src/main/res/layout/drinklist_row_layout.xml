@@ -7,15 +7,26 @@
     android:layout_margin="@dimen/activity_horizontal_margin">
 
     <TextView
+        android:id="@+id/date"
+        android:text="10/14/01 10:30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="left"
+        android:layout_alignBottom="@+id/drink_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
         android:id="@+id/caffeine_amount"
         android:text="caffeine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:textSize="20sp"
-        android:gravity="center"/>
+        android:gravity="right"
+        android:layout_alignBottom="@+id/drink_name"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 
     <TextView
@@ -23,11 +34,12 @@
         android:text="drink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/caffeine_amount"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:gravity="center"/>
+        android:gravity="left"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/date"
+        android:layout_toEndOf="@+id/date"
+        android:layout_marginLeft="10dp" />
 
 </RelativeLayout>
