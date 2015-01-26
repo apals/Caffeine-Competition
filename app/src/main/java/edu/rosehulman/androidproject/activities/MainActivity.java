@@ -50,6 +50,7 @@ public class MainActivity extends ActionBarActivity {
 
         CirclePageIndicator titleIndicator = (CirclePageIndicator)findViewById(R.id.titles);
         titleIndicator.setRadius(12);
+        titleIndicator.setFillColor(getResources().getColor(R.color.blue));
         titleIndicator.setViewPager(mPager);
     }
 

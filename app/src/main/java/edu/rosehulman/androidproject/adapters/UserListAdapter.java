@@ -2,8 +2,6 @@ package edu.rosehulman.androidproject.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -12,10 +10,6 @@ import android.widget.TextView;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
-import org.achartengine.model.TimeSeries;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
 
 import edu.rosehulman.androidproject.ExpandAnimation;
 import edu.rosehulman.androidproject.GraphUtils;
@@ -48,7 +42,7 @@ public class UserListAdapter extends ArrayAdapter<String> {
                 public void onClick(View v) {
                     LinearLayout toolbar = (LinearLayout) a.findViewById(R.id.toolbar);
 
-                    mLineChart = ChartFactory.getLineChartView(context, GraphUtils.getDataset(), GraphUtils.getRenderer());
+                    mLineChart = ChartFactory.getLineChartView(context, GraphUtils.getDataset(), GraphUtils.getMultipleSeriesRenderer(context));
                     toolbar.addView(mLineChart);
                     // Creating the expand animation for the item
                     ExpandAnimation expandAni = new ExpandAnimation(toolbar, 500);
