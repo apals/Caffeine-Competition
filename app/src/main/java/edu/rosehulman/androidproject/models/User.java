@@ -1,12 +1,13 @@
 package edu.rosehulman.androidproject.models;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Created by palssoa on 1/25/2015.
  */
-public class User {
+public class User implements Comparable {
 
     private int mCaffeineLevel;
     private List<Drink> mDrinkHistory;
@@ -36,5 +37,10 @@ public class User {
 
     public void setDrinkHistory(List<Drink> mDrinkHistory) {
         this.mDrinkHistory = mDrinkHistory;
+    }
+
+    @Override
+    public int compareTo(Object another) {
+        return ((User) another).getCaffeineLevel() - mCaffeineLevel;
     }
 }

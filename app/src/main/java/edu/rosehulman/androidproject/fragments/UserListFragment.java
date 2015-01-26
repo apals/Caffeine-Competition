@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import edu.rosehulman.androidproject.ExpandAnimation;
@@ -37,11 +38,11 @@ public class UserListFragment extends ListFragment {
             new User("John", 10),
             new User("Percy", 15),
             new User("Honken", 10),
-            new User("McLovin", 10),
-            new User("Barbossa", 10),
-            new User("Adhi", 10),
-            new User("Abdullah", 10),
-            new User("Zlatan", 10)
+            new User("McLovin", 17),
+            new User("Barbossa", 4),
+            new User("Adhi", 14),
+            new User("Abdullah", 29),
+            new User("Zlatan", 8)
     };
 
 
@@ -62,5 +63,6 @@ public class UserListFragment extends ListFragment {
         for(int i = 0; i < 8; i++) {
             users[i].getDrinkHistory().add(new Drink("Drink #" + i, i*2, new Date()));
         }
+        Arrays.sort(users);
     }
 }
