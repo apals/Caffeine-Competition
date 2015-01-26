@@ -27,6 +27,7 @@ public class GraphUtils {
         renderer.setChartTitle("");
 
         renderer.setAxesColor(Color.BLACK);
+        renderer.setLabelsColor(Color.BLACK);
         renderer.setXTitle("Time");
         renderer.setYTitle("Caffeine");
 
@@ -50,8 +51,6 @@ public class GraphUtils {
         r.setColor(context.getResources().getColor(R.color.blue));
 
         return r;
-
-
     }
 
     public static XYMultipleSeriesDataset getDataset() {
