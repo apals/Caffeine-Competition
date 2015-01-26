@@ -28,6 +28,7 @@
                 android:layout_weight="1"
                 android:padding="@dimen/activity_horizontal_margin"/>
             <TextView
+                android:id="@+id/fragment_home_textview_caffeine_level"
                 android:text="@string/caffeine_level"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
