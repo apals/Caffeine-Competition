@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
 
         mDrinks.add(new Drink(
                 data.getExtras().getString(AddDrinkActivity.KEY_DRINK_NAME),
-                data.getExtras().getInt(AddDrinkActivity.KEY_CAFFEINE_AMOUNT)));
+                data.getExtras().getInt(AddDrinkActivity.KEY_CAFFEINE_AMOUNT), new Date()));
         mDrinkAdapter.notifyDataSetChanged();
 
     }
