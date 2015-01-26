@@ -3,6 +3,7 @@ package edu.rosehulman.androidproject.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import edu.rosehulman.androidproject.R;
@@ -10,7 +11,7 @@ import edu.rosehulman.androidproject.R;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

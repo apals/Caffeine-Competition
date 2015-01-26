@@ -12,25 +12,30 @@
         android:layout_weight="1"
         >
 
-        <TableRow android:layout_weight="1">
+        <TableRow android:layout_weight="1" android:layout_marginBottom="@dimen/button_margin">
             <Button
-                android:text="bajs"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"/>
+                android:text="@string/coffee"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/blue"
+                />
             <Button
-                android:text="bajs2"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"/>
+                android:text="@string/energy_drink"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/blue"/>
         </TableRow>
-        <TableRow android:layout_weight="1">
+        <TableRow android:layout_weight="1" android:layout_marginTop="@dimen/button_margin">
             <Button
-                android:text="bajs3"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"/>
+                android:text="@string/latte"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/blue"/>
             <Button
-                android:text="bajs4"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"/>
+                android:text="@string/espresso"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/blue"/>
         </TableRow>
     </TableLayout>
 
@@ -38,7 +43,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="horizontal"
-        android:layout_weight="2">
+        android:layout_weight="2"
+        android:layout_marginTop="@dimen/button_margin">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -47,12 +53,12 @@
             android:layout_weight="3">
 
             <EditText
-                android:hint="bajsa"
+                android:hint="@string/drink_name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
             <EditText
-                android:hint="hittler"
+                android:hint="@string/caffeine_amount"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
@@ -60,10 +66,11 @@
         </LinearLayout>
 
         <Button
-            android:text="legg till"
+            android:text="@string/add"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="@color/blue"/>
 
     </LinearLayout>
 
