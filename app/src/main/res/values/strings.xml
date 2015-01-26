@@ -5,8 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="url">https://api.imgur.com/3/gallery/hot/viral/0.json</string>
-    <string name="username">Username</string>
-    <string name="caffeine_level">Caffeine level: 0.0mg</string>
+    <string name="username">USER NAME</string>
+    <string name="caffeine_level">CAFFEINE LEVEL: 0.0mg</string>
     <string name="drink">Drink</string>
     <string name="add">ADD</string>
     <string name="espresso">ESPRESSO</string>

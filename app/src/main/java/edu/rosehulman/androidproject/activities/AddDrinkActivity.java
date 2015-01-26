@@ -34,19 +34,19 @@ public class AddDrinkActivity extends Activity implements View.OnClickListener {
         switch(v.getId()) {
             case R.id.add_drink_button_coffee:
                 mDrinkName = getString(R.string.coffee);
-                mCaffeineAmount = 10;
+                mCaffeineAmount = getResources().getInteger(R.integer.caffeine_amount_coffee);
                 break;
             case R.id.add_drink_button_energy_drink:
                 mDrinkName = getString(R.string.energy_drink);
-                mCaffeineAmount = 15;
+                mCaffeineAmount = getResources().getInteger(R.integer.caffeine_amount_energy_drink);
                 break;
             case R.id.add_drink_button_espresso:
                 mDrinkName = getString(R.string.espresso);
-                mCaffeineAmount = 20;
+                mCaffeineAmount = getResources().getInteger(R.integer.caffeine_amount_espresso);
                 break;
             case R.id.add_drink_button_latte:
                 mDrinkName = getString(R.string.latte);
-                mCaffeineAmount = 12;
+                mCaffeineAmount = getResources().getInteger(R.integer.caffeine_amount_latte);
                 break;
             case R.id.add_drink_button_custom:
                 mDrinkName = ((EditText) findViewById(R.id.add_drink_edittext_name)).getText().toString();
