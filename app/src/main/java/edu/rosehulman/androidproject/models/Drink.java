@@ -7,30 +7,12 @@ import java.util.Date;
  */
 public class Drink {
 
-    private String mName;
-    private int mCaffeineAmount;
+    private DrinkType mDrinkType;
     private Date mDateTime;
 
-    public Drink(String name, int caffeineAmount, Date date) {
-        mName = name;
-        mCaffeineAmount = caffeineAmount;
+    public Drink(DrinkType drinkType, Date date) {
+        mDrinkType = drinkType;
         mDateTime = date;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String mName) {
-        this.mName = mName;
-    }
-
-    public int getCaffeineAmount() {
-        return mCaffeineAmount;
-    }
-
-    public void setCaffeineAmount(int mCaffeineAmount) {
-        this.mCaffeineAmount = mCaffeineAmount;
     }
 
     public String getFormattedDate() {
