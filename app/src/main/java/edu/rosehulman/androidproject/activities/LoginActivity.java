@@ -5,13 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 
 import edu.rosehulman.androidproject.R;
+import edu.rosehulman.androidproject.models.User;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends ActionBarActivity {
+
+    public static final String KEY_USERNAME = "KEY_USERNAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +26,10 @@ public class LoginActivity extends ActionBarActivity {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                User user = new User(((AutoCompleteTextView) findViewById(R.id.email)).getText().toString(), 0);
+                i.putExtra(KEY_USERNAME, user);
+                startActivity(i);
             }
         });
 

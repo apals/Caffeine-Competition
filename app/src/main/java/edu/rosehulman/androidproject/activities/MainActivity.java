@@ -26,6 +26,7 @@ import edu.rosehulman.androidproject.fragments.HomeFragment;
 import edu.rosehulman.androidproject.fragments.ListContainerFragment;
 import edu.rosehulman.androidproject.fragments.GraphContainerFragment;
 import edu.rosehulman.androidproject.fragments.UserListFragment;
+import edu.rosehulman.androidproject.models.User;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -38,13 +39,17 @@ public class MainActivity extends ActionBarActivity {
     private PagerAdapter mPagerAdapter;
 
     private Firebase mRef;
+
+    //TODO: null checks on mUser when talking to firebase
     private AuthData mUser = null;
+
+    public static User USER;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen_slide);
-
+        USER = (User) getIntent().getSerializableExtra(LoginActivity.KEY_USERNAME);
 
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));

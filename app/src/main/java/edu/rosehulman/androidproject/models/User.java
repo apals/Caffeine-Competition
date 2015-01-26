@@ -1,5 +1,6 @@
 package edu.rosehulman.androidproject.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * Created by palssoa on 1/25/2015.
  */
-public class User implements Comparable {
+public class User implements Comparable, Serializable {
 
     private int mCaffeineLevel;
     private List<Drink> mDrinkHistory;
