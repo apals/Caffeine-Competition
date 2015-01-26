@@ -28,6 +28,14 @@ public class GraphFragment extends Fragment implements CompoundButton.OnCheckedC
     private GraphicalView mLineChart;
     XYMultipleSeriesRenderer renderer;
 
+
+    private static GraphFragment instance;
+    public static GraphFragment getInstance() {
+        if(instance == null)
+            instance = new GraphFragment();
+        return instance;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_graph, container, false);

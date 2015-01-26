@@ -9,8 +9,15 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
+import com.firebase.client.AuthData;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
+
+import java.util.Map;
 
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.fragments.GraphFragment;
@@ -30,15 +37,54 @@ public class MainActivity extends ActionBarActivity {
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
 
-    
-
-    //TODO: bottom fragment is added dynamically everywhere even though it's the same fragment on every page. should probably not be that way
-    //TODO: add getInstance() method to all fragments
+    private Firebase mRef;
+    private AuthData mUser = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen_slide);
+
+
+        Firebase.setAndroidContext(this);
+        this.mRef = new Firebase("https://dazzling-inferno-2149.firebaseio.com/");
+        this.mRef.child("chat").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                System.out.println("SOMEONE DRANK SOMETHING");
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+        this.mRef.authAnonymously(new Firebase.AuthResultHandler() {
+            @Override
+            public void onAuthenticated(AuthData authData) {
+                MainActivity.this.mUser = authData;
+            }
+
+            @Override
+            public void onAuthenticationError(FirebaseError firebaseError) {
+                MainActivity.this.mUser = null;
+            }
+        });
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
 
@@ -56,6 +102,10 @@ public class MainActivity extends ActionBarActivity {
 
     public ViewPager getPager() {
         return mPager;
+    }
+
+    public Firebase getFirebaseReference() {
+        return mRef;
     }
 
     @Override
@@ -85,13 +135,13 @@ public class MainActivity extends ActionBarActivity {
         public Fragment getItem(int position) {
             switch(position) {
                 case 0:
-                    return new HomeFragment();
+                    return HomeFragment.getInstance();
                     //return HomeContainerFragment.getInstance();
                 case 1:
-                    return new UserListFragment();
+                    return UserListFragment.getInstance();
                     //return ListContainerFragment.getInstance();
                 case 2:
-                    return new GraphFragment();
+                    return GraphFragment.getInstance();
                     //GraphContainerFragment gcf = GraphContainerFragment.getInstance();
                     //return gcf;
 

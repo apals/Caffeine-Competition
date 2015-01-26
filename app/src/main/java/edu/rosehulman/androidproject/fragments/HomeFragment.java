@@ -14,6 +14,7 @@ import java.util.Date;
 
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.activities.AddDrinkActivity;
+import edu.rosehulman.androidproject.activities.MainActivity;
 import edu.rosehulman.androidproject.adapters.DrinkAdapter;
 import edu.rosehulman.androidproject.models.Drink;
 
@@ -25,6 +26,15 @@ public class HomeFragment extends Fragment {
     public static final int DRINK_REQUEST_CODE = 0;
     private ArrayList<Drink> mDrinks;
     private DrinkAdapter mDrinkAdapter;
+
+
+    private static HomeFragment instance;
+
+    public static HomeFragment getInstance() {
+        if(instance == null)
+            instance = new HomeFragment();
+        return instance;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,9 +60,13 @@ public class HomeFragment extends Fragment {
         if(requestCode != DRINK_REQUEST_CODE || resultCode != Activity.RESULT_OK)
             return;
 
-        mDrinks.add(new Drink(
+        Drink d = new Drink(
                 data.getExtras().getString(AddDrinkActivity.KEY_DRINK_NAME),
-                data.getExtras().getInt(AddDrinkActivity.KEY_CAFFEINE_AMOUNT), new Date()));
+                data.getExtras().getInt(AddDrinkActivity.KEY_CAFFEINE_AMOUNT), new Date());
+
+        ((MainActivity) getActivity()).getFirebaseReference().child("chat").push().setValue(d);
+
+        mDrinks.add(d);
         mDrinkAdapter.notifyDataSetChanged();
 
     }

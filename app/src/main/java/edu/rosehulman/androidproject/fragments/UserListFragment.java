@@ -21,6 +21,14 @@ import edu.rosehulman.androidproject.adapters.UserListAdapter;
  */
 public class UserListFragment extends ListFragment {
 
+    private static UserListFragment instance;
+
+    public static UserListFragment getInstance() {
+        if(instance == null)
+            instance = new UserListFragment();
+        return instance;
+    }
+
     String[] countries = new String[] {
             "John",
             "Percy",
