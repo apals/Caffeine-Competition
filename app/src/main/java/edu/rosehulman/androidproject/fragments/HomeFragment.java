@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.activities.AddDrinkActivity;
@@ -35,8 +36,8 @@ public class HomeFragment extends Fragment {
 
         ListView listView = (ListView) rootView.findViewById(R.id.fragment_home_drink_list);
         ArrayList<Drink> drinks = new ArrayList<Drink>();
-        drinks.add(new Drink("Coffee", 10));
-        drinks.add(new Drink("Red Bull", 15));
+        drinks.add(new Drink("Coffee", 10, new Date()));
+        drinks.add(new Drink("Red Bull", 15, new Date()));
         DrinkAdapter drinkAdapter = new DrinkAdapter(getActivity(), R.layout.drinklist_row_layout, drinks);
         listView.setAdapter(drinkAdapter);
 

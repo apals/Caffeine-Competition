@@ -33,11 +33,17 @@ public class Drink {
         this.mCaffeineAmount = mCaffeineAmount;
     }
 
-    public Date getmDateTime() {
+    public String getFormatedDate() {
+        String[] dateObjects = mDateTime.toString().split(" ");
+        String[] timeObjects = dateObjects[3].split(":");
+        return timeObjects[0] + ":" + timeObjects[1];
+    }
+
+    public Date getDateTime() {
         return mDateTime;
     }
 
-    public void setmDateTime(Date mDateTime) {
+    public void setDateTime(Date mDateTime) {
         this.mDateTime = mDateTime;
     }
 }
