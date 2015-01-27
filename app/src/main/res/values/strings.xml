@@ -16,5 +16,6 @@
     <string name="drink_name">NAME</string>
     <string name="caffeine_amount">CAFFEINE AMOUNT</string>
     <string name="prompt_username">Username</string>
+    <string name="action_register">Register</string>
 
 </resources>

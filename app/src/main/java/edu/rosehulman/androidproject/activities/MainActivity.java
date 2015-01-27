@@ -38,6 +38,7 @@ public class MainActivity extends ActionBarActivity {
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
 
+    //TODO: Remove reference, use login activitys ref
     private Firebase mRef;
 
     //TODO: null checks on mUser when talking to firebase
