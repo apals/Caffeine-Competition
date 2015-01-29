@@ -1,21 +1,15 @@
 package edu.rosehulman.androidproject.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-import edu.rosehulman.androidproject.ExpandAnimation;
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.adapters.UserListAdapter;
 import edu.rosehulman.androidproject.models.Drink;
@@ -36,14 +30,14 @@ public class UserListFragment extends ListFragment {
     }
 
     User[] users = new User[] {
-            new User("John"),
-            new User("Percy"),
-            new User("Honken"),
-            new User("McLovin"),
-            new User("Barbossa"),
-            new User("Adhi"),
-            new User("Abdullah"),
-            new User("Zlatan")
+            new User("John", new ArrayList<Drink>()),
+            new User("Percy", new ArrayList<Drink>()),
+            new User("Honken", new ArrayList<Drink>()),
+            new User("McLovin", new ArrayList<Drink>()),
+            new User("Barbossa", new ArrayList<Drink>()),
+            new User("Adhi", new ArrayList<Drink>()),
+            new User("Abdullah", new ArrayList<Drink>()),
+            new User("Zlatan", new ArrayList<Drink>())
     };
 
 

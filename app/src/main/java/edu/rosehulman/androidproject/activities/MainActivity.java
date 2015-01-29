@@ -14,6 +14,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -50,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen_slide);
-        USER = (User) getIntent().getSerializableExtra(LoginActivity.KEY_USERNAME);
+        USER = (User) getIntent().getSerializableExtra(LoginActivity.KEY_EMAIL);
 
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));

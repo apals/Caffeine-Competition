@@ -10,13 +10,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import edu.rosehulman.androidproject.R;
+import edu.rosehulman.androidproject.models.Drink;
 import edu.rosehulman.androidproject.models.User;
 
 /**
@@ -24,7 +28,8 @@ import edu.rosehulman.androidproject.models.User;
  */
 public class LoginActivity extends ActionBarActivity implements OnClickListener {
 
-    public static final String KEY_USERNAME = "KEY_USERNAME";
+    public static final String KEY_EMAIL = "key_email";
+    private static final String USERS_CHILD = "users";
 
     private Firebase mRef;
 
@@ -36,7 +41,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));
 
-        ((AutoCompleteTextView)findViewById(R.id.username)).setText("test@test.com");
+        ((AutoCompleteTextView)findViewById(R.id.email)).setText("test@test.com");
         ((TextView)findViewById(R.id.password)).setText("1");
 
         findViewById(R.id.email_sign_in_button).setOnClickListener(this);
@@ -45,22 +50,22 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 
     @Override
     public void onClick(View v) {
-        String username = ((AutoCompleteTextView) findViewById(R.id.username)).getText().toString();
+        String email = ((AutoCompleteTextView) findViewById(R.id.email)).getText().toString();
         String password = ((TextView) findViewById(R.id.password)).getText().toString();
 
         if (v.getId() == R.id.email_sign_in_button) {
-            authorize(username, password);
+            authorize(email, password);
         }
         else if (v.getId() == R.id.email_register_button) {
-            register(username, password);
+            register(email, password);
         }
     }
 
-    private void authorize(final String username, final String password) {
-        mRef.authWithPassword(username, password, new Firebase.AuthResultHandler() {
+    private void authorize(final String email, final String password) {
+        mRef.authWithPassword(email, password, new Firebase.AuthResultHandler() {
                     @Override
                     public void onAuthenticated(AuthData authData) {
-                        acceptLogin();
+                        getUserData(email);
                     }
                     @Override
                     public void onAuthenticationError(FirebaseError firebaseError) {
@@ -70,13 +75,12 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         );
     }
 
-    private void register(final String username, final String password) {
-        System.out.println("BAAAAAAAAAJSAR PÅ MIG");
-        mRef.createUser(username, password, new Firebase.ResultHandler() {
+    private void register(final String email, final String password) {
+        mRef.createUser(email, password, new Firebase.ResultHandler() {
                     @Override
                     public void onSuccess() {
-                        createUser(username, password);
-                        authorize(username, password);
+                        createUser(email, password);
+                        authorize(email, password);
                     }
 
                     @Override
@@ -87,22 +91,63 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         );
     }
 
-    public void acceptLogin() {
+    public void acceptLogin(User user) {
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
-        User user = new User(((AutoCompleteTextView) findViewById(R.id.username)).getText().toString());
-        i.putExtra(KEY_USERNAME, user);
+        i.putExtra(KEY_EMAIL, user);
         startActivity(i);
+    }
+
+    public void getUserData(String email) {
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email)).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                System.out.println(" HER E VI KANRAKCARE " + dataSnapshot.getValue());
+                Map<String, Object> data = (Map<String, Object>) dataSnapshot.getValue();
+                User user = new User((String) data.get("email"), (ArrayList<Drink>) data.get("drinkHistory"));
+                acceptLogin(user);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     public void toast(String message) {
         Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
     }
 
-    public void createUser(String username, String password) {
+    public void createUser(String email, String password) {
+
+        //TODO: create User.toMap??
         Map<String, String> sendMap = new HashMap<>();
-        sendMap.put("username", username);
-        sendMap.put("password", password);
-        mRef.child("users").push().setValue(sendMap);
+        sendMap.put("email", email);
+        User newUser = new User(email, new ArrayList<Drink>());
+
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email)).setValue(newUser.toMap());
+    }
+
+    public String cleanEmail(String email) {
+        email = email.replace(".", "-");
+        email = email.replace("@", "-");
+        System.out.println(email);
+        return email;
     }
 }
 

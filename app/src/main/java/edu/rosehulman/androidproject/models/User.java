@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by palssoa on 1/25/2015.
@@ -16,9 +18,13 @@ public class User implements Comparable, Serializable {
     private ArrayList<Drink> mDrinkHistory;
     private String mUsername;
 
-    public User(String username) {
+    public User(String username, ArrayList<Drink> drinkHistory) {
         mUsername = username;
-        mDrinkHistory = new ArrayList<>();
+        mDrinkHistory = drinkHistory;
+    }
+
+    public User(HashMap<String, Object> map) {
+        this((String) map.get("username"), (ArrayList<Drink>) map.get("drinkHistory"));
     }
 
     public String getUsername() {
@@ -41,6 +47,14 @@ public class User implements Comparable, Serializable {
     }
     public ArrayList<Drink> getDrinkHistory() {
         return mDrinkHistory;
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> userMap = new HashMap<String, Object>();
+        userMap.put("username", mUsername);
+        userMap.put("drinkHistory", mDrinkHistory);
+        return userMap;
+
     }
 
     @Override
