@@ -1,9 +1,11 @@
 package edu.rosehulman.androidproject.models;
 
+import java.io.Serializable;
+
 /**
  * Created by fruktprins on 26/01/15.
  */
-public class DrinkType {
+public class DrinkType implements Serializable {
 
     private String mDrinkName;
     private float mCaffeineAmount;

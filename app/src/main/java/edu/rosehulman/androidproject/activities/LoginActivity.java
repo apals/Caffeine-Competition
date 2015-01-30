@@ -14,13 +14,20 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.GenericTypeIndicator;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.models.Drink;
+import edu.rosehulman.androidproject.models.DrinkType;
 import edu.rosehulman.androidproject.models.User;
 
 /**
@@ -32,6 +39,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
     private static final String USERS_CHILD = "users";
 
     private Firebase mRef;
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +48,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));
+        this.gson = new Gson();
 
         ((AutoCompleteTextView)findViewById(R.id.email)).setText("test@test.com");
         ((TextView)findViewById(R.id.password)).setText("1");
@@ -67,6 +76,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
                     public void onAuthenticated(AuthData authData) {
                         getUserData(email);
                     }
+
                     @Override
                     public void onAuthenticationError(FirebaseError firebaseError) {
                         toast(firebaseError.getMessage());
@@ -97,13 +107,20 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         startActivity(i);
     }
 
-    public void getUserData(String email) {
+    public void getUserData(final String email) {
         mRef.child(USERS_CHILD + "/" + cleanEmail(email)).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                System.out.println(" HER E VI KANRAKCARE " + dataSnapshot.getValue());
-                Map<String, Object> data = (Map<String, Object>) dataSnapshot.getValue();
-                User user = new User((String) data.get("email"), (ArrayList<Drink>) data.get("drinkHistory"));
+
+                if(dataSnapshot.getChildrenCount() == 0)
+                    return;
+
+                //List<Drink> drinks = Collections.synchronizedList(gson.fromJson((String) dataSnapshot.getValue(), ArrayList.class));
+                ArrayList<Drink> drinks = (ArrayList<Drink>) dataSnapshot.getValue();
+
+
+                drinks.add(new Drink(new DrinkType("efter skicka", 10), new Date()));
+                User user = new User(email, (ArrayList) drinks);
                 acceptLogin(user);
             }
 
@@ -138,15 +155,17 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         //TODO: create User.toMap??
         Map<String, String> sendMap = new HashMap<>();
         sendMap.put("email", email);
-        User newUser = new User(email, new ArrayList<Drink>());
+        ArrayList<Drink> emptyDrinkList = new ArrayList<Drink>();
+        emptyDrinkList.add(new Drink(new DrinkType("innan skicka", 10), new Date()));
+        User newUser = new User(email, emptyDrinkList);
 
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email)).setValue(newUser.toMap());
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/drinkHistory").setValue(emptyDrinkList);
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/username").setValue(cleanEmail(email));
     }
 
     public String cleanEmail(String email) {
         email = email.replace(".", "-");
         email = email.replace("@", "-");
-        System.out.println(email);
         return email;
     }
 }

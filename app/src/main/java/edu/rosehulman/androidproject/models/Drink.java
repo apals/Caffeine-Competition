@@ -1,11 +1,12 @@
 package edu.rosehulman.androidproject.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by palssoa on 1/25/2015.
  */
-public class Drink {
+public class Drink implements Serializable {
 
     private DrinkType mDrinkType;
     private Date mDateTime;
