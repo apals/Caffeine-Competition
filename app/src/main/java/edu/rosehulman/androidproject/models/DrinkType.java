@@ -8,9 +8,9 @@ import java.io.Serializable;
 public class DrinkType implements Serializable {
 
     private String mDrinkName;
-    private float mCaffeineAmount;
+    private double mCaffeineAmount;
 
-    public DrinkType(String mDrinkName, float mCaffeineAmount) {
+    public DrinkType(String mDrinkName, double mCaffeineAmount) {
         this.mDrinkName = mDrinkName;
         this.mCaffeineAmount = mCaffeineAmount;
     }
@@ -23,7 +23,7 @@ public class DrinkType implements Serializable {
         this.mDrinkName = mDrinkName;
     }
 
-    public float getCaffeineAmount() {
+    public double getCaffeineAmount() {
         return mCaffeineAmount;
     }
 

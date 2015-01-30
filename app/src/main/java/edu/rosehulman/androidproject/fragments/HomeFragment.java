@@ -71,13 +71,7 @@ public class HomeFragment extends Fragment {
     private Runnable updateTask = new Runnable () {
         public void run() {
             updateCaffeineLevelTextView(MainActivity.USER.getCaffeineLevel());
-
-            // run any code here...
-
-            // queue the task to run again in 15 seconds...
             mHandler.postDelayed(updateTask, 1000);
-
-
         }
     };
 
@@ -94,9 +88,9 @@ public class HomeFragment extends Fragment {
                 data.getExtras().getString(AddDrinkActivity.KEY_DRINK_NAME),
                 data.getExtras().getInt(AddDrinkActivity.KEY_CAFFEINE_AMOUNT)), new Date());
 
-        ((MainActivity) getActivity()).getFirebaseReference().child("chat").push().setValue(d);
 
         MainActivity.USER.drink(d);
+        ((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getUsername() + "/drinkHistory").setValue(MainActivity.USER.getDrinkHistory());
         mDrinkAdapter.notifyDataSetChanged();
     }
 }

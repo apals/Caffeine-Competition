@@ -52,10 +52,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen_slide);
         USER = (User) getIntent().getSerializableExtra(LoginActivity.KEY_EMAIL);
-        System.out.println(" IN MAIN ACTIVITY PRINTING USER AND DRINK HISTORY");
-        System.out.println(USER.getUsername());
-        System.out.println(USER.getDrinkHistory());
-        System.out.println(USER.getDrinkHistory().size());
 
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));
