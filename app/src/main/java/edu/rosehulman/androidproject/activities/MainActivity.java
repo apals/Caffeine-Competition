@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 final String usr = (String) ((HashMap) dataSnapshot.getValue()).get("username");
                 final User user = new User(usr, new ArrayList<Drink>());
-                getUsers().add(user);
+                users.add(user);
                 mRef.child("users/" + usr + "/drinkHistory").addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
