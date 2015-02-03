@@ -17,8 +17,11 @@ import org.achartengine.GraphicalView;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
+import java.util.Random;
+
 import edu.rosehulman.androidproject.GraphUtils;
 import edu.rosehulman.androidproject.R;
+import edu.rosehulman.androidproject.activities.MainActivity;
 
 /**
  * Created by palssoa on 12/20/2014.
@@ -26,7 +29,8 @@ import edu.rosehulman.androidproject.R;
 public class GraphFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
     private GraphicalView mLineChart;
-    XYMultipleSeriesRenderer renderer;
+    private XYMultipleSeriesRenderer renderer;
+    private XYMultipleSeriesDataset dataset;
 
 
     private static GraphFragment instance;
@@ -41,7 +45,7 @@ public class GraphFragment extends Fragment implements CompoundButton.OnCheckedC
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_graph, container, false);
 
         renderer = GraphUtils.getMultipleSeriesRenderer(getActivity());
-        XYMultipleSeriesDataset dataset = GraphUtils.getDataset();
+        dataset = GraphUtils.getDataset(((MainActivity) getActivity()).getUsers());
         mLineChart = ChartFactory.getLineChartView(getActivity(), dataset, renderer);
         mLineChart.setBackgroundColor(Color.WHITE);
 
@@ -57,6 +61,10 @@ public class GraphFragment extends Fragment implements CompoundButton.OnCheckedC
         return rootView;
     }
 
+    public void updateGraph() {
+        dataset.getSeriesAt(0).add(new Random().nextInt(10), 3);
+        mLineChart.repaint();
+    }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

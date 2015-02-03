@@ -9,6 +9,11 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
+import java.util.List;
+
+import edu.rosehulman.androidproject.models.Drink;
+import edu.rosehulman.androidproject.models.User;
+
 /**
  * Created by palssoa on 1/15/2015.
  */
@@ -53,9 +58,13 @@ public class GraphUtils {
         return r;
     }
 
-    public static XYMultipleSeriesDataset getDataset() {
+    public static XYMultipleSeriesDataset getDataset(List<User> users) {
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 
+        for(int i = 0; i < users.size(); i++) {
+            TimeSeries series = new TimeSeries(users.get(i).getUsername());
+            series.add(i, users.get(i).getCaffeineLevel());
+        }
         TimeSeries series = new TimeSeries("User #1");
 
         for(int i = 0; i < 10; i++) {

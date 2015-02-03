@@ -169,7 +169,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 
         //TODO: create User.toMap??
         ArrayList<Drink> emptyDrinkList = new ArrayList<Drink>();
-        emptyDrinkList.add(new Drink(new DrinkType("CREATE USER", 10), new Date()));
+        emptyDrinkList.add(new Drink(new DrinkType("CREATE " + email, 10), new Date()));
 
         mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/drinkHistory").setValue(emptyDrinkList);
         mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/username").setValue(cleanEmail(email));

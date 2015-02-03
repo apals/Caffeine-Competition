@@ -2,7 +2,6 @@ package edu.rosehulman.androidproject.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -14,19 +13,19 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.viewpagerindicator.CirclePageIndicator;
-import com.viewpagerindicator.TitlePageIndicator;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.fragments.GraphFragment;
-import edu.rosehulman.androidproject.fragments.HomeContainerFragment;
 import edu.rosehulman.androidproject.fragments.HomeFragment;
 import edu.rosehulman.androidproject.fragments.ListContainerFragment;
-import edu.rosehulman.androidproject.fragments.GraphContainerFragment;
 import edu.rosehulman.androidproject.fragments.UserListFragment;
+import edu.rosehulman.androidproject.models.Drink;
+import edu.rosehulman.androidproject.models.DrinkType;
 import edu.rosehulman.androidproject.models.User;
 
 public class MainActivity extends ActionBarActivity {
@@ -45,6 +44,8 @@ public class MainActivity extends ActionBarActivity {
     //TODO: null checks on mUser when talking to firebase
     private AuthData mUser = null;
 
+    private ArrayList<User> users;
+
     public static User USER;
 
     @Override
@@ -52,13 +53,81 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen_slide);
         USER = (User) getIntent().getSerializableExtra(LoginActivity.KEY_EMAIL);
+        users = new ArrayList<User>();
 
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));
-        this.mRef.child("chat").addChildEventListener(new ChildEventListener() {
+
+        this.mRef.child("users").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                System.out.println("SOMEONE DRANK SOMETHING");
+                final String usr = (String) ((HashMap) dataSnapshot.getValue()).get("username");
+                final User user = new User(usr, new ArrayList<Drink>());
+                getUsers().add(user);
+                mRef.child("users/" + usr + "/drinkHistory").addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        System.out.println(usr + " drank something");
+                        System.out.println("He drank " + dataSnapshot.getValue());
+
+                        if (usr.equals(USER.getUsername())) {
+                            //all local changes needed are done in HomeFragment onactivityresult
+                            return;
+                        }
+
+                        HashMap drinks = (HashMap) dataSnapshot.getValue();
+
+                        double a = (double) drinks.get("remainingCaffeine");
+                        Date date = new Date((long) drinks.get("dateTime"));
+
+                        HashMap drinkType = (HashMap) drinks.get("drinkType");
+                        double caffeineAmount = (double) drinkType.get("caffeineAmount");
+                        String drinkName = (String) drinkType.get("drinkName");
+                        DrinkType d = new DrinkType(drinkName, caffeineAmount);
+                        Drink drink = new Drink(d, date);
+                        user.getDrinkHistory().add(drink);
+                        UserListFragment.getInstance().updateList();
+                        GraphFragment.getInstance().updateGraph();
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+
+                ArrayList<Drink> usrDrinkList = new ArrayList<Drink>();
+
+                ArrayList<HashMap> map = (ArrayList<HashMap>) ((HashMap) dataSnapshot.getValue()).get("drinkHistory");
+                for (int i = 0; i < map.size(); i++) {
+
+                    double a = (double) map.get(i).get("remainingCaffeine");
+                    Date date = new Date((long) map.get(i).get("dateTime"));
+
+                    HashMap drinkType = (HashMap) map.get(i).get("drinkType");
+                    double caffeineAmount = (double) drinkType.get("caffeineAmount");
+                    String drinkName = (String) drinkType.get("drinkName");
+                    DrinkType d = new DrinkType(drinkName, caffeineAmount);
+                    Drink drink = new Drink(d, date);
+                    usrDrinkList.add(drink);
+                }
+                //User user = new User(usr, usrDrinkList);
+
                 //TODO: update graphfragment
                 //TODO: update homefragment
                 //TODO: update userlistfragment
@@ -105,7 +174,7 @@ public class MainActivity extends ActionBarActivity {
         mPager.setAdapter(mPagerAdapter);
 
 
-        CirclePageIndicator titleIndicator = (CirclePageIndicator)findViewById(R.id.titles);
+        CirclePageIndicator titleIndicator = (CirclePageIndicator) findViewById(R.id.titles);
         titleIndicator.setRadius(12);
         titleIndicator.setFillColor(getResources().getColor(R.color.blue));
         titleIndicator.setViewPager(mPager);
@@ -131,6 +200,10 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
      * sequence.
@@ -141,20 +214,19 @@ public class MainActivity extends ActionBarActivity {
         }
 
 
-
         @Override
         public Fragment getItem(int position) {
-            switch(position) {
+            switch (position) {
                 case 0:
                     return HomeFragment.getInstance();
-                    //return HomeContainerFragment.getInstance();
+                //return HomeContainerFragment.getInstance();
                 case 1:
                     return UserListFragment.getInstance();
-                    //return ListContainerFragment.getInstance();
+                //return ListContainerFragment.getInstance();
                 case 2:
                     return GraphFragment.getInstance();
-                    //GraphContainerFragment gcf = GraphContainerFragment.getInstance();
-                    //return gcf;
+                //GraphContainerFragment gcf = GraphContainerFragment.getInstance();
+                //return gcf;
 
             }
             return new ListContainerFragment();
@@ -167,7 +239,6 @@ public class MainActivity extends ActionBarActivity {
 
 
     }
-
 
 
 }

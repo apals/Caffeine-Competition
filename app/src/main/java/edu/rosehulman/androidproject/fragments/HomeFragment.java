@@ -88,9 +88,19 @@ public class HomeFragment extends Fragment {
                 data.getExtras().getString(AddDrinkActivity.KEY_DRINK_NAME),
                 data.getExtras().getInt(AddDrinkActivity.KEY_CAFFEINE_AMOUNT)), new Date());
 
-
+        System.out.println("ONACTIVITY RESULT HOMEFRAGMENT");
         MainActivity.USER.drink(d);
         ((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getUsername() + "/drinkHistory").setValue(MainActivity.USER.getDrinkHistory());
+
+
+        UserListFragment.getInstance().updateList();
+        GraphFragment.getInstance().updateGraph();
+        //((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getUsername() + "/drinkHistory").setValue(MainActivity.USER.getDrinkHistory());
+        mDrinkAdapter.notifyDataSetChanged();
+    }
+
+    public void updateList() {
+        System.out.println("UPDATE LIST HOMEFRAGMENT");
         mDrinkAdapter.notifyDataSetChanged();
     }
 }

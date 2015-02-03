@@ -11,9 +11,12 @@ import android.widget.TextView;
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 
+import java.util.List;
+
 import edu.rosehulman.androidproject.ExpandAnimation;
 import edu.rosehulman.androidproject.GraphUtils;
 import edu.rosehulman.androidproject.R;
+import edu.rosehulman.androidproject.activities.MainActivity;
 import edu.rosehulman.androidproject.models.User;
 
 /**
@@ -26,7 +29,7 @@ public class UserListAdapter extends ArrayAdapter<User> {
 
 
 
-    public UserListAdapter(Context context, int textViewResourceId, User[] objects) {
+    public UserListAdapter(Context context, int textViewResourceId, List<User> objects) {
         super(context, textViewResourceId, objects);
         this.context = (Activity) context;
     }
@@ -44,7 +47,7 @@ public class UserListAdapter extends ArrayAdapter<User> {
                 public void onClick(View v) {
                     LinearLayout toolbar = (LinearLayout) a.findViewById(R.id.toolbar);
 
-                    mLineChart = ChartFactory.getLineChartView(context, GraphUtils.getDataset(), GraphUtils.getMultipleSeriesRenderer(context));
+                    mLineChart = ChartFactory.getLineChartView(context, GraphUtils.getDataset((((MainActivity) context).getUsers())), GraphUtils.getMultipleSeriesRenderer(context));
                     toolbar.addView(mLineChart);
                     // Creating the expand animation for the item
                     ExpandAnimation expandAni = new ExpandAnimation(toolbar, 500);
@@ -57,7 +60,7 @@ public class UserListAdapter extends ArrayAdapter<User> {
 
         ((TextView) convertView.findViewById(R.id.username)).setText(getItem(position).getUsername());
         ((TextView) convertView.findViewById(R.id.caffeinelevel)).setText(getItem(position).getCaffeineLevel() + " mg");
-        ((TextView) convertView.findViewById(R.id.subtext_date)).setText(getItem(position).getDrinkHistory().get(getItem(position).getDrinkHistory().size() - 1).getFormattedDate());
+        //((TextView) convertView.findViewById(R.id.subtext_date)).setText(getItem(position).getDrinkHistory().get(getItem(position).getDrinkHistory().size() - 1).getFormattedDate());
 
 
         // Resets the toolbar to be closed
