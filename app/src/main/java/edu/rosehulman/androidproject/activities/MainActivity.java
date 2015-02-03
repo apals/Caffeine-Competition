@@ -113,7 +113,12 @@ public class MainActivity extends ActionBarActivity {
 
                 ArrayList<Drink> usrDrinkList = new ArrayList<Drink>();
 
-                ArrayList<HashMap> map = (ArrayList<HashMap>) ((HashMap) dataSnapshot.getValue()).get("drinkHistory");
+                ArrayList<HashMap> map;
+                try {
+                    map = (ArrayList<HashMap>) ((HashMap) dataSnapshot.getValue()).get("drinkHistory");
+                } catch (ClassCastException e) {
+                    map = new ArrayList<HashMap>();
+                }
                 for (int i = 0; i < map.size(); i++) {
 
                     double a = (double) map.get(i).get("remainingCaffeine");

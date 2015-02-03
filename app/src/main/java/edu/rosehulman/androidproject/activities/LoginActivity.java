@@ -112,29 +112,22 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                if(dataSnapshot.getChildrenCount() == 0)
-                    return;
-
                 ArrayList<Drink> userDrinkList = new ArrayList<Drink>();
+                if(dataSnapshot.getChildrenCount() > 0) {
+                    ArrayList<HashMap> drinks = (ArrayList<HashMap>) dataSnapshot.getValue();
 
-                //List<Drink> drinks = Collections.synchronizedList(gson.fromJson((String) dataSnapshot.getValue(), ArrayList.class));
-                ArrayList<HashMap> drinks = (ArrayList<HashMap>) dataSnapshot.getValue();
-                for(int i = 0; i < drinks.size(); i++) {
+                    for(int i = 0; i < drinks.size(); i++) {
+                        double a = (double) drinks.get(i).get("remainingCaffeine");
+                        Date date = new Date((long) drinks.get(i).get("dateTime"));
 
-
-                    double a = (double) drinks.get(i).get("remainingCaffeine");
-                    Date date = new Date((long) drinks.get(i).get("dateTime"));
-
-                    HashMap drinkType = (HashMap) drinks.get(i).get("drinkType");
-                    double caffeineAmount = (double) drinkType.get("caffeineAmount");
-                    String drinkName = (String) drinkType.get("drinkName");
-                    DrinkType d = new DrinkType(drinkName, caffeineAmount);
-                    Drink drink = new Drink(d, date);
-                    userDrinkList.add(drink);
+                        HashMap drinkType = (HashMap) drinks.get(i).get("drinkType");
+                        double caffeineAmount = (double) drinkType.get("caffeineAmount");
+                        String drinkName = (String) drinkType.get("drinkName");
+                        DrinkType d = new DrinkType(drinkName, caffeineAmount);
+                        Drink drink = new Drink(d, date);
+                        userDrinkList.add(drink);
+                    }
                 }
-
-
-                //drinks.add(new Drink(new DrinkType("efter skicka", 10), new Date()));
                 User user = new User(cleanEmail(email), userDrinkList);
                 acceptLogin(user);
             }
@@ -168,10 +161,8 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
     public void createUser(String email, String password) {
 
         //TODO: create User.toMap??
-        ArrayList<Drink> emptyDrinkList = new ArrayList<Drink>();
-        emptyDrinkList.add(new Drink(new DrinkType("CREATE " + email, 10), new Date()));
 
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/drinkHistory").setValue(emptyDrinkList);
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/drinkHistory").setValue("");
         mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/username").setValue(cleanEmail(email));
     }
 
@@ -181,6 +172,3 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         return email;
     }
 }
-
-
-
