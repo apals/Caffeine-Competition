@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 User user = createUserFromSnapShot(dataSnapshot);
-                if (user.getUsername() == null) {
+                if (user.getUsername() == null || user.getUsername().equals(USER.getUsername())) {
                     return;
                 }
                 users.add(user);
@@ -74,15 +74,17 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 User changedUser = createUserFromSnapShot(dataSnapshot);
-                for (int i = 0; i < users.size(); i++) {
-                    if (users.get(i).getUsername().equals(changedUser.getUsername())) {
-                        users.remove(i);
-                        break;
+                if (!changedUser.getUsername().equals(USER.getUsername())) {
+                    for (int i = 0; i < users.size(); i++) {
+                        if (users.get(i).getUsername().equals(changedUser.getUsername())) {
+                            users.remove(i);
+                            break;
+                        }
                     }
-                }
-                users.add(changedUser);
-                UserListFragment.getInstance().updateList();
+                    users.add(changedUser);
+                    UserListFragment.getInstance().updateList();
 //                GraphFragment.getInstance().updateGraph();
+                }
             }
 
             @Override
