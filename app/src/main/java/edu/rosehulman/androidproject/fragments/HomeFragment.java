@@ -70,6 +70,10 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
+    public void stopUpdating() {
+        mHandler.removeCallbacksAndMessages(null);
+    }
+
     private Runnable updateTask = new Runnable () {
         public void run() {
             updateCaffeineLevelTextView(MainActivity.USER.getCaffeineLevel());
