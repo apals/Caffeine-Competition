@@ -128,6 +128,12 @@ public class MainActivity extends ActionBarActivity {
         titleIndicator.setViewPager(mPager);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        HomeFragment.getInstance().stopUpdating();
+    }
+
     public ViewPager getPager() {
         return mPager;
     }
