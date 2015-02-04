@@ -13,6 +13,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -61,86 +62,16 @@ public class MainActivity extends ActionBarActivity {
         this.mRef.child("users").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                final String usr = (String) ((HashMap) dataSnapshot.getValue()).get("username");
-                final User user = new User(usr, new ArrayList<Drink>());
-                users.add(user);
-                mRef.child("users/" + usr + "/drinkHistory").addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        System.out.println(usr + " drank something");
-                        System.out.println("He drank " + dataSnapshot.getValue());
-
-                        if (usr.equals(USER.getUsername())) {
-                            //all local changes needed are done in HomeFragment onactivityresult
-                            return;
-                        }
-
-                        HashMap drinks = (HashMap) dataSnapshot.getValue();
-
-                        double a = (double) drinks.get("remainingCaffeine");
-                        Date date = new Date((long) drinks.get("dateTime"));
-
-                        HashMap drinkType = (HashMap) drinks.get("drinkType");
-                        double caffeineAmount = (double) drinkType.get("caffeineAmount");
-                        String drinkName = (String) drinkType.get("drinkName");
-                        DrinkType d = new DrinkType(drinkName, caffeineAmount);
-                        Drink drink = new Drink(d, date);
-                        user.getDrinkHistory().add(drink);
-                        UserListFragment.getInstance().updateList();
-                        GraphFragment.getInstance().updateGraph();
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });
-
-                ArrayList<Drink> usrDrinkList = new ArrayList<Drink>();
-
-                ArrayList<HashMap> map;
-                try {
-                    map = (ArrayList<HashMap>) ((HashMap) dataSnapshot.getValue()).get("drinkHistory");
-                } catch (ClassCastException e) {
-                    map = new ArrayList<HashMap>();
-                }
-                for (int i = 0; i < map.size(); i++) {
-
-                    double a = (double) map.get(i).get("remainingCaffeine");
-                    Date date = new Date((long) map.get(i).get("dateTime"));
-
-                    HashMap drinkType = (HashMap) map.get(i).get("drinkType");
-                    double caffeineAmount = (double) drinkType.get("caffeineAmount");
-                    String drinkName = (String) drinkType.get("drinkName");
-                    DrinkType d = new DrinkType(drinkName, caffeineAmount);
-                    Drink drink = new Drink(d, date);
-                    usrDrinkList.add(drink);
-                }
-                //User user = new User(usr, usrDrinkList);
-
-                //TODO: update graphfragment
-                //TODO: update homefragment
-                //TODO: update userlistfragment
+                users.add(createUserFromSnapShot(dataSnapshot));
+                UserListFragment.getInstance().updateList();
+                GraphFragment.getInstance().updateGraph();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                users.add(createUserFromSnapShot(dataSnapshot));
+                UserListFragment.getInstance().updateList();
+                GraphFragment.getInstance().updateGraph();
             }
 
             @Override
@@ -158,6 +89,7 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
+
         this.mRef.authAnonymously(new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
@@ -241,9 +173,28 @@ public class MainActivity extends ActionBarActivity {
         public int getCount() {
             return NUM_PAGES;
         }
-
-
     }
+    public User createUserFromSnapShot(DataSnapshot dataSnapshot) {
+        HashMap<String, Object> userData = ((HashMap<String, Object>) dataSnapshot.getValue());
 
+        String username = (String) userData.get("username");
+        ArrayList<Drink> userDrinkList = new ArrayList<>();
+        for(DataSnapshot d : dataSnapshot.getChildren()) {
+            if (d.getKey().equals("drinkHistory")) {
+                for(DataSnapshot child: d.getChildren()) {
+                    HashMap<String, Object> drink = (HashMap<String, Object>) child.getValue();
+                    double a = (double) drink.get("remainingCaffeine");
+                    Date date = new Date((long) drink.get("dateTime"));
 
+                    HashMap drinkType = (HashMap) drink.get("drinkType");
+                    double caffeineAmount = (double) drinkType.get("caffeineAmount");
+                    String drinkName = (String) drinkType.get("drinkName");
+                    DrinkType dr = new DrinkType(drinkName, caffeineAmount);
+                    Drink newDrink = new Drink(dr, date);
+                    userDrinkList.add(newDrink);
+                }
+            }
+        }
+        return new User(username, userDrinkList);
+    }
 }

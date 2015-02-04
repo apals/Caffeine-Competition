@@ -3,6 +3,7 @@ package edu.rosehulman.androidproject.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
@@ -15,6 +16,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.GenericTypeIndicator;
+import com.firebase.client.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
@@ -108,48 +110,15 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
     }
 
     public void getUserData(final String email) {
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email)).addChildEventListener(new ChildEventListener() {
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email)).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                ArrayList<Drink> userDrinkList = new ArrayList<Drink>();
-                if(dataSnapshot.getChildrenCount() > 0) {
-                    ArrayList<HashMap> drinks = (ArrayList<HashMap>) dataSnapshot.getValue();
-
-                    for(int i = 0; i < drinks.size(); i++) {
-                        double a = (double) drinks.get(i).get("remainingCaffeine");
-                        Date date = new Date((long) drinks.get(i).get("dateTime"));
-
-                        HashMap drinkType = (HashMap) drinks.get(i).get("drinkType");
-                        double caffeineAmount = (double) drinkType.get("caffeineAmount");
-                        String drinkName = (String) drinkType.get("drinkName");
-                        DrinkType d = new DrinkType(drinkName, caffeineAmount);
-                        Drink drink = new Drink(d, date);
-                        userDrinkList.add(drink);
-                    }
-                }
-                User user = new User(cleanEmail(email), userDrinkList);
-                acceptLogin(user);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                acceptLogin(createUserFromSnapShot(dataSnapshot));
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                System.out.println("COULDNT RETRIEVE USER DATA");
             }
         });
     }
@@ -170,5 +139,29 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         email = email.replace(".", "-");
         email = email.replace("@", "-");
         return email;
+    }
+
+    public User createUserFromSnapShot(DataSnapshot dataSnapshot) {
+        HashMap<String, Object> userData = ((HashMap<String, Object>) dataSnapshot.getValue());
+
+        String username = (String) userData.get("username");
+        ArrayList<Drink> userDrinkList = new ArrayList<>();
+        for(DataSnapshot d : dataSnapshot.getChildren()) {
+            if (d.getKey().equals("drinkHistory")) {
+                for(DataSnapshot child: d.getChildren()) {
+                    HashMap<String, Object> drink = (HashMap<String, Object>) child.getValue();
+                    double a = (double) drink.get("remainingCaffeine");
+                    Date date = new Date((long) drink.get("dateTime"));
+
+                    HashMap drinkType = (HashMap) drink.get("drinkType");
+                    double caffeineAmount = (double) drinkType.get("caffeineAmount");
+                    String drinkName = (String) drinkType.get("drinkName");
+                    DrinkType dr = new DrinkType(drinkName, caffeineAmount);
+                    Drink newDrink = new Drink(dr, date);
+                    userDrinkList.add(newDrink);
+                }
+            }
+        }
+        return new User(username, userDrinkList);
     }
 }
