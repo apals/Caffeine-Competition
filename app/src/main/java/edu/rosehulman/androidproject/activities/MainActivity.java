@@ -62,8 +62,12 @@ public class MainActivity extends ActionBarActivity {
         this.mRef.child("users").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                users.add(createUserFromSnapShot(dataSnapshot));
-//                UserListFragment.getInstance().updateList();
+                User user = createUserFromSnapShot(dataSnapshot);
+                if (user.getUsername() == null) {
+                    return;
+                }
+                users.add(user);
+                UserListFragment.getInstance().updateList();
 //                GraphFragment.getInstance().updateGraph();
             }
 
@@ -71,12 +75,13 @@ public class MainActivity extends ActionBarActivity {
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 User changedUser = createUserFromSnapShot(dataSnapshot);
                 for (int i = 0; i < users.size(); i++) {
-                    System.out.println("USERNAME: " + users.get(i).getUsername());
                     if (users.get(i).getUsername().equals(changedUser.getUsername())) {
-                        users.get(i).setDrinkHistory(changedUser.getDrinkHistory());
+                        users.remove(i);
+                        break;
                     }
                 }
-//                UserListFragment.getInstance().updateList();
+                users.add(changedUser);
+                UserListFragment.getInstance().updateList();
 //                GraphFragment.getInstance().updateGraph();
             }
 
@@ -186,6 +191,7 @@ public class MainActivity extends ActionBarActivity {
         HashMap<String, Object> userData = ((HashMap<String, Object>) dataSnapshot.getValue());
 
         String username = (String) userData.get("username");
+        System.out.println("CREATING USER WITH USERNAME: " + username);
         ArrayList<Drink> userDrinkList = new ArrayList<>();
         for(DataSnapshot d : dataSnapshot.getChildren()) {
             if (d.getKey().equals("drinkHistory")) {
