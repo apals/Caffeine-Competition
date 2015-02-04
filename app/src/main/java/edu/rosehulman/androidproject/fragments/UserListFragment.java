@@ -42,7 +42,9 @@ public class UserListFragment extends ListFragment {
     }
 
     public void updateList() {
-        listAdapter.notifyDataSetChanged();
+        if (listAdapter != null) {
+            listAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

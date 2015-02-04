@@ -39,6 +39,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 
     public static final String KEY_EMAIL = "key_email";
     private static final String USERS_CHILD = "users";
+    private static boolean LOGGED_IN = false;
 
     private Firebase mRef;
     private Gson gson;
@@ -104,6 +105,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
     }
 
     public void acceptLogin(User user) {
+        LOGGED_IN = true;
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
         i.putExtra(KEY_EMAIL, user);
         startActivity(i);
@@ -113,7 +115,9 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         mRef.child(USERS_CHILD + "/" + cleanEmail(email)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                acceptLogin(createUserFromSnapShot(dataSnapshot));
+                if (!LOGGED_IN) {
+                    acceptLogin(createUserFromSnapShot(dataSnapshot));
+                }
             }
 
             @Override

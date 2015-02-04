@@ -79,6 +79,5 @@ public class AddDrinkActivity extends Activity implements View.OnClickListener {
         i.putExtra(KEY_CAFFEINE_AMOUNT, mCaffeineAmount);
         setResult(RESULT_OK, i);
         finish();
-
     }
 }

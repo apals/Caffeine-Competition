@@ -62,8 +62,10 @@ public class GraphFragment extends Fragment implements CompoundButton.OnCheckedC
     }
 
     public void updateGraph() {
-        dataset.getSeriesAt(0).add(new Random().nextInt(10), 3);
-        mLineChart.repaint();
+        if (dataset != null && mLineChart != null) {
+            dataset.getSeriesAt(0).add(new Random().nextInt(10), 3);
+            mLineChart.repaint();
+        }
     }
 
     @Override

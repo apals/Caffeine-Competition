@@ -54,7 +54,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen_slide);
         USER = (User) getIntent().getSerializableExtra(LoginActivity.KEY_EMAIL);
-        users = new ArrayList<User>();
+        users = new ArrayList<>();
 
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));
@@ -63,15 +63,21 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 users.add(createUserFromSnapShot(dataSnapshot));
-                UserListFragment.getInstance().updateList();
-                GraphFragment.getInstance().updateGraph();
+//                UserListFragment.getInstance().updateList();
+//                GraphFragment.getInstance().updateGraph();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                users.add(createUserFromSnapShot(dataSnapshot));
-                UserListFragment.getInstance().updateList();
-                GraphFragment.getInstance().updateGraph();
+                User changedUser = createUserFromSnapShot(dataSnapshot);
+                for (int i = 0; i < users.size(); i++) {
+                    System.out.println("USERNAME: " + users.get(i).getUsername());
+                    if (users.get(i).getUsername().equals(changedUser.getUsername())) {
+                        users.get(i).setDrinkHistory(changedUser.getDrinkHistory());
+                    }
+                }
+//                UserListFragment.getInstance().updateList();
+//                GraphFragment.getInstance().updateGraph();
             }
 
             @Override
@@ -173,7 +179,9 @@ public class MainActivity extends ActionBarActivity {
         public int getCount() {
             return NUM_PAGES;
         }
+
     }
+
     public User createUserFromSnapShot(DataSnapshot dataSnapshot) {
         HashMap<String, Object> userData = ((HashMap<String, Object>) dataSnapshot.getValue());
 

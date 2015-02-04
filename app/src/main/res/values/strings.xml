@@ -16,6 +16,11 @@
     <string name="drink_name">NAME</string>
     <string name="caffeine_amount">CAFFEINE AMOUNT</string>
     <string name="prompt_username">Username</string>
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_repeat_password">Repeat Password</string>
     <string name="action_register">Register</string>
+    <string name="register_weight">Weight (kg)</string>
+    <string name="register_height">Height (cm)</string>
+    <string name="prompt_password">Password</string>
 
 </resources>

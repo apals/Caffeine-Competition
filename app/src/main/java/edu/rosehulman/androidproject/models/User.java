@@ -17,6 +17,7 @@ public class User implements Comparable, Serializable {
 
     private ArrayList<Drink> mDrinkHistory;
     private String mUsername;
+    private ArrayList<Drink> drinkHistory;
 
     public User(String username, ArrayList<Drink> drinkHistory) {
         mUsername = username;
@@ -64,4 +65,7 @@ public class User implements Comparable, Serializable {
         return ((User) another).getCaffeineLevel() - getCaffeineLevel();
     }
 
+    public void setDrinkHistory(ArrayList<Drink> drinkHistory) {
+        this.drinkHistory = drinkHistory;
+    }
 }

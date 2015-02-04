@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -90,13 +92,12 @@ public class HomeFragment extends Fragment {
 
         System.out.println("ONACTIVITY RESULT HOMEFRAGMENT");
         MainActivity.USER.drink(d);
+
         ((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getUsername() + "/drinkHistory").push().setValue(d);
-
-
         UserListFragment.getInstance().updateList();
         GraphFragment.getInstance().updateGraph();
-        //((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getUsername() + "/drinkHistory").setValue(MainActivity.USER.getDrinkHistory());
-        mDrinkAdapter.notifyDataSetChanged();
+
+        updateList();
     }
 
     public void updateList() {
