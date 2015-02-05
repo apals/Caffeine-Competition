@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class Drink implements Serializable {
 
-    private static final double CAFFEINE_HALF_LIFE = 20520D; //5.7 HOURS
+    private static final double CAFFEINE_HALF_LIFE = 10;//20520D; //5.7 HOURS
     private DrinkType mDrinkType;
     private Date mDateTime;
 

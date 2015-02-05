@@ -38,9 +38,11 @@ public class User implements Comparable, Serializable {
         int caffeineLevel = 0;
 
         for (int i = 0; i < mDrinkHistory.size(); i++) {
-            double a = mDrinkHistory.get(i).getRemainingCaffeine();
-            if(a >= 0)
-                caffeineLevel += a;
+            double caffeine = mDrinkHistory.get(i).getRemainingCaffeine();
+            if(caffeine > 1)
+                caffeineLevel += caffeine;
+            else
+                mDrinkHistory.remove(mDrinkHistory.get(i));
         }
         return caffeineLevel;
     }
