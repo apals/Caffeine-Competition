@@ -13,10 +13,10 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -41,7 +41,6 @@ public class MainActivity extends ActionBarActivity {
       * increase size of drink elements in drink list
       * fix graphs in userlist and graphfragment
       * add register activity
-      * sort user list on caffinelevel
       * remove drinks when their active caffeine level <=0 (THIS IS DONE LOCALLY, BUT NOT SERVE SIDE)
       * */
 
@@ -82,7 +81,7 @@ public class MainActivity extends ActionBarActivity {
                 }
                 users.add(user);
                 UserListFragment.getInstance().updateList();
-//                GraphFragment.getInstance().updateGraph();
+                GraphFragment.getInstance().updateGraph();
             }
 
             @Override
@@ -96,6 +95,7 @@ public class MainActivity extends ActionBarActivity {
                         }
                     }
                     users.add(changedUser);
+                    Collections.sort(users);
                     UserListFragment.getInstance().updateList();
 //                GraphFragment.getInstance().updateGraph();
                 }
