@@ -3,6 +3,7 @@ package edu.rosehulman.androidproject.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +16,7 @@ import edu.rosehulman.androidproject.models.DrinkType;
 /**
  * Created by palssoa on 1/12/2015.
  */
-public class AddDrinkActivity extends Activity implements View.OnClickListener {
+public class AddDrinkActivity extends ActionBarActivity implements View.OnClickListener {
 
     private String mDrinkName;
     private int mCaffeineAmount;
@@ -25,6 +26,12 @@ public class AddDrinkActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Set up the action bar icon
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.icon);
+        getSupportActionBar().setDisplayUseLogoEnabled(false);
+
         setContentView(R.layout.activity_add_drink);
         findViewById(R.id.add_drink_button_coffee).setOnClickListener(this);
         findViewById(R.id.add_drink_button_energy_drink).setOnClickListener(this);

@@ -5,9 +5,19 @@
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:icon">@drawable/icon</item>
     </style>
-    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+    <style name="MyActionBar">
         <item name="android:background">@color/gray</item>
         <item name="android:icon">@drawable/icon</item>
+        <item name="android:logo">@drawable/icon</item>
+    </style>
+
+    <style name="button">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:padding">@dimen/activity_horizontal_margin</item>
+        <item name="android:background">@drawable/button_drawable</item>
+        <item name="android:textColor">@color/button_text_color</item>
+        <item name="android:layout_weight">3</item>
     </style>
 
 </resources>

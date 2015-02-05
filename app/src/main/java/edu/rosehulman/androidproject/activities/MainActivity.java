@@ -7,16 +7,17 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Window;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -35,14 +36,10 @@ public class MainActivity extends ActionBarActivity {
       * sharedpreferences in adddrinkactivity
       * save login
       * redesign addrinkactivity
-      * make drink comparable
       * make user picture round?
-      * add icon to all activities
       * increase size of drink elements in drink list
       * fix graphs in userlist and graphfragment
       * add register activity
-      * sort user list on caffinelevel
-      * add feedback on button presses (http://developer.android.com/guide/topics/resources/drawable-resource.html#StateList), http://stackoverflow.com/questions/3882064/how-to-change-color-of-button-in-android-when-clicked
       * remove drinks when their active caffeine level <=0 (THIS IS DONE LOCALLY, BUT NOT SERVE SIDE)
       * */
 
@@ -67,6 +64,12 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Set up the action bar icon
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.icon);
+        getSupportActionBar().setDisplayUseLogoEnabled(false);
+
         setContentView(R.layout.activity_screen_slide);
         USER = (User) getIntent().getSerializableExtra(LoginActivity.KEY_EMAIL);
         users = new ArrayList<>();
@@ -83,7 +86,7 @@ public class MainActivity extends ActionBarActivity {
                 }
                 users.add(user);
                 UserListFragment.getInstance().updateList();
-//                GraphFragment.getInstance().updateGraph();
+                GraphFragment.getInstance().updateGraph();
             }
 
             @Override
@@ -97,6 +100,7 @@ public class MainActivity extends ActionBarActivity {
                         }
                     }
                     users.add(changedUser);
+                    Collections.sort(users);
                     UserListFragment.getInstance().updateList();
 //                GraphFragment.getInstance().updateGraph();
                 }

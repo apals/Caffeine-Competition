@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by palssoa on 1/25/2015.
  */
-public class Drink implements Serializable {
+public class Drink implements Serializable, Comparable {
 
     private static final double CAFFEINE_HALF_LIFE = 10;//20520D; //5.7 HOURS
     private DrinkType mDrinkType;
@@ -50,5 +50,10 @@ public class Drink implements Serializable {
 
     public void setDateTime(Date mDateTime) {
         this.mDateTime = mDateTime;
+    }
+
+    @Override
+    public int compareTo(Object another) {
+        return ((Drink) another).getDateTime().compareTo(getDateTime());
     }
 }

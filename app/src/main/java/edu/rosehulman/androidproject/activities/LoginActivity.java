@@ -47,6 +47,12 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Set up the action bar icon
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.icon);
+        getSupportActionBar().setDisplayUseLogoEnabled(false);
+
         setContentView(R.layout.activity_login);
 
         Firebase.setAndroidContext(this);
