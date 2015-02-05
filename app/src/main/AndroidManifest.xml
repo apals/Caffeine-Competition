@@ -16,6 +16,7 @@
 
         <activity
             android:name=".activities.MainActivity"
+            android:icon="@drawable/icon"
             android:screenOrientation="portrait"
             android:label="@string/app_name" />
 

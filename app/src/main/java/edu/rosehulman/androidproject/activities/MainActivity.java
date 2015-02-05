@@ -31,6 +31,23 @@ import edu.rosehulman.androidproject.models.User;
 
 public class MainActivity extends ActionBarActivity {
 
+     /* TODO:
+      * sharedpreferences in adddrinkactivity
+      * save login
+      * redesign addrinkactivity
+      * make drink comparable
+      * make user picture round?
+      * add icon to all activities
+      * change name of app
+      * increase size of drink elements in drink list
+      * fix graphs in userlist and graphfragment
+      * add register activity
+      * disable back button in mainactivity
+      * sort user list on caffinelevel
+      * add feedback on button presses (http://developer.android.com/guide/topics/resources/drawable-resource.html#StateList), http://stackoverflow.com/questions/3882064/how-to-change-color-of-button-in-android-when-clicked
+      * remove drinks when their active caffine level <=0
+      * */
+
     public static final int HOME_ID = 0;
     public static final int LIST_ID = 1;
     public static final int GRAPH_ID = 2;
