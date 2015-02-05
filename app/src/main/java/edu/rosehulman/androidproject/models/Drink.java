@@ -8,6 +8,7 @@ import java.util.Date;
  */
 public class Drink implements Serializable {
 
+    private static final double CAFFEINE_HALF_LIFE = 20520D; //5.7 HOURS
     private DrinkType mDrinkType;
     private Date mDateTime;
 
@@ -20,7 +21,9 @@ public class Drink implements Serializable {
 
         Date nowDate = new Date();
         long seconds = Math.abs(nowDate.getTime() - getDateTime().getTime())/1000;
-        double a = getDrinkType().getCaffeineAmount() - seconds;
+        System.out.println(seconds/CAFFEINE_HALF_LIFE)
+        ;
+        double a = getDrinkType().getCaffeineAmount()*Math.pow(0.5D, seconds/CAFFEINE_HALF_LIFE);
         return a;
     }
 

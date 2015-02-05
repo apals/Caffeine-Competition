@@ -3,9 +3,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="android:icon">@drawable/icon</item>
     </style>
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">@color/gray</item>
+        <item name="android:icon">@drawable/icon</item>
     </style>
 
 </resources>

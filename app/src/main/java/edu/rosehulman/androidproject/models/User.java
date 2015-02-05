@@ -40,7 +40,7 @@ public class User implements Comparable, Serializable {
         for (int i = 0; i < mDrinkHistory.size(); i++) {
             double a = mDrinkHistory.get(i).getRemainingCaffeine();
             if(a >= 0)
-                caffeineLevel += a; //* 0.1; //tempDrink.getDrinkType().getCaffeineAmount() * (seconds/(HALF_LIFE * 10)); //3600));
+                caffeineLevel += a;
         }
         return caffeineLevel;
     }

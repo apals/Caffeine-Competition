@@ -30,6 +30,7 @@ import edu.rosehulman.androidproject.models.DrinkType;
 public class HomeFragment extends Fragment {
 
     public static final int DRINK_REQUEST_CODE = 0;
+    private static final long CALCULATE_INTERVAL = 1000 * 3; //Seconds
     private DrinkAdapter mDrinkAdapter;
     private ViewGroup rootView;
 
@@ -77,7 +78,7 @@ public class HomeFragment extends Fragment {
     private Runnable updateTask = new Runnable () {
         public void run() {
             updateCaffeineLevelTextView(MainActivity.USER.getCaffeineLevel());
-            mHandler.postDelayed(updateTask, 1000);
+            mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
         }
     };
 

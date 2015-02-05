@@ -3,5 +3,6 @@
 
     <color name="gray">#777</color>
     <color name="blue">#09b</color>
+    <color name="button_text_color">#ffffffff</color>
 
 </resources>

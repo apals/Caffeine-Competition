@@ -11,7 +11,7 @@
         android:layout_weight="2">
 
         <ImageView
-            android:src="@drawable/kitti"
+            android:src="@drawable/nobody"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
@@ -30,14 +30,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="@dimen/activity_horizontal_margin"/>
+                android:textStyle="bold"
+                android:autoText="false"
+                android:elegantTextHeight="false" />
             <TextView
                 android:id="@+id/fragment_home_textview_caffeine_level"
                 android:text="@string/caffeine_level"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/activity_horizontal_margin"/>
+                android:layout_weight="1" />
             <Button
                 android:id="@+id/fragment_home_button_drink"
                 android:text="@string/drink"
@@ -45,7 +46,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="@dimen/activity_horizontal_margin"
-                android:background="@color/blue"/>
+                android:background="@color/blue"
+                android:textColor="@color/button_text_color"/>
         </LinearLayout>
     </LinearLayout>
 
