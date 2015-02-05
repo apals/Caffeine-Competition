@@ -10,4 +10,13 @@
         <item name="android:icon">@drawable/icon</item>
     </style>
 
+    <style name="button">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:padding">@dimen/activity_horizontal_margin</item>
+        <item name="android:background">@drawable/button_drawable</item>
+        <item name="android:textColor">@color/button_text_color</item>
+        <item name="android:layout_weight">3</item>
+    </style>
+
 </resources>

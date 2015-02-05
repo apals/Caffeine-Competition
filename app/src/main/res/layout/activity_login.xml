@@ -62,7 +62,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold"
-                android:background="@color/blue"
+                android:background="@drawable/button_drawable"
                 android:textColor="@color/button_text_color"  />
             <Button
                 android:id="@+id/email_register_button" style="?android:textAppearanceSmall"
@@ -71,7 +71,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/action_register"
                 android:textStyle="bold"
-                android:background="@color/blue"
+                android:background="@drawable/button_drawable"
                 android:textColor="@color/button_text_color" />
 
         </LinearLayout>
