@@ -42,7 +42,6 @@ public class MainActivity extends ActionBarActivity {
       * increase size of drink elements in drink list
       * fix graphs in userlist and graphfragment
       * add register activity
-      * disable back button in mainactivity
       * sort user list on caffinelevel
       * add feedback on button presses (http://developer.android.com/guide/topics/resources/drawable-resource.html#StateList), http://stackoverflow.com/questions/3882064/how-to-change-color-of-button-in-android-when-clicked
       * remove drinks when their active caffine level <=0
@@ -163,12 +162,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        if (mPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
-            super.onBackPressed();
-        } else {
-            // Otherwise, select the previous step.
+        if (mPager.getCurrentItem() != 0) {
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
     }
