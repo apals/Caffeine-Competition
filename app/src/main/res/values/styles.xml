@@ -5,9 +5,10 @@
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:icon">@drawable/icon</item>
     </style>
-    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+    <style name="MyActionBar">
         <item name="android:background">@color/gray</item>
         <item name="android:icon">@drawable/icon</item>
+        <item name="android:logo">@drawable/icon</item>
     </style>
 
     <style name="button">

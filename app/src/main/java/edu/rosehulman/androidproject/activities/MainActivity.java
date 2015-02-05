@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Window;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
@@ -35,9 +36,7 @@ public class MainActivity extends ActionBarActivity {
       * sharedpreferences in adddrinkactivity
       * save login
       * redesign addrinkactivity
-      * make drink comparable
       * make user picture round?
-      * add icon to all activities
       * increase size of drink elements in drink list
       * fix graphs in userlist and graphfragment
       * add register activity
@@ -65,6 +64,12 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Set up the action bar icon
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.icon);
+        getSupportActionBar().setDisplayUseLogoEnabled(false);
+
         setContentView(R.layout.activity_screen_slide);
         USER = (User) getIntent().getSerializableExtra(LoginActivity.KEY_EMAIL);
         users = new ArrayList<>();

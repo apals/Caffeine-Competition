@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import edu.rosehulman.androidproject.R;
@@ -103,6 +104,7 @@ public class HomeFragment extends Fragment {
         UserListFragment.getInstance().updateList();
         GraphFragment.getInstance().updateGraph();
 
+        Collections.sort(MainActivity.USER.getDrinkHistory());
         updateList();
     }
 
