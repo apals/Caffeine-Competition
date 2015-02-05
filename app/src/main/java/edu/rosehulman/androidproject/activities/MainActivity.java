@@ -38,13 +38,12 @@ public class MainActivity extends ActionBarActivity {
       * make drink comparable
       * make user picture round?
       * add icon to all activities
-      * change name of app
       * increase size of drink elements in drink list
       * fix graphs in userlist and graphfragment
       * add register activity
       * sort user list on caffinelevel
       * add feedback on button presses (http://developer.android.com/guide/topics/resources/drawable-resource.html#StateList), http://stackoverflow.com/questions/3882064/how-to-change-color-of-button-in-android-when-clicked
-      * remove drinks when their active caffine level <=0
+      * remove drinks when their active caffeine level <=0 (THIS IS DONE LOCALLY, BUT NOT SERVE SIDE)
       * */
 
     public static final int HOME_ID = 0;
