@@ -21,10 +21,12 @@ public class Drink implements Serializable {
 
         Date nowDate = new Date();
         long seconds = Math.abs(nowDate.getTime() - getDateTime().getTime())/1000;
-        System.out.println(seconds/CAFFEINE_HALF_LIFE)
-        ;
-        double a = getDrinkType().getCaffeineAmount()*Math.pow(0.5D, seconds/CAFFEINE_HALF_LIFE);
-        return a;
+        if (seconds > 60) {
+            return getDrinkType().getCaffeineAmount()*Math.pow(0.5D, seconds/CAFFEINE_HALF_LIFE);
+        }
+        else {
+            return (getDrinkType().getCaffeineAmount()/60) * seconds;
+        }
     }
 
     public String getFormattedDate() {
