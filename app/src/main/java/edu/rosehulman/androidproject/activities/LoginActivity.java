@@ -2,6 +2,7 @@ package edu.rosehulman.androidproject.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -11,7 +12,9 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AutoCompleteTextView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +38,9 @@ import edu.rosehulman.androidproject.models.User;
  */
 public class LoginActivity extends ActionBarActivity implements OnClickListener {
 
+    private final static int REGISTER_REQUEST_CODE = 0;
     public static final String KEY_EMAIL = "key_email";
+    public static final String KEY_PASSWORD = "key_password";
     private static final String USERS_CHILD = "users";
     public static boolean LOGGED_IN = false;
 
@@ -55,8 +60,8 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));
 
-        ((AutoCompleteTextView)findViewById(R.id.email)).setText("test@test.com");
-        ((TextView)findViewById(R.id.password)).setText("1");
+        ((AutoCompleteTextView) findViewById(R.id.email)).setText("test@test.com");
+        ((TextView) findViewById(R.id.password)).setText("1");
 
         findViewById(R.id.email_sign_in_button).setOnClickListener(this);
         setRegisterButton();
@@ -72,6 +77,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
     }
 
     private void authorize(final String email, final String password) {
+        showProgressBar();
         mRef.authWithPassword(email, password, new Firebase.AuthResultHandler() {
                     @Override
                     public void onAuthenticated(AuthData authData) {
@@ -80,6 +86,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 
                     @Override
                     public void onAuthenticationError(FirebaseError firebaseError) {
+                        hideProgressBar();
                         toast(firebaseError.getMessage());
                     }
                 }
@@ -90,6 +97,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         LOGGED_IN = true;
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
         i.putExtra(KEY_EMAIL, user);
+        hideProgressBar();
         startActivity(i);
     }
 
@@ -111,14 +119,6 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 
     public void toast(String message) {
         Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
-    }
-
-    public void createUser(String email, String password) {
-
-        //TODO: create User.toMap??
-
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/drinkHistory").setValue("");
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/username").setValue(cleanEmail(email));
     }
 
     public String cleanEmail(String email) {
@@ -152,9 +152,24 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
     }
 
     public void register() {
-        Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivity(i);
+        Intent i = new Intent(this, RegisterActivity.class);
+        startActivityForResult(i, REGISTER_REQUEST_CODE);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+        String email = data.getStringExtra(KEY_EMAIL);
+        String password = data.getStringExtra(KEY_PASSWORD);
+
+        ((AutoCompleteTextView) findViewById(R.id.email)).setText(email);
+        ((TextView) findViewById(R.id.password)).setText(password);
+        authorize(email, password);
+    }
+
     public void setRegisterButton() {
         SpannableStringBuilder sb = new SpannableStringBuilder();
         String regularText = "Not already a user? ";
@@ -180,5 +195,13 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
             ds.setColor(getResources().getColor(R.color.blue));
             ds.setUnderlineText(false);
         }
+    }
+
+    public void showProgressBar() {
+        ((ProgressBar) findViewById(R.id.login_progressbar)).setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgressBar() {
+        ((ProgressBar) findViewById(R.id.login_progressbar)).setVisibility(View.INVISIBLE);
     }
 }

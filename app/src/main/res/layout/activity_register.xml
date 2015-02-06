@@ -17,6 +17,14 @@
         android:gravity="center_vertical"
         android:orientation="vertical">
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/register_progressbar"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible"
+            android:indeterminateDrawable="@drawable/progressbar_drawable"/>
+
         <AutoCompleteTextView
             android:id="@+id/register_email"
             android:layout_width="match_parent"

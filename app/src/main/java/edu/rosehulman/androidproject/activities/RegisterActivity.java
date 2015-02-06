@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,10 +32,8 @@ import edu.rosehulman.androidproject.models.User;
 
 public class RegisterActivity extends ActionBarActivity {
     private static final String USERS_CHILD = "users";
-    public static final String KEY_EMAIL = "key_email";
 
     private Firebase mRef;
-    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,6 @@ public class RegisterActivity extends ActionBarActivity {
 
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));
-        this.gson = new Gson();
 
         findViewById(R.id.email_register_button).setOnClickListener(new OnClickListener() {
 
@@ -61,10 +59,10 @@ public class RegisterActivity extends ActionBarActivity {
 
                     if (password.equals(repeatPassword)) {
                         register(
-                            ((AutoCompleteTextView) findViewById(R.id.register_email)).getText().toString(),
-                            ((TextView) findViewById(R.id.register_username)).getText().toString(),
-                            ((TextView) findViewById(R.id.register_weight)).getText().toString(),
-                            password
+                                ((AutoCompleteTextView) findViewById(R.id.register_email)).getText().toString(),
+                                ((TextView) findViewById(R.id.register_username)).getText().toString(),
+                                ((TextView) findViewById(R.id.register_weight)).getText().toString(),
+                                password
                         );
                     } else {
                         toast(getString(R.string.password_does_not_match_message));
@@ -75,34 +73,30 @@ public class RegisterActivity extends ActionBarActivity {
     }
 
     private void register(final String email, final String username, final String weight, final String password) {
+        showProgressBar();
         mRef.createUser(email, password, new Firebase.ResultHandler() {
                     @Override
                     public void onSuccess() {
                         createUser(email, username, weight);
-                        authorize(email, password);
+                        goBackToLogin(email, password);
                     }
 
                     @Override
                     public void onError(FirebaseError firebaseError) {
+                        hideProgressBar();
                         toast(firebaseError.getMessage());
                     }
                 }
         );
     }
 
-    private void authorize(final String email, final String password) {
-        mRef.authWithPassword(email, password, new Firebase.AuthResultHandler() {
-                    @Override
-                    public void onAuthenticated(AuthData authData) {
-                        getUserData(email);
-                    }
-
-                    @Override
-                    public void onAuthenticationError(FirebaseError firebaseError) {
-                        toast(firebaseError.getMessage());
-                    }
-                }
-        );
+    private void goBackToLogin(String email, String password) {
+        Intent i = new Intent();
+        i.putExtra(LoginActivity.KEY_EMAIL, email);
+        i.putExtra(LoginActivity.KEY_PASSWORD, password);
+        setResult(RESULT_OK, i);
+        hideProgressBar();
+        finish();
     }
 
     public void toast(String message) {
@@ -121,49 +115,12 @@ public class RegisterActivity extends ActionBarActivity {
         email = email.replace("@", "-");
         return email;
     }
-    public void getUserData(final String email) {
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email)).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!LoginActivity.LOGGED_IN) {
-                    acceptLogin(createUserFromSnapShot(dataSnapshot));
-                }
-            }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("COULDNT RETRIEVE USER DATA");
-            }
-        });
-    }
-    public User createUserFromSnapShot(DataSnapshot dataSnapshot) {
-        HashMap<String, Object> userData = ((HashMap<String, Object>) dataSnapshot.getValue());
-
-        String username = (String) userData.get("username");
-        ArrayList<Drink> userDrinkList = new ArrayList<>();
-        for(DataSnapshot d : dataSnapshot.getChildren()) {
-            if (d.getKey().equals("drinkHistory")) {
-                for(DataSnapshot child: d.getChildren()) {
-                    HashMap<String, Object> drink = (HashMap<String, Object>) child.getValue();
-                    double a = (double) drink.get("remainingCaffeine");
-                    Date date = new Date((long) drink.get("dateTime"));
-
-                    HashMap drinkType = (HashMap) drink.get("drinkType");
-                    double caffeineAmount = (double) drinkType.get("caffeineAmount");
-                    String drinkName = (String) drinkType.get("drinkName");
-                    DrinkType dr = new DrinkType(drinkName, caffeineAmount);
-                    Drink newDrink = new Drink(dr, date);
-                    userDrinkList.add(newDrink);
-                }
-            }
-        }
-        return new User(username, userDrinkList);
+    public void showProgressBar() {
+        ((ProgressBar) findViewById(R.id.register_progressbar)).setVisibility(View.VISIBLE);
     }
 
-    public void acceptLogin(User user) {
-        LoginActivity.LOGGED_IN = true;
-        Intent i = new Intent(RegisterActivity.this, MainActivity.class);
-        i.putExtra(KEY_EMAIL, user);
-        startActivity(i);
+    public void hideProgressBar() {
+        ((ProgressBar) findViewById(R.id.register_progressbar)).setVisibility(View.INVISIBLE);
     }
 }

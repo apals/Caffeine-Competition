@@ -20,8 +20,15 @@
             android:id="@+id/logo"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:src="@drawable/logo"
-            android:layout_marginBottom="20dp"/>
+            android:src="@drawable/logo"/>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/login_progressbar"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible"
+            android:indeterminateDrawable="@drawable/progressbar_drawable"/>
 
         <AutoCompleteTextView
             android:id="@+id/email"
@@ -59,7 +66,7 @@
             android:id="@+id/login_register_clickable"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:text="@string/register_text_placeholder" />
     </LinearLayout>
