@@ -41,6 +41,8 @@ public class GraphUtils {
         renderer.setXTitle("Time");
         renderer.setYTitle("Caffeine");
 
+        renderer.setYAxisMin(0);
+
         for(User u : ((MainActivity) context).getUsers()) {
             XYSeriesRenderer s = getSeriesRenderer(context);
             renderer.addSeriesRenderer(s);

@@ -94,6 +94,7 @@ public class MainActivity extends ActionBarActivity {
                     users.add(USER);
                 } else
                     users.add(user);
+                GraphFragment.getInstance().addUserCheckBox(USER);
                 UserListFragment.getInstance().updateList();
                 GraphFragment.getInstance().updateGraph();
             }
