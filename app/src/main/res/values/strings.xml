@@ -24,5 +24,6 @@
     <string name="register_height">Height (cm)</string>
     <string name="prompt_password">Password</string>
     <string name="hello_world">hello_world</string>
+    <string name="action_logout">logout</string>
 
 </resources>

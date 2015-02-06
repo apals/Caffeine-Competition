@@ -11,13 +11,14 @@ import java.util.Map;
 /**
  * Created by palssoa on 1/25/2015.
  */
-public class User implements Comparable, Serializable {
 
-    public static final int HALF_LIFE = 1;
+public class User implements Comparable, Serializable {
+    private static final long KEEP_HISTORY = 48; //Hours to keep drink history
 
     private ArrayList<Drink> mDrinkHistory;
     private String mUsername;
     private ArrayList<Drink> drinkHistory;
+    private ArrayList<Integer> points = new ArrayList<>();
 
     public User(String username, ArrayList<Drink> drinkHistory) {
         mUsername = username;
@@ -39,7 +40,7 @@ public class User implements Comparable, Serializable {
 
         for (int i = 0; i < mDrinkHistory.size(); i++) {
             double caffeine = mDrinkHistory.get(i).getRemainingCaffeine();
-            if(caffeine > 1)
+            if(mDrinkHistory.get(i).getSecondsPassed() < 3600*KEEP_HISTORY)
                 caffeineLevel += caffeine;
             else
                 mDrinkHistory.remove(mDrinkHistory.get(i));
@@ -55,7 +56,7 @@ public class User implements Comparable, Serializable {
     }
 
     public Map<String, Object> toMap() {
-        Map<String, Object> userMap = new HashMap<String, Object>();
+        Map<String, Object> userMap = new HashMap<>();
         userMap.put("username", mUsername);
         userMap.put("drinkHistory", mDrinkHistory);
         return userMap;
@@ -69,5 +70,13 @@ public class User implements Comparable, Serializable {
 
     public void setDrinkHistory(ArrayList<Drink> drinkHistory) {
         this.drinkHistory = drinkHistory;
+    }
+
+    public void addPoint(Integer caffeine) {
+        points.add(caffeine);
+    }
+
+    public void removePoint(int i) {
+        points.remove(i);
     }
 }

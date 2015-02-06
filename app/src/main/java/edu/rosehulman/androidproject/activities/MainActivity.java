@@ -7,6 +7,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 
 import com.firebase.client.AuthData;
@@ -35,12 +38,14 @@ public class MainActivity extends ActionBarActivity {
      /* TODO:
       * sharedpreferences in adddrinkactivity
       * save login
+      * logout functionality
       * redesign addrinkactivity
       * make user picture round?
       * increase size of drink elements in drink list
       * fix graphs in userlist and graphfragment
       * add register activity
-      * remove drinks when their active caffeine level <=0 (THIS IS DONE LOCALLY, BUT NOT SERVE SIDE)
+      * long press för att ta bort aktiviteter, förslagsvis med dialog (OK/CANCEL)
+      * remove drinks after 48 hours (THIS IS DONE LOCALLY, BUT NOT SERVE SIDE)
       * */
 
     public static final int HOME_ID = 0;
@@ -147,6 +152,32 @@ public class MainActivity extends ActionBarActivity {
         titleIndicator.setRadius(12);
         titleIndicator.setFillColor(getResources().getColor(R.color.blue));
         titleIndicator.setViewPager(mPager);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                logout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void logout() {
+        USER = null;
+        LoginActivity.LOGGED_IN = false;
+        finish();
     }
 
     @Override

@@ -3,5 +3,5 @@
     <integer name="caffeine_amount_coffee">100</integer>
     <integer name="caffeine_amount_latte">100</integer>
     <integer name="caffeine_amount_espresso">100</integer>
-    <integer name="caffeine_amount_energy_drink">100</integer>
+    <integer name="caffeine_amount_energy_drink">80</integer>
 </resources>

@@ -78,9 +78,12 @@ public class HomeFragment extends Fragment {
 
     private Runnable updateTask = new Runnable () {
         public void run() {
-            updateCaffeineLevelTextView(MainActivity.USER.getCaffeineLevel());
-            mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
+            int caffeineLevel = MainActivity.USER.getCaffeineLevel();
+            updateCaffeineLevelTextView(caffeineLevel);
+            MainActivity.USER.addPoint(caffeineLevel);
             updateList();
+
+            mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
         }
     };
 

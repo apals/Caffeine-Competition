@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class Drink implements Serializable, Comparable {
 
-    private static final double CAFFEINE_HALF_LIFE = 10;//20520D; //5.7 HOURS
+    private static final double CAFFEINE_HALF_LIFE = 5.7; //Caffeine half-life in hours
     private DrinkType mDrinkType;
     private Date mDateTime;
 
@@ -17,16 +17,17 @@ public class Drink implements Serializable, Comparable {
         mDateTime = date;
     }
 
-    public double getRemainingCaffeine() {
-
-        Date nowDate = new Date();
-        long seconds = Math.abs(nowDate.getTime() - getDateTime().getTime())/1000;
+    public double getRemainingCaffeineFrom(Date date) {
+        long seconds = Math.abs((date).getTime() - getDateTime().getTime())/1000;
         if (seconds > 60) {
-            return getDrinkType().getCaffeineAmount()*Math.pow(0.5D, seconds/CAFFEINE_HALF_LIFE);
+            return getDrinkType().getCaffeineAmount() * Math.pow(0.5D, seconds / 3600*CAFFEINE_HALF_LIFE);
+        } else {
+            return (getDrinkType().getCaffeineAmount() / 60) * seconds;
         }
-        else {
-            return (getDrinkType().getCaffeineAmount()/60) * seconds;
-        }
+    }
+
+    public double getRemainingCaffeine() {
+        return getRemainingCaffeineFrom(new Date());
     }
 
     public String getFormattedDate() {
@@ -55,5 +56,9 @@ public class Drink implements Serializable, Comparable {
     @Override
     public int compareTo(Object another) {
         return ((Drink) another).getDateTime().compareTo(getDateTime());
+    }
+
+    public long getSecondsPassed() {
+        return Math.abs((new Date()).getTime() - getDateTime().getTime())/1000;
     }
 }

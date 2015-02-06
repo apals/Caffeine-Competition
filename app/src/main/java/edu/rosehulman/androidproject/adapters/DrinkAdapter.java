@@ -35,7 +35,8 @@ public class DrinkAdapter extends ArrayAdapter<Drink> {
 
         ((TextView) convertView.findViewById(R.id.date)).setText(getItem(position).getFormattedDate());
         ((TextView) convertView.findViewById(R.id.drink_name)).setText(getItem(position).getDrinkType().getDrinkName());
-        ((TextView) convertView.findViewById(R.id.caffeine_amount)).setText(getItem(position).getDrinkType().getCaffeineAmount() + " mg");
+        ((TextView) convertView.findViewById(R.id.caffeine_amount)).setText(getItem(position).getDrinkType().getCaffeineAmount() + "mg ("
+        + Math.round(getItem(position).getRemainingCaffeine())+ "mg)");
 
         return convertView;
     }

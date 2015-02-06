@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <color name="gray">#777</color>
     <color name="blue">#09b</color>
-    <color name="light_blue">#0fb</color>
+    <color name="light_blue">#ffbfe2e8</color>
     <color name="button_text_color">#ffffffff</color>
-
 </resources>

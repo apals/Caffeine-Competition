@@ -39,7 +39,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 
     public static final String KEY_EMAIL = "key_email";
     private static final String USERS_CHILD = "users";
-    private static boolean LOGGED_IN = false;
+    public static boolean LOGGED_IN = false;
 
     private Firebase mRef;
     private Gson gson;
