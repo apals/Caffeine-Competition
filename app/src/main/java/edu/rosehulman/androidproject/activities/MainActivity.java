@@ -162,14 +162,14 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
-
-        if fragment homefragment {
-            start new runnable (update homefragment every 3 sec)
-        }
-
-        if fragment graphfragment {
-            start new runnabble update graphfragment every 3 sec)
-        }
+//
+//        if fragment homefragment {
+//            start new runnable (update homefragment every 3 sec)
+//        }
+//
+//        if fragment graphfragment {
+//            start new runnabble update graphfragment every 3 sec)
+//        }
     }
 
     @Override
