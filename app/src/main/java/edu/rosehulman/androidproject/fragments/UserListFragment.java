@@ -38,7 +38,6 @@ public class UserListFragment extends ListFragment {
         setListAdapter(listAdapter);
 
         return inflater.inflate(R.layout.fragment_userlist, container, false);
-
     }
 
     public void updateList() {

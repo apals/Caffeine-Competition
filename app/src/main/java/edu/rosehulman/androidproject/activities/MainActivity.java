@@ -46,7 +46,8 @@ public class MainActivity extends ActionBarActivity {
       * add register activity
       * long press för att ta bort aktiviteter, förslagsvis med dialog (OK/CANCEL)
       * remove drinks after 48 hours (THIS IS DONE LOCALLY, BUT NOT SERVE SIDE)
-      * i think graphutils.getdataset is called before users have their full drink history. maybe wait until list is populated before calling that
+      * FIXED I THINK: i think graphutils.getdataset is called before users have their full drink history. maybe wait until list is populated before calling that
+      * write startUpdating() in all fragments - done in graphfragment and homefragment
       * */
 
     public static final int HOME_ID = 0;
@@ -271,7 +272,7 @@ public class MainActivity extends ActionBarActivity {
 
         String username = (String) userData.get("username");
         String email = (String) userData.get("email");
-        int weight = (int) userData.get("weight");
+        int weight = Integer.parseInt((String) userData.get("weight"));
         ArrayList<Drink> userDrinkList = new ArrayList<>();
         for(DataSnapshot d : dataSnapshot.getChildren()) {
             if (d.getKey().equals("drinkHistory")) {

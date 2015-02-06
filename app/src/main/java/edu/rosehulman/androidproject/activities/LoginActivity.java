@@ -132,7 +132,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 
         String username = (String) userData.get("username");
         String email = (String) userData.get("email");
-        int weight = (int) userData.get("weight");
+        int weight = Integer.parseInt((String) userData.get("weight"));
         ArrayList<Drink> userDrinkList = new ArrayList<>();
         for(DataSnapshot d : dataSnapshot.getChildren()) {
             if (d.getKey().equals("drinkHistory")) {
