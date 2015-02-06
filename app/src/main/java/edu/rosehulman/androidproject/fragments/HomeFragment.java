@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void startUpdating() {
-        mHandler.postDelayed(updateTask, 1000);
+        mHandler.postDelayed(updateTask, 3000);
     }
 
     private Runnable updateTask = new Runnable () {
@@ -86,7 +86,6 @@ public class HomeFragment extends Fragment {
             int caffeineLevel = MainActivity.USER.getCaffeineLevel();
             updateCaffeineLevelTextView(caffeineLevel);
             MainActivity.USER.addPoint(new Date(), caffeineLevel);
-            System.out.println("MAINACTIVITY USER ADDPOINT");
             updateList();
             //GraphFragment.getInstance().updateGraph();
             mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
@@ -105,8 +104,6 @@ public class HomeFragment extends Fragment {
         Drink d = new Drink(new DrinkType(
                 data.getExtras().getString(AddDrinkActivity.KEY_DRINK_NAME),
                 data.getExtras().getInt(AddDrinkActivity.KEY_CAFFEINE_AMOUNT)), new Date());
-
-        System.out.println("ONACTIVITY RESULT HOMEFRAGMENT");
         MainActivity.USER.drink(d);
 
         ((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getEmail() + "/drinkHistory").push().setValue(d);
@@ -118,7 +115,6 @@ public class HomeFragment extends Fragment {
     }
 
     public void updateList() {
-        System.out.println("UPDATE LIST HOMEFRAGMENT");
         mDrinkAdapter.notifyDataSetChanged();
     }
 }

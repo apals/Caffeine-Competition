@@ -3,12 +3,16 @@ package edu.rosehulman.androidproject.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -99,6 +103,22 @@ public class AddDrinkActivity extends ActionBarActivity implements View.OnClickL
         editor.putString(drinkName, json.toString());
         editor.apply();
         editor.commit();
+
+        Intent i = new Intent();
+        i.putExtra(KEY_DRINK_NAME, drinkName);
+        i.putExtra(KEY_CAFFEINE_AMOUNT, caffeineAmount);
+        setResult(RESULT_OK, i);
+        finish();
+    }
+
+    public void myClickHandler(View v)
+    {
+        RelativeLayout parentRow = (RelativeLayout) v.getParent();
+        String drinkName = ((TextView) parentRow.findViewById(R.id.common_drink_list_drink_name)).getText().toString();
+
+        //caffeine is something like 101.0 mg
+        String caffeine =((TextView) parentRow.findViewById(R.id.common_drink_list_caffeine_amount)).getText().toString();
+        int caffeineAmount = (int) Double.parseDouble(caffeine.substring(0, caffeine.length() - 3));
 
         Intent i = new Intent();
         i.putExtra(KEY_DRINK_NAME, drinkName);

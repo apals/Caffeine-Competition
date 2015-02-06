@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -35,12 +36,7 @@ public class CommonDrinkAdapter extends ArrayAdapter<CommonDrink> {
 
         ((TextView) convertView.findViewById(R.id.common_drink_list_drink_name)).setText(getItem(position).getDrinkType().getDrinkName());
         ((TextView) convertView.findViewById(R.id.common_drink_list_caffeine_amount)).setText(getItem(position).getDrinkType().getCaffeineAmount() + " mg");
-        convertView.findViewById(R.id.common_drink_list_caffeine_amount).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.finish();
-            }
-        });
+
 
         return convertView;
     }

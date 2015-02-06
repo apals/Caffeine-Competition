@@ -62,7 +62,7 @@ public class GraphFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_graph, container, false);
+        rootView = inflater.inflate(R.layout.fragment_graph, container, false);
 
         renderer = GraphUtils.getMultipleSeriesRenderer(getActivity());
         dataset = GraphUtils.getDataset(((MainActivity) getActivity()).getUsers());
@@ -124,16 +124,9 @@ public class GraphFragment extends Fragment {
                 }
             }
 
-
-            if (users == null || users.size() == 0)
-                return;
-
-
             for (int i = 0; i < users.size(); i++) {
                 ArrayList<DateCaffeinePoint> points = users.get(i).getPoints();
-                System.out.println("TRYING TO UPDATE GRAPH: POINTS. SIZE == " + points.size());
                 if (points.size() != 0) {
-                    System.out.println("ADDING A POINT TO SERIES, ADDING THIS POINT       X: " + (points.get(points.size() - 1).getDate() + ", Y: " + points.get(points.size() - 1).getCaffeine()));
                     ((TimeSeries) dataset.getSeriesAt(i)).add(points.get(points.size() - 1).getDate(), points.get(points.size() - 1).getCaffeine());
                 }
             }
