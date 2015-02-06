@@ -25,5 +25,7 @@
     <string name="prompt_password">Password</string>
     <string name="hello_world">hello_world</string>
     <string name="action_logout">logout</string>
+    <string name="password_does_not_match_message">Passwords does not match</string>
+    <string name="register_text_placeholder">Not already a user? Register!</string>
 
 </resources>

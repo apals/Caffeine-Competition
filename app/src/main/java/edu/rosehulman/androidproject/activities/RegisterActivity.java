@@ -3,12 +3,6 @@ package edu.rosehulman.androidproject.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.TextPaint;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
@@ -20,6 +14,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,15 +26,15 @@ import edu.rosehulman.androidproject.models.DrinkType;
 import edu.rosehulman.androidproject.models.User;
 
 /**
- * A login screen that offers login via email/password.
+ * A register screen that offers registration
  */
-public class LoginActivity extends ActionBarActivity implements OnClickListener {
 
-    public static final String KEY_EMAIL = "key_email";
+public class RegisterActivity extends ActionBarActivity {
     private static final String USERS_CHILD = "users";
-    public static boolean LOGGED_IN = false;
+    public static final String KEY_EMAIL = "key_email";
 
     private Firebase mRef;
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,25 +45,49 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         getSupportActionBar().setIcon(R.drawable.icon);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
 
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));
+        this.gson = new Gson();
 
-        ((AutoCompleteTextView)findViewById(R.id.email)).setText("test@test.com");
-        ((TextView)findViewById(R.id.password)).setText("1");
+        findViewById(R.id.email_register_button).setOnClickListener(new OnClickListener() {
 
-        findViewById(R.id.email_sign_in_button).setOnClickListener(this);
-        setRegisterButton();
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.email_register_button) {
+                    String password = ((TextView) findViewById(R.id.register_password)).getText().toString();
+                    String repeatPassword = ((TextView) findViewById(R.id.register_repeat_password)).getText().toString();
+
+                    if (password.equals(repeatPassword)) {
+                        register(
+                            ((AutoCompleteTextView) findViewById(R.id.register_email)).getText().toString(),
+                            ((TextView) findViewById(R.id.register_username)).getText().toString(),
+                            ((TextView) findViewById(R.id.register_weight)).getText().toString(),
+                            password
+                        );
+                    } else {
+                        toast(getString(R.string.password_does_not_match_message));
+                    }
+                }
+            }
+        });
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.email_sign_in_button) {
-            String email = ((AutoCompleteTextView) findViewById(R.id.email)).getText().toString();
-            String password = ((TextView) findViewById(R.id.password)).getText().toString();
-            authorize(email, password);
-        }
+    private void register(final String email, final String username, final String weight, final String password) {
+        mRef.createUser(email, password, new Firebase.ResultHandler() {
+                    @Override
+                    public void onSuccess() {
+                        createUser(email, username, weight);
+                        authorize(email, password);
+                    }
+
+                    @Override
+                    public void onError(FirebaseError firebaseError) {
+                        toast(firebaseError.getMessage());
+                    }
+                }
+        );
     }
 
     private void authorize(final String email, final String password) {
@@ -86,18 +105,27 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         );
     }
 
-    public void acceptLogin(User user) {
-        LOGGED_IN = true;
-        Intent i = new Intent(LoginActivity.this, MainActivity.class);
-        i.putExtra(KEY_EMAIL, user);
-        startActivity(i);
+    public void toast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+    public void createUser(String email, String username, String weight) {
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/drinkHistory").setValue("");
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/email").setValue(cleanEmail(email));
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/username").setValue(username);
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/weight").setValue(weight);
+    }
+
+    public String cleanEmail(String email) {
+        email = email.replace(".", "-");
+        email = email.replace("@", "-");
+        return email;
+    }
     public void getUserData(final String email) {
         mRef.child(USERS_CHILD + "/" + cleanEmail(email)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!LOGGED_IN) {
+                if (!LoginActivity.LOGGED_IN) {
                     acceptLogin(createUserFromSnapShot(dataSnapshot));
                 }
             }
@@ -108,25 +136,6 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
             }
         });
     }
-
-    public void toast(String message) {
-        Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
-    }
-
-    public void createUser(String email, String password) {
-
-        //TODO: create User.toMap??
-
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/drinkHistory").setValue("");
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/username").setValue(cleanEmail(email));
-    }
-
-    public String cleanEmail(String email) {
-        email = email.replace(".", "-");
-        email = email.replace("@", "-");
-        return email;
-    }
-
     public User createUserFromSnapShot(DataSnapshot dataSnapshot) {
         HashMap<String, Object> userData = ((HashMap<String, Object>) dataSnapshot.getValue());
 
@@ -151,34 +160,10 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         return new User(username, userDrinkList);
     }
 
-    public void register() {
-        Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+    public void acceptLogin(User user) {
+        LoginActivity.LOGGED_IN = true;
+        Intent i = new Intent(RegisterActivity.this, MainActivity.class);
+        i.putExtra(KEY_EMAIL, user);
         startActivity(i);
-    }
-    public void setRegisterButton() {
-        SpannableStringBuilder sb = new SpannableStringBuilder();
-        String regularText = "Not already a user? ";
-        String clickableText = "Register!";
-        sb.append(regularText);
-        sb.append(clickableText);
-        sb.setSpan(new MyClickableSpan(),
-                sb.length()-clickableText.length(), sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        TextView tv = (TextView) findViewById(R.id.login_register_clickable);
-        tv.setText(sb);
-        tv.setMovementMethod(LinkMovementMethod.getInstance());
-    }
-
-    class MyClickableSpan extends ClickableSpan{
-        @Override
-        public void onClick(View textView) {
-            register();
-        }
-
-        @Override
-        public void updateDrawState(TextPaint ds) {
-            ds.setColor(getResources().getColor(R.color.blue));
-            ds.setUnderlineText(false);
-        }
     }
 }

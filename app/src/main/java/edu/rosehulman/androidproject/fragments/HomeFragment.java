@@ -24,6 +24,7 @@ import edu.rosehulman.androidproject.activities.MainActivity;
 import edu.rosehulman.androidproject.adapters.DrinkAdapter;
 import edu.rosehulman.androidproject.models.Drink;
 import edu.rosehulman.androidproject.models.DrinkType;
+import edu.rosehulman.androidproject.models.User;
 
 /**
  * Created by palssoa on 12/20/2014.
