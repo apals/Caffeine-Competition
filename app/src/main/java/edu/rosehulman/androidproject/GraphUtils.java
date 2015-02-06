@@ -11,6 +11,8 @@ import org.achartengine.renderer.XYSeriesRenderer;
 
 import java.util.List;
 
+import edu.rosehulman.androidproject.activities.MainActivity;
+import edu.rosehulman.androidproject.models.DateCaffeinePoint;
 import edu.rosehulman.androidproject.models.Drink;
 import edu.rosehulman.androidproject.models.User;
 
@@ -36,12 +38,10 @@ public class GraphUtils {
         renderer.setXTitle("Time");
         renderer.setYTitle("Caffeine");
 
-
-        XYSeriesRenderer r = getSeriesRenderer(context);
-        renderer.addSeriesRenderer(r);
-
-        XYSeriesRenderer s = getSeriesRenderer(context);
-        renderer.addSeriesRenderer(s);
+        for(User u : ((MainActivity) context).getUsers()) {
+            XYSeriesRenderer s = getSeriesRenderer(context);
+            renderer.addSeriesRenderer(s);
+        }
 
         renderer.setXAxisMax(24);
         renderer.setYAxisMax(10);
@@ -54,32 +54,20 @@ public class GraphUtils {
     public static XYSeriesRenderer getSeriesRenderer(Context context) {
         XYSeriesRenderer r = new XYSeriesRenderer();
         r.setColor(context.getResources().getColor(R.color.blue));
-
         return r;
     }
 
     public static XYMultipleSeriesDataset getDataset(List<User> users) {
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 
-        for(int i = 0; i < users.size(); i++) {
-            TimeSeries series = new TimeSeries(users.get(i).getUsername());
-            series.add(i, users.get(i).getCaffeineLevel());
+        for(User user : users) {
+            TimeSeries series = new TimeSeries(user.getUsername());
+            for(DateCaffeinePoint point : user.getPoints()) {
+                series.add(point.getDate().getTime(), point.getCaffeine());
+            }
+            dataset.addSeries(series);
+
         }
-        TimeSeries series = new TimeSeries("User #1");
-
-        for(int i = 0; i < 10; i++) {
-            series.add(i, i);
-        }
-
-        TimeSeries series2 = new TimeSeries("User #2");
-
-        for(int i = 10; i > 0; i--) {
-            series2.add(10-i, i);
-        }
-
-
-        dataset.addSeries(series);
-        dataset.addSeries(series2);
         return dataset;
     }
 }

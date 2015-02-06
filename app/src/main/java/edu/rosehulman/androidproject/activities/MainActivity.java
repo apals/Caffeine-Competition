@@ -46,6 +46,7 @@ public class MainActivity extends ActionBarActivity {
       * add register activity
       * long press för att ta bort aktiviteter, förslagsvis med dialog (OK/CANCEL)
       * remove drinks after 48 hours (THIS IS DONE LOCALLY, BUT NOT SERVE SIDE)
+      * i think graphutils.getdataset is called before users have their full drink history. maybe wait until list is populated before calling that
       * */
 
     public static final int HOME_ID = 0;
@@ -86,10 +87,13 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 User user = createUserFromSnapShot(dataSnapshot);
-                if (user.getUsername() == null || user.getUsername().equals(USER.getUsername())) {
+                if (user.getUsername() == null) {
                     return;
                 }
-                users.add(user);
+                if (user.getUsername().equals(USER.getUsername())) {
+                    users.add(USER);
+                } else
+                    users.add(user);
                 UserListFragment.getInstance().updateList();
                 GraphFragment.getInstance().updateGraph();
             }
@@ -97,18 +101,17 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 User changedUser = createUserFromSnapShot(dataSnapshot);
-                if (!changedUser.getUsername().equals(USER.getUsername())) {
-                    for (int i = 0; i < users.size(); i++) {
-                        if (users.get(i).getUsername().equals(changedUser.getUsername())) {
-                            users.remove(i);
-                            break;
-                        }
+                for (int i = 0; i < users.size(); i++) {
+                    if (users.get(i).getUsername().equals(changedUser.getUsername())) {
+                        users.get(i).setDrinkHistory(changedUser.getDrinkHistory());
+                        break;
                     }
-                    users.add(changedUser);
-                    Collections.sort(users);
-                    UserListFragment.getInstance().updateList();
-//                GraphFragment.getInstance().updateGraph();
                 }
+                //users.add(changedUser);
+                Collections.sort(users);
+                UserListFragment.getInstance().updateList();
+                GraphFragment.getInstance().updateGraph();
+
             }
 
             @Override
@@ -246,9 +249,9 @@ public class MainActivity extends ActionBarActivity {
         String username = (String) userData.get("username");
         System.out.println("CREATING USER WITH USERNAME: " + username);
         ArrayList<Drink> userDrinkList = new ArrayList<>();
-        for(DataSnapshot d : dataSnapshot.getChildren()) {
+        for (DataSnapshot d : dataSnapshot.getChildren()) {
             if (d.getKey().equals("drinkHistory")) {
-                for(DataSnapshot child: d.getChildren()) {
+                for (DataSnapshot child : d.getChildren()) {
                     HashMap<String, Object> drink = (HashMap<String, Object>) child.getValue();
                     double a = (double) drink.get("remainingCaffeine");
                     Date date = new Date((long) drink.get("dateTime"));

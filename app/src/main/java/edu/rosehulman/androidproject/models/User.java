@@ -18,7 +18,7 @@ public class User implements Comparable, Serializable {
     private ArrayList<Drink> mDrinkHistory;
     private String mUsername;
     private ArrayList<Drink> drinkHistory;
-    private ArrayList<Integer> points = new ArrayList<>();
+    private ArrayList<DateCaffeinePoint> points = new ArrayList<>();
 
     public User(String username, ArrayList<Drink> drinkHistory) {
         mUsername = username;
@@ -72,11 +72,15 @@ public class User implements Comparable, Serializable {
         this.drinkHistory = drinkHistory;
     }
 
-    public void addPoint(Integer caffeine) {
-        points.add(caffeine);
+    public void addPoint(Date date, Integer caffeine) {
+        points.add(new DateCaffeinePoint(date, caffeine));
     }
 
     public void removePoint(int i) {
         points.remove(i);
+    }
+
+    public ArrayList<DateCaffeinePoint> getPoints() {
+        return points;
     }
 }

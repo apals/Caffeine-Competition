@@ -80,9 +80,10 @@ public class HomeFragment extends Fragment {
         public void run() {
             int caffeineLevel = MainActivity.USER.getCaffeineLevel();
             updateCaffeineLevelTextView(caffeineLevel);
-            MainActivity.USER.addPoint(caffeineLevel);
+            MainActivity.USER.addPoint(new Date(), caffeineLevel);
+            System.out.println("MAINACTIVITY USER ADDPOINT");
             updateList();
-
+            GraphFragment.getInstance().updateGraph();
             mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
         }
     };
