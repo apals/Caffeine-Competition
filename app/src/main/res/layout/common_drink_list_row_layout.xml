@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:gravity="center"
+        android:layout_weight="2"
+        android:text="drink name"
+        android:id="@+id/common_drink_list_drink_name"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent" />
+    <TextView
+        android:gravity="center"
+        android:layout_weight="2"
+        android:text="caffeine"
+        android:id="@+id/common_drink_list_caffeine_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent" />
+
+    <Button
+        android:id="@+id/common_drink_list_button_add"
+        android:layout_weight="1"
+        android:text="yolo"
+        android:layout_width="wrap_content"
+        style="@style/button"/>
+
+</LinearLayout>

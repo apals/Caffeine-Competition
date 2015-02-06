@@ -131,6 +131,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+
         this.mRef.authAnonymously(new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
@@ -156,6 +157,19 @@ public class MainActivity extends ActionBarActivity {
         titleIndicator.setRadius(12);
         titleIndicator.setFillColor(getResources().getColor(R.color.blue));
         titleIndicator.setViewPager(mPager);
+    }
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+
+        if fragment homefragment {
+            start new runnable (update homefragment every 3 sec)
+        }
+
+        if fragment graphfragment {
+            start new runnabble update graphfragment every 3 sec)
+        }
     }
 
     @Override
