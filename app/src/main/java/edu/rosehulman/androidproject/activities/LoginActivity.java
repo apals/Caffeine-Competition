@@ -131,6 +131,8 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         HashMap<String, Object> userData = ((HashMap<String, Object>) dataSnapshot.getValue());
 
         String username = (String) userData.get("username");
+        String email = (String) userData.get("email");
+        int weight = (int) userData.get("weight");
         ArrayList<Drink> userDrinkList = new ArrayList<>();
         for(DataSnapshot d : dataSnapshot.getChildren()) {
             if (d.getKey().equals("drinkHistory")) {
@@ -148,7 +150,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
                 }
             }
         }
-        return new User(username, userDrinkList);
+        return new User(username, email, weight, userDrinkList);
     }
 
     public void register() {
