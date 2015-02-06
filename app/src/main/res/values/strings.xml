@@ -4,8 +4,6 @@
     <string name="app_name">Caffeine Competition</string>
     <string name="action_settings">Settings</string>
     <string name="url">https://dazzling-inferno-2149.firebaseio.com/</string>
-
-
     <string name="username">USERNAME</string>
     <string name="caffeine_level">CAFFEINE LEVEL: %d mg</string>
     <string name="drink">DRINK</string>

@@ -163,18 +163,18 @@ public class MainActivity extends ActionBarActivity {
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
 
-        if(fragment instanceof HomeFragment) {
+        if (fragment instanceof HomeFragment) {
             HomeFragment.getInstance().startUpdating();
             return;
         }
 
 
-        if(fragment instanceof GraphFragment) {
+        if (fragment instanceof GraphFragment) {
             GraphFragment.getInstance().startUpdating();
             return;
         }
 
-        if(fragment instanceof UserListFragment) {
+        if (fragment instanceof UserListFragment) {
             UserListFragment.getInstance().startUpdating();
             return;
         }
@@ -270,11 +270,12 @@ public class MainActivity extends ActionBarActivity {
         HashMap<String, Object> userData = ((HashMap<String, Object>) dataSnapshot.getValue());
 
         String username = (String) userData.get("username");
-        System.out.println("CREATING USER WITH USERNAME: " + username);
+        String email = (String) userData.get("email");
+        int weight = (int) userData.get("weight");
         ArrayList<Drink> userDrinkList = new ArrayList<>();
-        for (DataSnapshot d : dataSnapshot.getChildren()) {
+        for(DataSnapshot d : dataSnapshot.getChildren()) {
             if (d.getKey().equals("drinkHistory")) {
-                for (DataSnapshot child : d.getChildren()) {
+                for(DataSnapshot child: d.getChildren()) {
                     HashMap<String, Object> drink = (HashMap<String, Object>) child.getValue();
                     double a = (double) drink.get("remainingCaffeine");
                     Date date = new Date((long) drink.get("dateTime"));
@@ -288,6 +289,6 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         }
-        return new User(username, userDrinkList);
+        return new User(username, email, weight, userDrinkList);
     }
 }

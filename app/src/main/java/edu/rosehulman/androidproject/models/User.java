@@ -19,14 +19,12 @@ public class User implements Comparable, Serializable {
     private String mUsername;
     private ArrayList<Drink> drinkHistory;
     private ArrayList<DateCaffeinePoint> points = new ArrayList<>();
+    private int weight;
+    private String email;
 
-    public User(String username, ArrayList<Drink> drinkHistory) {
+    public User(String username, String email, int weight, ArrayList<Drink> drinkHistory) {
         mUsername = username;
         mDrinkHistory = drinkHistory;
-    }
-
-    public User(HashMap<String, Object> map) {
-        this((String) map.get("username"), (ArrayList<Drink>) map.get("drinkHistory"));
     }
 
     public String getUsername() {
@@ -82,5 +80,9 @@ public class User implements Comparable, Serializable {
 
     public ArrayList<DateCaffeinePoint> getPoints() {
         return points;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }
