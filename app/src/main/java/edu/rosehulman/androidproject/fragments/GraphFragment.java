@@ -17,6 +17,7 @@ import org.achartengine.GraphicalView;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -51,7 +52,8 @@ public class GraphFragment extends Fragment implements CompoundButton.OnCheckedC
 
         renderer = GraphUtils.getMultipleSeriesRenderer(getActivity());
         dataset = GraphUtils.getDataset(((MainActivity) getActivity()).getUsers());
-        mLineChart = ChartFactory.getLineChartView(getActivity(), dataset, renderer);
+        mLineChart = ChartFactory.getTimeChartView(getActivity(), dataset, renderer, "HH-mm-ss"); //ChartFactory.getLineChartView(getActivity(), dataset, renderer);
+
         mLineChart.setBackgroundColor(Color.WHITE);
 
         ((LinearLayout) rootView.findViewById(R.id.chart)).addView(mLineChart);
@@ -82,6 +84,9 @@ public class GraphFragment extends Fragment implements CompoundButton.OnCheckedC
                 if(i >= dataset.getSeriesCount()) {
                     TimeSeries series = new TimeSeries(users.get(i).getUsername());
                     dataset.addSeries(series);
+                    XYSeriesRenderer r = new XYSeriesRenderer();
+                    r.setColor(getActivity().getResources().getColor(R.color.blue));
+                    renderer.addSeriesRenderer(r);
                 }
                 System.out.println("ADDING A POINT TO SERIES, ADDING THIS POINT       X: " + (points.get(points.size() - 1).getDate() + ", Y: " + points.get(points.size() - 1).getCaffeine()));
                 ((TimeSeries) dataset.getSeriesAt(i)).add(points.get(points.size() - 1).getDate(), points.get(points.size() - 1).getCaffeine());

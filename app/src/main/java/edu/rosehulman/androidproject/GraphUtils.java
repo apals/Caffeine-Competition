@@ -29,12 +29,15 @@ public class GraphUtils {
 
 
         renderer.setXLabelsColor(context.getResources().getColor(R.color.blue));
+        renderer.setYLabelsColor(0, context.getResources().getColor(R.color.blue));
+
         renderer.setShowGrid(false);
         renderer.setYLabelsAlign(Paint.Align.LEFT);
         renderer.setChartTitle("");
 
         renderer.setAxesColor(Color.BLACK);
         renderer.setLabelsColor(Color.BLACK);
+
         renderer.setXTitle("Time");
         renderer.setYTitle("Caffeine");
 
@@ -43,8 +46,6 @@ public class GraphUtils {
             renderer.addSeriesRenderer(s);
         }
 
-        renderer.setXAxisMax(24);
-        renderer.setYAxisMax(10);
         renderer.setZoomEnabled(false);
         renderer.setPanEnabled(false);
 
