@@ -20,7 +20,7 @@ public class Drink implements Serializable, Comparable {
     public double getRemainingCaffeineFrom(Date date) {
         long seconds = Math.abs((date).getTime() - getDateTime().getTime())/1000;
         if (seconds > 60) {
-            return getDrinkType().getCaffeineAmount() * Math.pow(0.5D, seconds / 3600*CAFFEINE_HALF_LIFE);
+            return getDrinkType().getCaffeineAmount() * Math.pow(0.5D, seconds / (3600*CAFFEINE_HALF_LIFE)  );
         } else {
             return (getDrinkType().getCaffeineAmount() / 60) * seconds;
         }
