@@ -10,11 +10,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.adapters.CommonDrinkAdapter;
+import edu.rosehulman.androidproject.models.CommonDrink;
 import edu.rosehulman.androidproject.models.DrinkType;
 
 /**
@@ -26,7 +32,7 @@ public class AddDrinkActivity extends ActionBarActivity implements View.OnClickL
     public static final String KEY_CAFFEINE_AMOUNT = "KEY_CAFFEINE_AMOUNT";
     private ListView mListView;
     private CommonDrinkAdapter mAdapter;
-    private ArrayList<DrinkType> mCommonDrinkTypes;
+    private ArrayList<CommonDrink> mCommonDrinkTypes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,30 +45,61 @@ public class AddDrinkActivity extends ActionBarActivity implements View.OnClickL
 
         setContentView(R.layout.activity_add_drink);
 
-        mCommonDrinkTypes = new ArrayList<DrinkType>();
+        mCommonDrinkTypes = new ArrayList<CommonDrink>();
 
         SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-        Map<String, Integer> drinks = (Map<String, Integer>) prefs.getAll();
-        for (Map.Entry<String, Integer> entry : drinks.entrySet()) {
+        Map<String, String> drinks = (Map<String, String>) prefs.getAll();
+
+        for (Map.Entry<String, String> entry : drinks.entrySet()) {
             String drinkName = entry.getKey();
-            Integer caffeine = entry.getValue();
-            mCommonDrinkTypes.add(new DrinkType(drinkName, caffeine));
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(entry.getValue());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                mCommonDrinkTypes.add(new CommonDrink(new DrinkType(drinkName, jsonObject.getInt("caffeineAmount")), jsonObject.getInt("timesConsumed")));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
+
+
+        Collections.sort(mCommonDrinkTypes);
 
         findViewById(R.id.add_drink_button_custom).setOnClickListener(this);
         mListView = (ListView) findViewById(R.id.drink_list);
         mAdapter = new CommonDrinkAdapter(this, R.layout.common_drink_list_row_layout, mCommonDrinkTypes);
         mListView.setAdapter(mAdapter);
-
     }
 
     @Override
     public void onClick(View v) {
-        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+
         String drinkName = ((EditText) findViewById(R.id.add_drink_edittext_name)).getText().toString();
         Integer caffeineAmount = Integer.parseInt(((EditText) findViewById(R.id.add_drink_edittext_caffine_amount)).getText().toString());
-        editor.putInt(drinkName, caffeineAmount);
+        int oldTimesConsumed = 0;
+
+        if (getPreferences(MODE_PRIVATE).contains(drinkName)) {
+            try {
+                oldTimesConsumed = new JSONObject(getPreferences(MODE_PRIVATE).getString(drinkName, null)).getInt("timesConsumed");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+        JSONObject json = null;
+        try {
+            json = new JSONObject("{\"caffeineAmount\":\"" + caffeineAmount + "\",\"timesConsumed\":\"" + oldTimesConsumed+1 + "\"}");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        editor.putString(drinkName, json.toString());
         editor.apply();
+        editor.commit();
+
         Intent i = new Intent();
         i.putExtra(KEY_DRINK_NAME, drinkName);
         i.putExtra(KEY_CAFFEINE_AMOUNT, caffeineAmount);
