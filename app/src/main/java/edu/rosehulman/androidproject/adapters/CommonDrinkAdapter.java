@@ -30,7 +30,7 @@ public class CommonDrinkAdapter extends ArrayAdapter<DrinkType> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null)
-            convertView = context.getLayoutInflater().inflate(R.layout.drinklist_row_layout, null);
+            convertView = context.getLayoutInflater().inflate(R.layout.common_drink_list_row_layout, null);
 
         ((TextView) convertView.findViewById(R.id.common_drink_list_drink_name)).setText(getItem(position).getDrinkName());
         ((TextView) convertView.findViewById(R.id.common_drink_list_caffeine_amount)).setText(getItem(position).getCaffeineAmount() + " mg");

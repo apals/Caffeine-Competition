@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment {
         mDrinkAdapter = new DrinkAdapter(getActivity(), R.layout.drinklist_row_layout, MainActivity.USER.getDrinkHistory());
         listView.setAdapter(mDrinkAdapter);
 
-        mHandler.postDelayed(updateTask, 1000);
+
 
 
         return rootView;
@@ -77,6 +77,10 @@ public class HomeFragment extends Fragment {
         mHandler.removeCallbacksAndMessages(null);
     }
 
+    public void startUpdating() {
+        mHandler.postDelayed(updateTask, 1000);
+    }
+
     private Runnable updateTask = new Runnable () {
         public void run() {
             int caffeineLevel = MainActivity.USER.getCaffeineLevel();
@@ -84,7 +88,7 @@ public class HomeFragment extends Fragment {
             MainActivity.USER.addPoint(new Date(), caffeineLevel);
             System.out.println("MAINACTIVITY USER ADDPOINT");
             updateList();
-            GraphFragment.getInstance().updateGraph();
+            //GraphFragment.getInstance().updateGraph();
             mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
         }
     };
@@ -107,7 +111,7 @@ public class HomeFragment extends Fragment {
 
         ((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getUsername() + "/drinkHistory").push().setValue(d);
         UserListFragment.getInstance().updateList();
-        GraphFragment.getInstance().updateGraph();
+        //GraphFragment.getInstance().updateGraph();
 
         Collections.sort(MainActivity.USER.getDrinkHistory());
         updateList();

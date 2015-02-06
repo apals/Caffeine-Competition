@@ -43,10 +43,10 @@ public class GraphUtils {
 
         renderer.setYAxisMin(0);
 
-        for(User u : ((MainActivity) context).getUsers()) {
+        /*for(User u : ((MainActivity) context).getUsers()) {
             XYSeriesRenderer s = getSeriesRenderer(context);
             renderer.addSeriesRenderer(s);
-        }
+        }*/
 
         renderer.setZoomEnabled(false);
         renderer.setPanEnabled(false);
@@ -63,14 +63,14 @@ public class GraphUtils {
     public static XYMultipleSeriesDataset getDataset(List<User> users) {
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 
-        for(User user : users) {
+        /*for(User user : users) {
             TimeSeries series = new TimeSeries(user.getUsername());
             for(DateCaffeinePoint point : user.getPoints()) {
                 series.add(point.getDate().getTime(), point.getCaffeine());
             }
             dataset.addSeries(series);
 
-        }
+        }*/
         return dataset;
     }
 }

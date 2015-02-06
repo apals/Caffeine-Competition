@@ -51,4 +51,8 @@ public class UserListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+    public void startUpdating() {
+
+    }
 }

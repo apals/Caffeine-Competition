@@ -43,7 +43,7 @@ public class AddDrinkActivity extends ActionBarActivity implements View.OnClickL
         mCommonDrinkTypes.add(new DrinkType("RED BULL", 10));
         mListView = (ListView) findViewById(R.id.drink_list);
         mAdapter = new CommonDrinkAdapter(this, R.layout.common_drink_list_row_layout, mCommonDrinkTypes);
-
+        mListView.setAdapter(mAdapter);
 
     }
 

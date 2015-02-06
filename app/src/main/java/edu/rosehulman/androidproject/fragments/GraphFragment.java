@@ -3,6 +3,7 @@ package edu.rosehulman.androidproject.fragments;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import org.achartengine.renderer.XYSeriesRenderer;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.LogRecord;
 
 import edu.rosehulman.androidproject.GraphUtils;
 import edu.rosehulman.androidproject.R;
@@ -32,7 +34,7 @@ import edu.rosehulman.androidproject.models.User;
 /**
  * Created by palssoa on 12/20/2014.
  */
-public class GraphFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
+public class GraphFragment extends Fragment {
 
     private GraphicalView mLineChart;
     private XYMultipleSeriesRenderer renderer;
@@ -42,12 +44,15 @@ public class GraphFragment extends Fragment implements CompoundButton.OnCheckedC
 
 
     private static GraphFragment instance;
+    private Handler mHandler = new Handler();
+
 
     public static GraphFragment getInstance() {
         if (instance == null)
             instance = new GraphFragment();
         return instance;
     }
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -88,42 +93,56 @@ public class GraphFragment extends Fragment implements CompoundButton.OnCheckedC
 
             }
         });
+        checkBoxes.add(button);
         ((LinearLayout) rootView.findViewById(R.id.linearlayout_scrollview)).addView(button);
 
     }
 
-    public void updateGraph() {
-        if (dataset == null || mLineChart == null)
-            return;
-        ArrayList<User> users = ((MainActivity) getActivity()).getUsers();
-        if (users == null || users.size() == 0)
-            return;
+
+    private Runnable updateGraph = new Runnable() {
+        public void run() {
+            if (dataset == null || mLineChart == null)
+                return;
+            ArrayList<User> users = ((MainActivity) getActivity()).getUsers();
 
 
-        for (int i = 0; i < users.size(); i++) {
-            ArrayList<DateCaffeinePoint> points = users.get(i).getPoints();
-            System.out.println("TRYING TO UPDATE GRAPH: POINTS. SIZE == " + points.size());
-            if (points.size() != 0) {
-                if (i >= dataset.getSeriesCount()) {
-                    TimeSeries series = new TimeSeries(users.get(i).getUsername());
+            for (User user : users) {
+                boolean finns = false;
+                for (CheckBox box : checkBoxes) {
+                    if (box.getText().toString().equals(user.getUsername())) {
+                        finns = true;
+                        break;
+                    }
+                }
+                if(!finns) {
+                    TimeSeries series = new TimeSeries(user.getUsername());
                     dataset.addSeries(series);
                     XYSeriesRenderer r = new XYSeriesRenderer();
                     r.setColor(getActivity().getResources().getColor(R.color.blue));
                     renderer.addSeriesRenderer(r);
+                    addUserCheckBox(user);
                 }
-                System.out.println("ADDING A POINT TO SERIES, ADDING THIS POINT       X: " + (points.get(points.size() - 1).getDate() + ", Y: " + points.get(points.size() - 1).getCaffeine()));
-                ((TimeSeries) dataset.getSeriesAt(i)).add(points.get(points.size() - 1).getDate(), points.get(points.size() - 1).getCaffeine());
             }
-        }
-        mLineChart.repaint();
-    }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (!isChecked)
-            renderer.getSeriesRendererAt(0).setColor(Color.TRANSPARENT);
-        else
-            renderer.getSeriesRendererAt(0).setColor(getResources().getColor(R.color.blue));
-        mLineChart.repaint();
+
+            if (users == null || users.size() == 0)
+                return;
+
+
+            for (int i = 0; i < users.size(); i++) {
+                ArrayList<DateCaffeinePoint> points = users.get(i).getPoints();
+                System.out.println("TRYING TO UPDATE GRAPH: POINTS. SIZE == " + points.size());
+                if (points.size() != 0) {
+                    System.out.println("ADDING A POINT TO SERIES, ADDING THIS POINT       X: " + (points.get(points.size() - 1).getDate() + ", Y: " + points.get(points.size() - 1).getCaffeine()));
+                    ((TimeSeries) dataset.getSeriesAt(i)).add(points.get(points.size() - 1).getDate(), points.get(points.size() - 1).getCaffeine());
+                }
+            }
+            mLineChart.repaint();
+            mHandler.postDelayed(updateGraph, 3000);
+        }
+    };
+
+    public void startUpdating() {
+        mHandler.postDelayed(updateGraph, 3000);
     }
 }

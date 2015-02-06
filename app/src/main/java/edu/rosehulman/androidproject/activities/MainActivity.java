@@ -94,9 +94,9 @@ public class MainActivity extends ActionBarActivity {
                     users.add(USER);
                 } else
                     users.add(user);
-                GraphFragment.getInstance().addUserCheckBox(USER);
-                UserListFragment.getInstance().updateList();
-                GraphFragment.getInstance().updateGraph();
+                //GraphFragment.getInstance().addUserCheckBox(USER);
+                //UserListFragment.getInstance().updateList();
+                //GraphFragment.getInstance().updateGraph();
             }
 
             @Override
@@ -110,8 +110,8 @@ public class MainActivity extends ActionBarActivity {
                 }
                 //users.add(changedUser);
                 Collections.sort(users);
-                UserListFragment.getInstance().updateList();
-                GraphFragment.getInstance().updateGraph();
+                //UserListFragment.getInstance().updateList();
+                //GraphFragment.getInstance().updateGraph();
 
             }
 
@@ -163,12 +163,20 @@ public class MainActivity extends ActionBarActivity {
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
 
-        if fragment homefragment {
-            start new runnable (update homefragment every 3 sec)
+        if(fragment instanceof HomeFragment) {
+            HomeFragment.getInstance().startUpdating();
+            return;
         }
 
-        if fragment graphfragment {
-            start new runnabble update graphfragment every 3 sec)
+
+        if(fragment instanceof GraphFragment) {
+            GraphFragment.getInstance().startUpdating();
+            return;
+        }
+
+        if(fragment instanceof UserListFragment) {
+            UserListFragment.getInstance().startUpdating();
+            return;
         }
     }
 
