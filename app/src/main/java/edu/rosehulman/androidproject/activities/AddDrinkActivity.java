@@ -96,7 +96,7 @@ public class AddDrinkActivity extends ActionBarActivity implements View.OnClickL
         SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
         JSONObject json = null;
         try {
-            json = new JSONObject("{\"caffeineAmount\":\"" + caffeineAmount + "\",\"timesConsumed\":\"" + oldTimesConsumed+1 + "\"}");
+            json = new JSONObject("{\"caffeineAmount\":\"" + caffeineAmount + "\",\"timesConsumed\":\"" + oldTimesConsumed + 1 + "\"}");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -111,14 +111,33 @@ public class AddDrinkActivity extends ActionBarActivity implements View.OnClickL
         finish();
     }
 
-    public void myClickHandler(View v)
-    {
+    public void myClickHandler(View v) {
         RelativeLayout parentRow = (RelativeLayout) v.getParent();
         String drinkName = ((TextView) parentRow.findViewById(R.id.common_drink_list_drink_name)).getText().toString();
 
         //caffeine is something like 101.0 mg
-        String caffeine =((TextView) parentRow.findViewById(R.id.common_drink_list_caffeine_amount)).getText().toString();
+        String caffeine = ((TextView) parentRow.findViewById(R.id.common_drink_list_caffeine_amount)).getText().toString();
         int caffeineAmount = (int) Double.parseDouble(caffeine.substring(0, caffeine.length() - 3));
+
+        int oldTimesConsumed = 0;
+
+        try {
+            oldTimesConsumed = new JSONObject(getPreferences(MODE_PRIVATE).getString(drinkName, null)).getInt("timesConsumed");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+        JSONObject json = null;
+        try {
+            json = new JSONObject("{\"caffeineAmount\":\"" + caffeineAmount + "\",\"timesConsumed\":\"" + oldTimesConsumed + 1 + "\"}");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        editor.putString(drinkName, json.toString());
+        editor.apply();
+        editor.commit();
 
         Intent i = new Intent();
         i.putExtra(KEY_DRINK_NAME, drinkName);
