@@ -87,4 +87,15 @@ public class User implements Comparable, Serializable {
     public String getEmail() {
         return mEmail;
     }
+
+    public boolean clearOldDrinks() {
+        boolean someThingRemoved = false;
+        for (int i = 0; i < mDrinkHistory.size(); i++) {
+            if (mDrinkHistory.get(i).getSecondsPassed() > 3600*KEEP_HISTORY) {
+                mDrinkHistory.remove(i);
+                someThingRemoved = true;
+            }
+        }
+        return someThingRemoved;
+    }
 }

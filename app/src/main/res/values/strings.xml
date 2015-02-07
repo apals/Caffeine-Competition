@@ -25,5 +25,7 @@
     <string name="action_logout">logout</string>
     <string name="password_does_not_match_message">Passwords does not match</string>
     <string name="register_text_placeholder">Not already a user? Register!</string>
+    <string name="remove_item">Remove drink?</string>
+    <string name="skip_message">Do you want to remove this drink?</string>
 
 </resources>

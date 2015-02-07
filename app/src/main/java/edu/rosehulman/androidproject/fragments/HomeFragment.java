@@ -1,18 +1,18 @@
 package edu.rosehulman.androidproject.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +24,6 @@ import edu.rosehulman.androidproject.activities.MainActivity;
 import edu.rosehulman.androidproject.adapters.DrinkAdapter;
 import edu.rosehulman.androidproject.models.Drink;
 import edu.rosehulman.androidproject.models.DrinkType;
-import edu.rosehulman.androidproject.models.User;
 
 /**
  * Created by palssoa on 12/20/2014.
@@ -33,16 +32,16 @@ public class HomeFragment extends Fragment {
 
     public static final int DRINK_REQUEST_CODE = 0;
     private static final long CALCULATE_INTERVAL = 1000 * 3; //Seconds
+    private static final long REMOVE_OLD_DRINK_INTERVAL = 3600 * 1; //hours
     private DrinkAdapter mDrinkAdapter;
     private ViewGroup rootView;
-
 
     private static HomeFragment instance;
 
     int i = 0;
 
     public static HomeFragment getInstance() {
-        if(instance == null)
+        if (instance == null)
             instance = new HomeFragment();
         return instance;
     }
@@ -67,8 +66,13 @@ public class HomeFragment extends Fragment {
         mDrinkAdapter = new DrinkAdapter(getActivity(), R.layout.drinklist_row_layout, MainActivity.USER.getDrinkHistory());
         listView.setAdapter(mDrinkAdapter);
 
-
-
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                showRemoveDialog(position);
+                return false;
+            }
+        });
 
         return rootView;
     }
@@ -78,10 +82,11 @@ public class HomeFragment extends Fragment {
     }
 
     public void startUpdating() {
-        mHandler.postDelayed(updateTask, 3000);
+        mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
+        mHandler.postDelayed(updateTaskSlow, REMOVE_OLD_DRINK_INTERVAL);
     }
 
-    private Runnable updateTask = new Runnable () {
+    private Runnable updateTask = new Runnable() {
         public void run() {
             int caffeineLevel = MainActivity.USER.getCaffeineLevel();
             updateCaffeineLevelTextView(caffeineLevel);
@@ -92,13 +97,25 @@ public class HomeFragment extends Fragment {
         }
     };
 
+    private Runnable updateTaskSlow = new Runnable() {
+
+        @Override
+        public void run() {
+            boolean somethingToClear = MainActivity.USER.clearOldDrinks();
+            if (somethingToClear) {
+                updateDataBase(MainActivity.USER.getDrinkHistory());
+            }
+            mHandler.postDelayed(updateTaskSlow, REMOVE_OLD_DRINK_INTERVAL);
+        }
+    };
+
     private void updateCaffeineLevelTextView(int caffeineLevel) {
         ((TextView) rootView.findViewById(R.id.fragment_home_textview_caffeine_level)).setText(getString(R.string.caffeine_level, caffeineLevel));
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode != DRINK_REQUEST_CODE || resultCode != Activity.RESULT_OK)
+        if (requestCode != DRINK_REQUEST_CODE || resultCode != Activity.RESULT_OK)
             return;
 
         Drink d = new Drink(new DrinkType(
@@ -106,7 +123,7 @@ public class HomeFragment extends Fragment {
                 data.getExtras().getInt(AddDrinkActivity.KEY_CAFFEINE_AMOUNT)), new Date());
         MainActivity.USER.drink(d);
 
-        ((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getEmail() + "/drinkHistory").push().setValue(d);
+        updateDataBase(MainActivity.USER.getDrinkHistory());
         UserListFragment.getInstance().updateList();
         //GraphFragment.getInstance().updateGraph();
 
@@ -114,7 +131,32 @@ public class HomeFragment extends Fragment {
         updateList();
     }
 
+    private void updateDataBase(ArrayList<Drink> drinkList) {
+        ((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getEmail() + "/drinkHistory").setValue(drinkList);
+    }
+
     public void updateList() {
         mDrinkAdapter.notifyDataSetChanged();
+    }
+
+    public void showRemoveDialog(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.remove_item);
+        builder.setMessage(R.string.skip_message);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MainActivity.USER.getDrinkHistory().remove(position);
+                updateDataBase(MainActivity.USER.getDrinkHistory());
+                updateList();
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 }
