@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import org.achartengine.chart.PointStyle;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
@@ -38,15 +39,21 @@ public class GraphUtils {
         renderer.setAxesColor(Color.BLACK);
         renderer.setLabelsColor(Color.BLACK);
 
+        renderer.setLabelsTextSize(context.getResources().getDimension(R.dimen.small_text_size));
+        renderer.setAxisTitleTextSize(context.getResources().getDimension(R.dimen.small_text_size));
+
         renderer.setXTitle("Time");
         renderer.setYTitle("Caffeine");
 
         renderer.setYAxisMin(0);
+        renderer.setYAxisMax(300, 0);
 
         /*for(User u : ((MainActivity) context).getUsers()) {
             XYSeriesRenderer s = getSeriesRenderer(context);
             renderer.addSeriesRenderer(s);
         }*/
+        renderer.setShowGrid(true);
+        renderer.setBarSpacing(30);
 
         renderer.setZoomEnabled(false);
         renderer.setPanEnabled(false);
@@ -56,7 +63,15 @@ public class GraphUtils {
 
     public static XYSeriesRenderer getSeriesRenderer(Context context) {
         XYSeriesRenderer r = new XYSeriesRenderer();
+
         r.setColor(context.getResources().getColor(R.color.blue));
+        r.setLineWidth(7);
+        r.setPointStyle(PointStyle.CIRCLE);
+
+        XYSeriesRenderer.FillOutsideLine fill = new XYSeriesRenderer.FillOutsideLine(XYSeriesRenderer.FillOutsideLine.Type.BELOW);
+        fill.setColor(context.getResources().getColor(R.color.transparent_blue));
+        r.addFillOutsideLine(fill);
+
         return r;
     }
 

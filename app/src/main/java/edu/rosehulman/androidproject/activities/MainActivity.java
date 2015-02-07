@@ -41,12 +41,9 @@ import edu.rosehulman.androidproject.models.User;
 public class MainActivity extends ActionBarActivity {
 
      /* TODO:
-      * sharedpreferences in adddrinkactivity
       * save login
       * logout functionality
-      * redesign addrinkactivity
       * make user picture round?
-      * increase size of drink elements in drink list
       * fix graphs in userlist and graphfragment
       * add register activity
       * long press för att ta bort aktiviteter, förslagsvis med dialog (OK/CANCEL)
@@ -54,6 +51,7 @@ public class MainActivity extends ActionBarActivity {
       * FIXED I THINK: i think graphutils.getdataset is called before users have their full drink history. maybe wait until list is populated before calling that
       * write startUpdating() in all fragments - done in graphfragment and homefragment
       * use stopUpdating() in fragments on logout or exit
+      * use holder pattern in listadapters
       * */
 
     public static final int HOME_ID = 0;

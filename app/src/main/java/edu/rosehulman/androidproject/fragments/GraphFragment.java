@@ -85,10 +85,19 @@ public class GraphFragment extends Fragment {
         button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked)
+                if (!isChecked) {
                     renderer.getSeriesRendererAt(buttonIndex).setColor(Color.TRANSPARENT);
-                else
+                    XYSeriesRenderer.FillOutsideLine fill = new XYSeriesRenderer.FillOutsideLine(XYSeriesRenderer.FillOutsideLine.Type.BELOW);
+                    fill.setColor(Color.TRANSPARENT);
+                    ((XYSeriesRenderer) renderer.getSeriesRendererAt(buttonIndex)).addFillOutsideLine(fill);
+
+                }
+                else {
                     renderer.getSeriesRendererAt(buttonIndex).setColor(getResources().getColor(R.color.blue));
+                    XYSeriesRenderer.FillOutsideLine fill = new XYSeriesRenderer.FillOutsideLine(XYSeriesRenderer.FillOutsideLine.Type.BELOW);
+                    fill.setColor(getActivity().getResources().getColor(R.color.transparent_blue));
+                    ((XYSeriesRenderer) renderer.getSeriesRendererAt(buttonIndex)).addFillOutsideLine(fill);
+                }
                 mLineChart.repaint();
 
             }
@@ -117,8 +126,7 @@ public class GraphFragment extends Fragment {
                 if(!finns) {
                     TimeSeries series = new TimeSeries(user.getUsername());
                     dataset.addSeries(series);
-                    XYSeriesRenderer r = new XYSeriesRenderer();
-                    r.setColor(getActivity().getResources().getColor(R.color.blue));
+                    XYSeriesRenderer r = GraphUtils.getSeriesRenderer(getActivity());
                     renderer.addSeriesRenderer(r);
                     addUserCheckBox(user);
                 }
@@ -131,11 +139,11 @@ public class GraphFragment extends Fragment {
                 }
             }
             mLineChart.repaint();
-            mHandler.postDelayed(updateGraph, 3000);
+            mHandler.postDelayed(updateGraph, 100);
         }
     };
 
     public void startUpdating() {
-        mHandler.postDelayed(updateGraph, 3000);
+        mHandler.postDelayed(updateGraph, 100);
     }
 }
