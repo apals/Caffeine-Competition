@@ -42,16 +42,12 @@ public class MainActivity extends ActionBarActivity {
 
      /* TODO:
       * save login
-      * logout functionality
       * make user picture round?
       * fix graphs in userlist and graphfragment
-      * add register activity
       * long press för att ta bort aktiviteter, förslagsvis med dialog (OK/CANCEL)
       * remove drinks after 48 hours (THIS IS DONE LOCALLY, BUT NOT SERVE SIDE)
-      * FIXED I THINK: i think graphutils.getdataset is called before users have their full drink history. maybe wait until list is populated before calling that
-      * write startUpdating() in all fragments - done in graphfragment and homefragment
-      * use stopUpdating() in fragments on logout or exit
       * use holder pattern in listadapters
+      * create points for everybody else
       * */
 
     public static final int HOME_ID = 0;
