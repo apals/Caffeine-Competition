@@ -54,16 +54,18 @@ public class RegisterActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.email_register_button) {
+                    String email = ((AutoCompleteTextView) findViewById(R.id.register_email)).getText().toString();
+                    String username = ((TextView) findViewById(R.id.register_username)).getText().toString();
+                    String weight = ((TextView) findViewById(R.id.register_weight)).getText().toString();
                     String password = ((TextView) findViewById(R.id.register_password)).getText().toString();
                     String repeatPassword = ((TextView) findViewById(R.id.register_repeat_password)).getText().toString();
 
                     if (password.equals(repeatPassword)) {
-                        register(
-                                ((AutoCompleteTextView) findViewById(R.id.register_email)).getText().toString(),
-                                ((TextView) findViewById(R.id.register_username)).getText().toString(),
-                                ((TextView) findViewById(R.id.register_weight)).getText().toString(),
-                                password
-                        );
+                        if (email.length() > 0 && username.length() > 0 && weight.length() > 0) {
+                            register(email, username, weight, password);
+                        } else {
+                            toast(getString(R.string.not_all_fields_filled_out_message));
+                        }
                     } else {
                         toast(getString(R.string.password_does_not_match_message));
                     }

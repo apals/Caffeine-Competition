@@ -27,5 +27,6 @@
     <string name="register_text_placeholder">Not already a user? Register!</string>
     <string name="remove_item">Remove drink?</string>
     <string name="skip_message">Do you want to remove this drink?</string>
+    <string name="not_all_fields_filled_out_message">You need to fill in all fields.</string>
 
 </resources>
