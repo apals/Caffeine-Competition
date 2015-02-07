@@ -87,15 +87,15 @@ public class GraphFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!isChecked) {
                     renderer.getSeriesRendererAt(buttonIndex).setColor(Color.TRANSPARENT);
-                    XYSeriesRenderer.FillOutsideLine fill = new XYSeriesRenderer.FillOutsideLine(XYSeriesRenderer.FillOutsideLine.Type.BELOW);
-                    fill.setColor(Color.TRANSPARENT);
-                    ((XYSeriesRenderer) renderer.getSeriesRendererAt(buttonIndex)).addFillOutsideLine(fill);
+                    //XYSeriesRenderer.FillOutsideLine fill = new XYSeriesRenderer.FillOutsideLine(XYSeriesRenderer.FillOutsideLine.Type.BELOW);
+                    //fill.setColor(Color.TRANSPARENT);
+                    //((XYSeriesRenderer) renderer.getSeriesRendererAt(buttonIndex)).addFillOutsideLine(fill);
 
                 } else {
                     renderer.getSeriesRendererAt(buttonIndex).setColor(getResources().getColor(R.color.blue));
-                    XYSeriesRenderer.FillOutsideLine fill = new XYSeriesRenderer.FillOutsideLine(XYSeriesRenderer.FillOutsideLine.Type.BELOW);
-                    fill.setColor(getActivity().getResources().getColor(R.color.transparent_blue));
-                    ((XYSeriesRenderer) renderer.getSeriesRendererAt(buttonIndex)).addFillOutsideLine(fill);
+                    //XYSeriesRenderer.FillOutsideLine fill = new XYSeriesRenderer.FillOutsideLine(XYSeriesRenderer.FillOutsideLine.Type.BELOW);
+                    //fill.setColor(getActivity().getResources().getColor(R.color.transparent_blue));
+                    //((XYSeriesRenderer) renderer.getSeriesRendererAt(buttonIndex)).addFillOutsideLine(fill);
                 }
                 mLineChart.repaint();
 

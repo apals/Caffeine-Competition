@@ -68,9 +68,9 @@ public class GraphUtils {
         r.setLineWidth(7);
         r.setPointStyle(PointStyle.CIRCLE);
 
-        XYSeriesRenderer.FillOutsideLine fill = new XYSeriesRenderer.FillOutsideLine(XYSeriesRenderer.FillOutsideLine.Type.BELOW);
-        fill.setColor(context.getResources().getColor(R.color.transparent_blue));
-        r.addFillOutsideLine(fill);
+        //XYSeriesRenderer.FillOutsideLine fill = new XYSeriesRenderer.FillOutsideLine(XYSeriesRenderer.FillOutsideLine.Type.BELOW);
+        //fill.setColor(context.getResources().getColor(R.color.transparent_blue));
+        //r.addFillOutsideLine(fill);
 
         return r;
     }

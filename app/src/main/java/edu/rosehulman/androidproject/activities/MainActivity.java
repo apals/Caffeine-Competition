@@ -26,7 +26,6 @@ import java.util.HashMap;
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.fragments.GraphFragment;
 import edu.rosehulman.androidproject.fragments.HomeFragment;
-import edu.rosehulman.androidproject.fragments.ListContainerFragment;
 import edu.rosehulman.androidproject.fragments.UserListFragment;
 import edu.rosehulman.androidproject.models.Drink;
 import edu.rosehulman.androidproject.models.DrinkType;
@@ -248,11 +247,12 @@ public class MainActivity extends ActionBarActivity {
                 //return ListContainerFragment.getInstance();
                 case 2:
                     return GraphFragment.getInstance();
+                default:
+                    return null;
                 //GraphContainerFragment gcf = GraphContainerFragment.getInstance();
                 //return gcf;
 
             }
-            return new ListContainerFragment();
         }
 
         @Override
@@ -266,7 +266,7 @@ public class MainActivity extends ActionBarActivity {
 
         String username = (String) userData.get("username");
         String email = (String) userData.get("email");
-        int weight = Integer.parseInt((String) userData.get("weight"));
+        //int weight = Integer.parseInt((String) userData.get("weight"));
         ArrayList<Drink> userDrinkList = new ArrayList<>();
         for(DataSnapshot d : dataSnapshot.getChildren()) {
             if (d.getKey().equals("drinkHistory")) {
@@ -284,6 +284,6 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         }
-        return new User(username, email, weight, userDrinkList);
+        return new User(username, email, 80, userDrinkList);
     }
 }
