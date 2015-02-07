@@ -39,6 +39,7 @@ public class MainActivity extends ActionBarActivity {
       * fix graphs in userlist and graphfragment
       * remove drinks after 48 hours (THIS IS DONE LOCALLY, BUT NOT SERVE SIDE)
       * use holder pattern in listadapters
+      * use expandablelistview
       * */
 
     public static final int HOME_ID = 0;
