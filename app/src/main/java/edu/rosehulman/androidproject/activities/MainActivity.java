@@ -208,13 +208,15 @@ public class MainActivity extends ActionBarActivity {
     private void logout() {
         USER = null;
         LoginActivity.LOGGED_IN = false;
+        HomeFragment.getInstance().stopUpdating();
+        GraphFragment.getInstance().stopUpdating();
+        UserListFragment.getInstance().stopUpdating();
         finish();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        HomeFragment.getInstance().stopUpdating();
     }
 
     public ViewPager getPager() {
