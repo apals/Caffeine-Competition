@@ -91,8 +91,7 @@ public class GraphFragment extends Fragment {
                     fill.setColor(Color.TRANSPARENT);
                     ((XYSeriesRenderer) renderer.getSeriesRendererAt(buttonIndex)).addFillOutsideLine(fill);
 
-                }
-                else {
+                } else {
                     renderer.getSeriesRendererAt(buttonIndex).setColor(getResources().getColor(R.color.blue));
                     XYSeriesRenderer.FillOutsideLine fill = new XYSeriesRenderer.FillOutsideLine(XYSeriesRenderer.FillOutsideLine.Type.BELOW);
                     fill.setColor(getActivity().getResources().getColor(R.color.transparent_blue));
@@ -123,7 +122,7 @@ public class GraphFragment extends Fragment {
                         break;
                     }
                 }
-                if(!finns) {
+                if (!finns) {
                     TimeSeries series = new TimeSeries(user.getUsername());
                     dataset.addSeries(series);
                     XYSeriesRenderer r = GraphUtils.getSeriesRenderer(getActivity());
@@ -146,4 +145,10 @@ public class GraphFragment extends Fragment {
     public void startUpdating() {
         mHandler.postDelayed(updateGraph, 100);
     }
+
+
+    public void stopUpdating() {
+        mHandler.removeCallbacksAndMessages(null);
+    }
+
 }

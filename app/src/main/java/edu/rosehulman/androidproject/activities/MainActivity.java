@@ -1,7 +1,5 @@
 package edu.rosehulman.androidproject.activities;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,10 +10,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
@@ -42,15 +36,9 @@ public class MainActivity extends ActionBarActivity {
 
      /* TODO:
       * save login
-      * logout functionality
       * make user picture round?
       * fix graphs in userlist and graphfragment
-      * add register activity
-      * long press för att ta bort aktiviteter, förslagsvis med dialog (OK/CANCEL)
       * remove drinks after 48 hours (THIS IS DONE LOCALLY, BUT NOT SERVE SIDE)
-      * FIXED I THINK: i think graphutils.getdataset is called before users have their full drink history. maybe wait until list is populated before calling that
-      * write startUpdating() in all fragments - done in graphfragment and homefragment
-      * use stopUpdating() in fragments on logout or exit
       * use holder pattern in listadapters
       * */
 
@@ -208,6 +196,7 @@ public class MainActivity extends ActionBarActivity {
     private void logout() {
         HomeFragment.getInstance().stopUpdating();
         UserListFragment.getInstance().stopUpdating();
+        GraphFragment.getInstance().stopUpdating();
         USER = null;
         LoginActivity.LOGGED_IN = false;
         finish();

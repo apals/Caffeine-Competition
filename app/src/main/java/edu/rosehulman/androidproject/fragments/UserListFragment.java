@@ -6,17 +6,13 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.activities.MainActivity;
 import edu.rosehulman.androidproject.adapters.UserListAdapter;
-import edu.rosehulman.androidproject.models.Drink;
-import edu.rosehulman.androidproject.models.DrinkType;
 import edu.rosehulman.androidproject.models.User;
 
 /**
@@ -27,8 +23,9 @@ public class UserListFragment extends ListFragment {
     private static final long CALCULATE_INTERVAL = 100;
     private static UserListFragment instance;
     private UserListAdapter listAdapter;
+
     public static UserListFragment getInstance() {
-        if(instance == null)
+        if (instance == null)
             instance = new UserListFragment();
         return instance;
     }
@@ -36,7 +33,7 @@ public class UserListFragment extends ListFragment {
     private Handler mHandler = new Handler();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /** Creating an array adapter to store the list of countries **/
         listAdapter = new UserListAdapter(getActivity(), R.layout.userlist_row_layout, ((MainActivity) getActivity()).getUsers());
         /** Setting the list adapter for the ListFragment */
@@ -63,8 +60,6 @@ public class UserListFragment extends ListFragment {
                 user.addPoint(new Date(), caffeineLevel);
             }
             updateList();
-
-            System.out.println("BAJS");
             //GraphFragment.getInstance().updateGraph();
             mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
         }
