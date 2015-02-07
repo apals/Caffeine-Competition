@@ -206,6 +206,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void logout() {
+        HomeFragment.getInstance().stopUpdating();
+        UserListFragment.getInstance().stopUpdating();
         USER = null;
         LoginActivity.LOGGED_IN = false;
         finish();
@@ -215,6 +217,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onDestroy() {
         super.onDestroy();
         HomeFragment.getInstance().stopUpdating();
+        UserListFragment.getInstance().stopUpdating();
     }
 
     public ViewPager getPager() {
@@ -245,7 +248,6 @@ public class MainActivity extends ActionBarActivity {
             super(fm);
         }
 
-
         @Override
         public Fragment getItem(int position) {
             switch (position) {
@@ -268,7 +270,6 @@ public class MainActivity extends ActionBarActivity {
         public int getCount() {
             return NUM_PAGES;
         }
-
     }
 
     public User createUserFromSnapShot(DataSnapshot dataSnapshot) {

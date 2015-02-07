@@ -31,7 +31,7 @@ import edu.rosehulman.androidproject.models.DrinkType;
 public class HomeFragment extends Fragment {
 
     public static final int DRINK_REQUEST_CODE = 0;
-    private static final long CALCULATE_INTERVAL = 1000 * 3; //Seconds
+    private static final long CALCULATE_INTERVAL = 100; //Seconds
     private static final long REMOVE_OLD_DRINK_INTERVAL = 3600 * 1; //hours
     private DrinkAdapter mDrinkAdapter;
     private ViewGroup rootView;
