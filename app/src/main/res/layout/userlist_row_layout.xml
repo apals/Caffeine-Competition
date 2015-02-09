@@ -41,7 +41,7 @@
             android:id="@+id/caffeinelevel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20 mg"
+            android:text="@string/user_list_object_temp_mg"
             android:layout_gravity="center_vertical|right"
             android:layout_weight="1"
             android:gravity="right"

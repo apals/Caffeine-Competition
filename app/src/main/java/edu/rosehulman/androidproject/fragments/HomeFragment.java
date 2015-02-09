@@ -31,7 +31,7 @@ import edu.rosehulman.androidproject.models.DrinkType;
 public class HomeFragment extends Fragment {
 
     public static final int DRINK_REQUEST_CODE = 0;
-    public static final int CALCULATE_INTERVAL = 200; //Seconds
+    public static final int CALCULATE_INTERVAL = 1000; //Seconds
     private static final int REMOVE_OLD_DRINK_INTERVAL =1; //hours
     private DrinkAdapter mDrinkAdapter;
     private ViewGroup rootView;
@@ -115,7 +115,7 @@ public class HomeFragment extends Fragment {
     };
 
     private void updateCaffeineLevelTextView(double caffeineLevel) {
-        ((TextView) rootView.findViewById(R.id.fragment_home_textview_caffeine_level)).setText(getString(R.string.caffeine_level, caffeineLevel));
+        ((TextView) rootView.findViewById(R.id.fragment_home_textview_caffeine_level)).setText("CAFFEINELEVEL: " + String.format("%.2f", caffeineLevel) + "‰");//setText(getString(R.string.caffeine_level, caffeineLevel));
     }
 
     @Override

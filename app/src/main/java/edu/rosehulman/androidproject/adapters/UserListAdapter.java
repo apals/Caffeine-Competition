@@ -59,7 +59,7 @@ public class UserListAdapter extends ArrayAdapter<User> {
         }
 
         ((TextView) convertView.findViewById(R.id.username)).setText(getItem(position).getUsername());
-        ((TextView) convertView.findViewById(R.id.caffeinelevel)).setText(getItem(position).getCaffeineLevel() + " mg");
+        ((TextView) convertView.findViewById(R.id.caffeinelevel)).setText(String.format("%.2f", getItem(position).getCaffeineLevel()) + "‰");
         //((TextView) convertView.findViewById(R.id.subtext_date)).setText(getItem(position).getDrinkHistory().get(getItem(position).getDrinkHistory().size() - 1).getFormattedDate());
 
 

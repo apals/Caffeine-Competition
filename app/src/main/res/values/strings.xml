@@ -30,5 +30,6 @@
     <string name="not_all_fields_filled_out_message">You need to fill in all fields.</string>
     <string name="switch_gender_text">Gender</string>
     <string name="switch_label_text_standard">male</string>
+    <string name="user_list_object_temp_mg">20 mg</string>
 
 </resources>

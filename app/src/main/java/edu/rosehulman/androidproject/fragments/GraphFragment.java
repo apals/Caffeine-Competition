@@ -33,7 +33,7 @@ import edu.rosehulman.androidproject.models.User;
  */
 public class GraphFragment extends Fragment {
 
-    private static final long UPDATE_GRAPH_INTERVAL = 200; //ms
+    private static final long UPDATE_GRAPH_INTERVAL = 1000; //ms
     private static final long UPDATE_GRAPH_SLOW_INTERVAL = 10000; //ms
     private GraphicalView mLineChart;
     private XYMultipleSeriesRenderer renderer;

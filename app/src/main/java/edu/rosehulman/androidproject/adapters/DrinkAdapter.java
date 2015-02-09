@@ -22,7 +22,6 @@ public class DrinkAdapter extends ArrayAdapter<Drink> {
     private Activity context;
     private ArrayList<Drink> mDrinks;
 
-
     public DrinkAdapter(Context context, int textViewResourceId, ArrayList<Drink> objects) {
         super(context, textViewResourceId, objects);
         this.context = (Activity) context;
