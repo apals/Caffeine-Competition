@@ -95,10 +95,16 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                if (dataSnapshot.getChildrenCount() != 5) {
+                    return;
+                }
                 User changedUser = createUserFromSnapShot(dataSnapshot);
                 for (int i = 0; i < users.size(); i++) {
                     if (users.get(i).getUsername().equals(changedUser.getUsername())) {
-                        users.get(i).setDrinkHistory(changedUser.getDrinkHistory());
+                        for (Drink drink: changedUser.getDrinkHistory()) {
+                            if (!users.get(i).getDrinkHistory().contains(drink))
+                                users.get(i).getDrinkHistory().add(drink);
+                        }
                         break;
                     }
                 }
@@ -106,7 +112,6 @@ public class MainActivity extends ActionBarActivity {
                 Collections.sort(users);
                 //UserListFragment.getInstance().updateList();
                 //GraphFragment.getInstance().updateGraph();
-
             }
 
             @Override

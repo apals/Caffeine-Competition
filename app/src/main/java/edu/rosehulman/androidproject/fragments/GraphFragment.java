@@ -35,6 +35,7 @@ public class GraphFragment extends Fragment {
 
     private static final long UPDATE_GRAPH_INTERVAL = 1000; //ms
     private static final long UPDATE_GRAPH_SLOW_INTERVAL = 10000; //ms
+    public static final double MAX_Y = 0.30;
     private GraphicalView mLineChart;
     private XYMultipleSeriesRenderer renderer;
     private XYMultipleSeriesDataset dataset;
@@ -53,7 +54,7 @@ public class GraphFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        checkBoxes = new ArrayList<CheckBox>();
+        checkBoxes = new ArrayList<>();
     }
 
     @Override
@@ -144,7 +145,11 @@ public class GraphFragment extends Fragment {
     private Runnable updateGraphSlow = new Runnable() {
         public void run() {
             System.out.println("Updating Y Bounds");
-            renderer.setYAxisMax(((MainActivity) getActivity()).getHighestCaffeineLevel() + 0.2, 0);
+            double newYBounds = ((MainActivity) getActivity()).getHighestCaffeineLevel();
+            if (newYBounds > MAX_Y) {
+                newYBounds = 0.1;
+            }
+            renderer.setYAxisMax(newYBounds + 0.2, 0);
             mHandler.postDelayed(updateGraphSlow, UPDATE_GRAPH_SLOW_INTERVAL);
         }
     };
