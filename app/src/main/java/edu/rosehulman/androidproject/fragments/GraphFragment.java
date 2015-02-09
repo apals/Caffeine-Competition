@@ -8,11 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
@@ -22,8 +20,7 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.logging.LogRecord;
+import java.util.HashMap;
 
 import edu.rosehulman.androidproject.GraphUtils;
 import edu.rosehulman.androidproject.R;
@@ -36,23 +33,22 @@ import edu.rosehulman.androidproject.models.User;
  */
 public class GraphFragment extends Fragment {
 
+    private static final long UPDATE_GRAPH_INTERVAL = 200; //ms
+    private static final long UPDATE_GRAPH_SLOW_INTERVAL = 10000; //ms
     private GraphicalView mLineChart;
     private XYMultipleSeriesRenderer renderer;
     private XYMultipleSeriesDataset dataset;
     private View rootView;
     private ArrayList<CheckBox> checkBoxes;
 
-
     private static GraphFragment instance;
     private Handler mHandler = new Handler();
-
 
     public static GraphFragment getInstance() {
         if (instance == null)
             instance = new GraphFragment();
         return instance;
     }
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -71,6 +67,7 @@ public class GraphFragment extends Fragment {
         mLineChart.setBackgroundColor(Color.WHITE);
 
         ((LinearLayout) rootView.findViewById(R.id.chart)).addView(mLineChart);
+
         return rootView;
     }
 
@@ -105,8 +102,6 @@ public class GraphFragment extends Fragment {
         ((LinearLayout) rootView.findViewById(R.id.linearlayout_scrollview)).addView(button);
 
     }
-
-
     private Runnable updateGraph = new Runnable() {
         public void run() {
             if (dataset == null || mLineChart == null)
@@ -114,7 +109,8 @@ public class GraphFragment extends Fragment {
             ArrayList<User> users = ((MainActivity) getActivity()).getUsers();
 
 
-            for (User user : users) {
+            for (int i = 0; i < users.size(); i++) {
+                User user = users.get(i);
                 boolean finns = false;
                 for (CheckBox box : checkBoxes) {
                     if (box.getText().toString().equals(user.getUsername())) {
@@ -127,6 +123,9 @@ public class GraphFragment extends Fragment {
                     dataset.addSeries(series);
                     XYSeriesRenderer r = GraphUtils.getSeriesRenderer(getActivity());
                     renderer.addSeriesRenderer(r);
+                    if (i != 0) {
+                        r.setColor(getResources().getColor(R.color.yellow));
+                    }
                     addUserCheckBox(user);
                 }
             }
@@ -138,12 +137,21 @@ public class GraphFragment extends Fragment {
                 }
             }
             mLineChart.repaint();
-            mHandler.postDelayed(updateGraph, 100);
+            mHandler.postDelayed(updateGraph, UPDATE_GRAPH_INTERVAL);
+        }
+    };
+
+    private Runnable updateGraphSlow = new Runnable() {
+        public void run() {
+            System.out.println("Updating Y Bounds");
+            renderer.setYAxisMax(((MainActivity) getActivity()).getHighestCaffeineLevel() + 0.2, 0);
+            mHandler.postDelayed(updateGraphSlow, UPDATE_GRAPH_SLOW_INTERVAL);
         }
     };
 
     public void startUpdating() {
-        mHandler.postDelayed(updateGraph, 100);
+        mHandler.postDelayed(updateGraph, UPDATE_GRAPH_INTERVAL);
+        mHandler.postDelayed(updateGraphSlow, UPDATE_GRAPH_INTERVAL);
     }
 
 

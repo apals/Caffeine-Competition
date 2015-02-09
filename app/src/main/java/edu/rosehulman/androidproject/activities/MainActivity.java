@@ -59,6 +59,7 @@ public class MainActivity extends ActionBarActivity {
     private ArrayList<User> users;
 
     public static User USER;
+    private double highestCaffeineLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,6 +229,14 @@ public class MainActivity extends ActionBarActivity {
         return users;
     }
 
+    public void setHighestCaffeineLevel(double highestCaffeineLevel) {
+        this.highestCaffeineLevel = highestCaffeineLevel;
+    }
+
+    public double getHighestCaffeineLevel() {
+        return highestCaffeineLevel;
+    }
+
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
      * sequence.
@@ -268,12 +277,13 @@ public class MainActivity extends ActionBarActivity {
         String username = (String) userData.get("username");
         String email = (String) userData.get("email");
         //int weight = Integer.parseInt((String) userData.get("weight"));
+        String gender = (String) userData.get("gender");
         ArrayList<Drink> userDrinkList = new ArrayList<>();
         for(DataSnapshot d : dataSnapshot.getChildren()) {
             if (d.getKey().equals("drinkHistory")) {
                 for(DataSnapshot child: d.getChildren()) {
                     HashMap<String, Object> drink = (HashMap<String, Object>) child.getValue();
-                    double a = (double) drink.get("remainingCaffeine");
+//                    double a = (double) drink.get("remainingCaffeine");
                     Date date = new Date((long) drink.get("dateTime"));
 
                     HashMap drinkType = (HashMap) drink.get("drinkType");
@@ -285,6 +295,6 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         }
-        return new User(username, email, 80, userDrinkList);
+        return new User(username, email, 80, gender, userDrinkList);
     }
 }

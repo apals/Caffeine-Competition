@@ -8,15 +8,15 @@ import java.util.Date;
 public class DateCaffeinePoint {
 
     private Date date;
-    private int caffeine;
-    public DateCaffeinePoint(Date date, int caffeine) {
+    private double caffeine;
+    public DateCaffeinePoint(Date date, double caffeine) {
         this.date = date;
         this.caffeine = caffeine;
     }
     public Date getDate() {
         return date;
     }
-    public int getCaffeine() {
+    public double getCaffeine() {
         return caffeine;
     }
 }

@@ -6,7 +6,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +48,17 @@ public class RegisterActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_register);
 
+        ((Switch) findViewById(R.id.register_switch)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    ((TextView) findViewById(R.id.register_switch_label)).setText("female");
+                } else {
+                    ((TextView) findViewById(R.id.register_switch_label)).setText("male");
+                }
+            }
+        });
+
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));
 
@@ -57,12 +70,13 @@ public class RegisterActivity extends ActionBarActivity {
                     String email = ((AutoCompleteTextView) findViewById(R.id.register_email)).getText().toString();
                     String username = ((TextView) findViewById(R.id.register_username)).getText().toString();
                     String weight = ((TextView) findViewById(R.id.register_weight)).getText().toString();
+                    String gender = ((TextView) findViewById(R.id.register_switch_label)).getText().toString();
                     String password = ((TextView) findViewById(R.id.register_password)).getText().toString();
                     String repeatPassword = ((TextView) findViewById(R.id.register_repeat_password)).getText().toString();
 
                     if (password.equals(repeatPassword)) {
                         if (email.length() > 0 && username.length() > 0 && weight.length() > 0) {
-                            register(email, username, weight, password);
+                            register(email, username, weight, gender, password);
                         } else {
                             toast(getString(R.string.not_all_fields_filled_out_message));
                         }
@@ -74,12 +88,12 @@ public class RegisterActivity extends ActionBarActivity {
         });
     }
 
-    private void register(final String email, final String username, final String weight, final String password) {
+    private void register(final String email, final String username, final String weight, final String gender, final String password) {
         showProgressBar();
         mRef.createUser(email, password, new Firebase.ResultHandler() {
                     @Override
                     public void onSuccess() {
-                        createUser(email, username, weight);
+                        createUser(email, username, weight, gender);
                         goBackToLogin(email, password);
                     }
 
@@ -105,11 +119,12 @@ public class RegisterActivity extends ActionBarActivity {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    public void createUser(String email, String username, String weight) {
+    public void createUser(String email, String username, String weight, String gender) {
         mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/drinkHistory").setValue("");
         mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/email").setValue(cleanEmail(email));
         mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/username").setValue(username);
         mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/weight").setValue(weight);
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/gender").setValue(gender);
     }
 
     public String cleanEmail(String email) {

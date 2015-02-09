@@ -20,11 +20,13 @@ public class User implements Comparable, Serializable {
     private ArrayList<Drink> drinkHistory;
     private ArrayList<DateCaffeinePoint> points = new ArrayList<>();
     private int mWeight;
+    private String mGender;
     private String mEmail;
 
-    public User(String username, String email, int weight, ArrayList<Drink> drinkHistory) {
+    public User(String username, String email, int weight, String gender, ArrayList<Drink> drinkHistory) {
         mEmail = email;
         mWeight = weight;
+        mGender = gender;
         mUsername = username;
         mDrinkHistory = drinkHistory;
     }
@@ -35,11 +37,11 @@ public class User implements Comparable, Serializable {
 
 
     //TODO: make double or float (probably double since firebase stores doubles)
-    public int getCaffeineLevel() {
-        int caffeineLevel = 0;
+    public double getCaffeineLevel() {
+        double caffeineLevel = 0;
 
         for (int i = 0; i < mDrinkHistory.size(); i++) {
-            double caffeine = mDrinkHistory.get(i).getRemainingCaffeine();
+            double caffeine = mDrinkHistory.get(i).getRemainingCaffeine(mWeight, mGender);
             if(mDrinkHistory.get(i).getSecondsPassed() < 3600*KEEP_HISTORY)
                 caffeineLevel += caffeine;
             else
@@ -65,14 +67,16 @@ public class User implements Comparable, Serializable {
 
     @Override
     public int compareTo(Object another) {
-        return ((User) another).getCaffeineLevel() - getCaffeineLevel();
+//        return ((User) another).getCaffeineLevel() - getCaffeineLevel();
+        return -1;
     }
+
 
     public void setDrinkHistory(ArrayList<Drink> drinkHistory) {
         this.drinkHistory = drinkHistory;
     }
 
-    public void addPoint(Date date, Integer caffeine) {
+    public void addPoint(Date date, double caffeine) {
         points.add(new DateCaffeinePoint(date, caffeine));
     }
 
@@ -97,5 +101,13 @@ public class User implements Comparable, Serializable {
             }
         }
         return someThingRemoved;
+    }
+
+    public int getWeight() {
+        return mWeight;
+    }
+
+    public String getGender() {
+        return mGender;
     }
 }

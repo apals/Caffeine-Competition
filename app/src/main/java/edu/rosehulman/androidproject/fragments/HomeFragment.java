@@ -31,8 +31,8 @@ import edu.rosehulman.androidproject.models.DrinkType;
 public class HomeFragment extends Fragment {
 
     public static final int DRINK_REQUEST_CODE = 0;
-    private static final long CALCULATE_INTERVAL = 100; //Seconds
-    private static final long REMOVE_OLD_DRINK_INTERVAL = 3600 * 1; //hours
+    public static final int CALCULATE_INTERVAL = 200; //Seconds
+    private static final int REMOVE_OLD_DRINK_INTERVAL =1; //hours
     private DrinkAdapter mDrinkAdapter;
     private ViewGroup rootView;
 
@@ -83,15 +83,20 @@ public class HomeFragment extends Fragment {
 
     public void startUpdating() {
         mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
-        mHandler.postDelayed(updateTaskSlow, REMOVE_OLD_DRINK_INTERVAL);
+        mHandler.postDelayed(updateTaskSlow, 3600*REMOVE_OLD_DRINK_INTERVAL);
     }
 
     private Runnable updateTask = new Runnable() {
         public void run() {
-            int caffeineLevel = MainActivity.USER.getCaffeineLevel();
+            double caffeineLevel = MainActivity.USER.getCaffeineLevel();
             updateCaffeineLevelTextView(caffeineLevel);
-            MainActivity.USER.addPoint(new Date(), caffeineLevel);
-            updateList();
+                if (caffeineLevel > ((MainActivity) getActivity()).getHighestCaffeineLevel()) {
+                    ((MainActivity) getActivity()).setHighestCaffeineLevel(caffeineLevel);
+                }
+            if (caffeineLevel > 0) {
+                MainActivity.USER.addPoint(new Date(), caffeineLevel);
+                updateList();
+            }
             //GraphFragment.getInstance().updateGraph();
             mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
         }
@@ -105,11 +110,11 @@ public class HomeFragment extends Fragment {
             if (somethingToClear) {
                 updateDataBase(MainActivity.USER.getDrinkHistory());
             }
-            mHandler.postDelayed(updateTaskSlow, REMOVE_OLD_DRINK_INTERVAL);
+            mHandler.postDelayed(updateTaskSlow, 3600*REMOVE_OLD_DRINK_INTERVAL);
         }
     };
 
-    private void updateCaffeineLevelTextView(int caffeineLevel) {
+    private void updateCaffeineLevelTextView(double caffeineLevel) {
         ((TextView) rootView.findViewById(R.id.fragment_home_textview_caffeine_level)).setText(getString(R.string.caffeine_level, caffeineLevel));
     }
 

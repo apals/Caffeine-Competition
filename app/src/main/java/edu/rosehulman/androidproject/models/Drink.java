@@ -3,12 +3,15 @@ package edu.rosehulman.androidproject.models;
 import java.io.Serializable;
 import java.util.Date;
 
+import edu.rosehulman.androidproject.fragments.HomeFragment;
+
 /**
  * Created by palssoa on 1/25/2015.
  */
 public class Drink implements Serializable, Comparable {
 
     private static final double CAFFEINE_HALF_LIFE = 5.7; //Caffeine half-life in hours
+    private static final int START_PERIOD = 60; //Seconds
     private DrinkType mDrinkType;
     private Date mDateTime;
 
@@ -17,17 +20,27 @@ public class Drink implements Serializable, Comparable {
         mDateTime = date;
     }
 
-    public double getRemainingCaffeineFrom(Date date) {
+    public double getRemainingCaffeineFrom(Date date, int weight, String gender) {
         long seconds = Math.abs((date).getTime() - getDateTime().getTime())/1000;
-        if (seconds > 60) {
-            return getDrinkType().getCaffeineAmount() * Math.pow(0.5D, seconds / (3600*CAFFEINE_HALF_LIFE)  );
+        long ms = Math.abs((date).getTime() - getDateTime().getTime());
+        double bodyWater = 0.58;
+        if (gender == "female") {
+            bodyWater = 0.49;
+        }
+        double caffeine = ((0.806 * (getDrinkType().getCaffeineAmount() / 18) * 1.2)/((bodyWater*weight))) - (0.015*(seconds/360D));
+        if (caffeine > 0) {
+            if (seconds > START_PERIOD) {
+                return caffeine;
+            } else {
+                return caffeine / (START_PERIOD*1000) * ms;
+            }
         } else {
-            return (getDrinkType().getCaffeineAmount() / 60) * seconds;
+            return 0;
         }
     }
 
-    public double getRemainingCaffeine() {
-        return getRemainingCaffeineFrom(new Date());
+    public double getRemainingCaffeine(int weight, String gender) {
+        return getRemainingCaffeineFrom(new Date(), weight, gender);
     }
 
     public String getFormattedDate() {
@@ -37,7 +50,7 @@ public class Drink implements Serializable, Comparable {
     }
 
     public String toString() {
-        return "drinkName: " + mDrinkType.getDrinkName() + " caffienAmount: " + mDrinkType.getCaffeineAmount();
+        return "drinkName: " + mDrinkType.getDrinkName() + " caffeineAmount: " + mDrinkType.getCaffeineAmount();
 
     }
 

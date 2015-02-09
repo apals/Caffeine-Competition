@@ -20,9 +20,10 @@ import edu.rosehulman.androidproject.models.User;
  */
 public class UserListFragment extends ListFragment {
 
-    private static final long CALCULATE_INTERVAL = 100;
+    private static final long CALCULATE_INTERVAL = 200;
     private static UserListFragment instance;
     private UserListAdapter listAdapter;
+    public double highestCaffeineLevel = 0;
 
     public static UserListFragment getInstance() {
         if (instance == null)
@@ -54,10 +55,16 @@ public class UserListFragment extends ListFragment {
     private Runnable updateTask = new Runnable() {
         public void run() {
             ArrayList<User>  userList = ((MainActivity) getActivity()).getUsers();
+            ((MainActivity) getActivity()).setHighestCaffeineLevel(0);
             for (int i = 0; i < userList.size(); i++) {
                 User user = userList.get(i);
-                int caffeineLevel = user.getCaffeineLevel();
-                user.addPoint(new Date(), caffeineLevel);
+                double caffeineLevel = user.getCaffeineLevel();
+                if (caffeineLevel > ((MainActivity) getActivity()).getHighestCaffeineLevel()) {
+                    ((MainActivity) getActivity()).setHighestCaffeineLevel(caffeineLevel);
+                }
+                if (caffeineLevel > 0) {
+                    user.addPoint(new Date(), caffeineLevel);
+                }
             }
             updateList();
             //GraphFragment.getInstance().updateGraph();
