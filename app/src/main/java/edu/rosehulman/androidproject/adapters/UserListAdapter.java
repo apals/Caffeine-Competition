@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
+import org.achartengine.model.TimeSeries;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
 import java.util.List;
 
@@ -47,7 +50,14 @@ public class UserListAdapter extends ArrayAdapter<User> {
                 public void onClick(View v) {
                     LinearLayout toolbar = (LinearLayout) a.findViewById(R.id.toolbar);
 
-                    mLineChart = ChartFactory.getLineChartView(context, GraphUtils.getDataset((((MainActivity) context).getUsers())), GraphUtils.getMultipleSeriesRenderer(context));
+                    XYMultipleSeriesDataset dataset = GraphUtils.getDataset((((MainActivity) context).getUsers()));
+                    TimeSeries series = new TimeSeries("lol");
+                    series.add(1,1);
+                    dataset.addSeries(series);
+
+                    XYMultipleSeriesRenderer renderer = GraphUtils.getMultipleSeriesRenderer(context);
+                    renderer.addSeriesRenderer(GraphUtils.getSeriesRenderer(context));
+                    mLineChart = ChartFactory.getTimeChartView(context, dataset, renderer, "HH-mm-ss");
                     toolbar.addView(mLineChart);
                     // Creating the expand animation for the item
                     ExpandAnimation expandAni = new ExpandAnimation(toolbar, 500);
