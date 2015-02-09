@@ -96,10 +96,9 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                System.out.println("ON childn changed : " + dataSnapshot.getValue() + " get children count " + dataSnapshot.getChildrenCount());
-
-                if (dataSnapshot.getChildrenCount() != 5)
+                if (dataSnapshot.getChildrenCount() != 5) {
                     return;
+                }
                 User changedUser = createUserFromSnapShot(dataSnapshot);
                 if (changedUser.getEmail().equals(USER.getEmail()))
                     return;
@@ -123,7 +122,6 @@ public class MainActivity extends ActionBarActivity {
                 Collections.sort(users);
                 UserListFragment.getInstance().updateList();
                 //GraphFragment.getInstance().updateGraph();
-
             }
 
             @Override

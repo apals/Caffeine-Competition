@@ -13,6 +13,7 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import java.util.List;
 
 import edu.rosehulman.androidproject.activities.MainActivity;
+import edu.rosehulman.androidproject.fragments.GraphFragment;
 import edu.rosehulman.androidproject.models.DateCaffeinePoint;
 import edu.rosehulman.androidproject.models.Drink;
 import edu.rosehulman.androidproject.models.User;
@@ -46,7 +47,7 @@ public class GraphUtils {
         renderer.setYTitle("Caffeine");
 
         renderer.setYAxisMin(0);
-        renderer.setYAxisMax(1, 0);
+        renderer.setYAxisMax(GraphFragment.MAX_Y, 0);
 
         /*for(User u : ((MainActivity) context).getUsers()) {
             XYSeriesRenderer s = getSeriesRenderer(context);
