@@ -132,7 +132,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 
         String username = (String) userData.get("username");
         String email = (String) userData.get("email");
-        int weight = Integer.parseInt((String) userData.get("weight"));
+        //int weight = Integer.parseInt((String) userData.get("weight"));
         String gender = ((String) userData.get("gender"));
         ArrayList<Drink> userDrinkList = new ArrayList<>();
         for(DataSnapshot d : dataSnapshot.getChildren()) {
@@ -151,7 +151,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
                 }
             }
         }
-        return new User(username, email, weight, gender, userDrinkList);
+        return new User(username, email, 80, gender, userDrinkList);
     }
 
     public void register() {

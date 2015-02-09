@@ -54,7 +54,7 @@ public class UserListFragment extends ListFragment {
 
     private Runnable updateTask = new Runnable() {
         public void run() {
-            ArrayList<User>  userList = ((MainActivity) getActivity()).getUsers();
+            ArrayList<User> userList = ((MainActivity) getActivity()).getUsers();
             ((MainActivity) getActivity()).setHighestCaffeineLevel(0);
             for (int i = 0; i < userList.size(); i++) {
                 User user = userList.get(i);
@@ -73,9 +73,8 @@ public class UserListFragment extends ListFragment {
     };
 
     public void updateList() {
-        if (listAdapter != null) {
+        if(listAdapter != null)
             listAdapter.notifyDataSetChanged();
-        }
     }
 
     @Override

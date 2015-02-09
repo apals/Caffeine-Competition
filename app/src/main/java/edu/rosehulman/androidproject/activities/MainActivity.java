@@ -80,6 +80,7 @@ public class MainActivity extends ActionBarActivity {
         this.mRef.child("users").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                System.out.println("on child added mainactivity child event listener");
                 User user = createUserFromSnapShot(dataSnapshot);
                 if (user.getUsername() == null) {
                     return;
@@ -89,22 +90,38 @@ public class MainActivity extends ActionBarActivity {
                 } else
                     users.add(user);
                 //GraphFragment.getInstance().addUserCheckBox(USER);
-                //UserListFragment.getInstance().updateList();
+                UserListFragment.getInstance().updateList();
                 //GraphFragment.getInstance().updateGraph();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                System.out.println("ON childn changed : " + dataSnapshot.getValue() + " get children count " + dataSnapshot.getChildrenCount());
+
+                if (dataSnapshot.getChildrenCount() != 5)
+                    return;
                 User changedUser = createUserFromSnapShot(dataSnapshot);
+                if (changedUser.getEmail().equals(USER.getEmail()))
+                    return;
+                
+                boolean alreadyExists = false;
                 for (int i = 0; i < users.size(); i++) {
-                    if (users.get(i).getUsername().equals(changedUser.getUsername())) {
-                        users.get(i).setDrinkHistory(changedUser.getDrinkHistory());
+                    if (users.get(i).getEmail().equals(changedUser.getEmail())) {
+                        for (Drink drink : changedUser.getDrinkHistory()) {
+                            if (!users.get(i).getDrinkHistory().contains(drink))
+                                users.get(i).getDrinkHistory().add(drink);
+                        }
+                        alreadyExists = true;
                         break;
                     }
                 }
+
+                if (!alreadyExists) {
+                    users.add(changedUser);
+                }
                 //users.add(changedUser);
                 Collections.sort(users);
-                //UserListFragment.getInstance().updateList();
+                UserListFragment.getInstance().updateList();
                 //GraphFragment.getInstance().updateGraph();
 
             }
@@ -279,9 +296,9 @@ public class MainActivity extends ActionBarActivity {
         //int weight = Integer.parseInt((String) userData.get("weight"));
         String gender = (String) userData.get("gender");
         ArrayList<Drink> userDrinkList = new ArrayList<>();
-        for(DataSnapshot d : dataSnapshot.getChildren()) {
+        for (DataSnapshot d : dataSnapshot.getChildren()) {
             if (d.getKey().equals("drinkHistory")) {
-                for(DataSnapshot child: d.getChildren()) {
+                for (DataSnapshot child : d.getChildren()) {
                     HashMap<String, Object> drink = (HashMap<String, Object>) child.getValue();
 //                    double a = (double) drink.get("remainingCaffeine");
                     Date date = new Date((long) drink.get("dateTime"));
