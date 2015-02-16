@@ -123,7 +123,7 @@ public class MainActivity extends ActionBarActivity {
                     users.add(changedUser);
                 }
                 //users.add(changedUser);
-                Collections.sort(users);
+                //Collections.sort(users);
                 UserListFragment.getInstance().updateList();
                 //GraphFragment.getInstance().updateGraph();
             }

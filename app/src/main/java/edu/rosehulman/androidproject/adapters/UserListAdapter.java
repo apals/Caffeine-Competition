@@ -85,7 +85,6 @@ public class UserListAdapter extends BaseExpandableListAdapter {
         }
 
         ((TextView) convertView.findViewById(R.id.username)).setText(((User) getGroup(groupPosition)).getUsername());
-        System.out.println("USELRISTADAPTER: " + ((User) getGroup(groupPosition)).getCaffeineLevel());
         ((TextView) convertView.findViewById(R.id.caffeinelevel)).setText(String.format("%.2f", ((User) getGroup(groupPosition)).getCaffeineLevel()) + "‰");
         return convertView;
     }
