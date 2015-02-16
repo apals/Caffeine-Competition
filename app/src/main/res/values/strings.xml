@@ -22,7 +22,7 @@
     <string name="register_height">Height (cm)</string>
     <string name="prompt_password">Password</string>
     <string name="hello_world">hello_world</string>
-    <string name="action_logout">logout</string>
+    <string name="action_logout">Logout</string>
     <string name="password_does_not_match_message">Passwords does not match</string>
     <string name="register_text_placeholder">Not already a user? Register!</string>
     <string name="remove_item">Remove drink?</string>

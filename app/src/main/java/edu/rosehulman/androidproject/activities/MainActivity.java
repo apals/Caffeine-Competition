@@ -40,7 +40,6 @@ public class MainActivity extends ActionBarActivity {
       * polish add drink design
       * check boxes color
       * weight
-      * logout capital L
       * fix graph y-resizing
       * set max caffeinelevel 
       *
