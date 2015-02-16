@@ -39,7 +39,6 @@ public class MainActivity extends ActionBarActivity {
       *
       * polish add drink design
       * check boxes color
-      * user list fragment small text should be last drink
       * weight
       * registeractivity gender option
       * logout capital L
