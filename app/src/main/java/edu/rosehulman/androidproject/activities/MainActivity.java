@@ -59,6 +59,7 @@ public class MainActivity extends ActionBarActivity {
 
     //TODO: Remove reference, use login activitys ref
     private Firebase mRef;
+    ChildEventListener childListener;
 
     //TODO: null checks on mUser when talking to firebase
     private AuthData mUser = null;
@@ -84,7 +85,7 @@ public class MainActivity extends ActionBarActivity {
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));
 
-        this.mRef.child("users").addChildEventListener(new ChildEventListener() {
+        childListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 System.out.println("ON CHILD ADDED: " + dataSnapshot.getValue());
@@ -95,7 +96,7 @@ public class MainActivity extends ActionBarActivity {
                         exists = true;
                     }
                 }
-                if (!exists) {
+                if (!exists) { 
                     users.add(user);
                 }
                 UserListFragment.getInstance().updateList();
@@ -137,20 +138,10 @@ public class MainActivity extends ActionBarActivity {
             public void onCancelled(FirebaseError firebaseError) {
 
             }
-        });
+        };
 
+        this.mRef.child("users").addChildEventListener(childListener);
 
-        this.mRef.authAnonymously(new Firebase.AuthResultHandler() {
-            @Override
-            public void onAuthenticated(AuthData authData) {
-                MainActivity.this.mUser = authData;
-            }
-
-            @Override
-            public void onAuthenticationError(FirebaseError firebaseError) {
-                MainActivity.this.mUser = null;
-            }
-        });
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
 
@@ -213,6 +204,7 @@ public class MainActivity extends ActionBarActivity {
         UserListFragment.getInstance().stopUpdating();
         GraphFragment.getInstance().stopUpdating();
         USER = null;
+        mRef.removeEventListener(childListener);
         mRef = null;
         LoginActivity.LOGGED_IN = false;
         finish();
