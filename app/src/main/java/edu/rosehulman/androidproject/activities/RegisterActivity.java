@@ -61,7 +61,7 @@ public class RegisterActivity extends ActionBarActivity {
                     String email = ((AutoCompleteTextView) findViewById(R.id.register_email)).getText().toString();
                     String username = ((TextView) findViewById(R.id.register_username)).getText().toString();
                     String weight = ((TextView) findViewById(R.id.register_weight)).getText().toString();
-                    String gender = switchman.isChecked() ? getString(R.string.male) : getString(R.string.female);
+                    String gender = switchman.isChecked() ? getString(R.string.female) : getString(R.string.male);
                     String password = ((TextView) findViewById(R.id.register_password)).getText().toString();
                     String repeatPassword = ((TextView) findViewById(R.id.register_repeat_password)).getText().toString();
 
