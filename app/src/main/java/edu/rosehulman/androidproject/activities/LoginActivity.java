@@ -37,6 +37,8 @@ import edu.rosehulman.androidproject.models.User;
 public class LoginActivity extends ActionBarActivity implements OnClickListener {
 
     private final static int REGISTER_REQUEST_CODE = 0;
+    private static final int START_MAIN_REQUEST_CODE = 1;
+
     public static final String KEY_EMAIL = "key_email";
     public static final String KEY_PASSWORD = "key_password";
     private static final String USERS_CHILD = "users";
@@ -98,11 +100,12 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         i.putExtra(KEY_EMAIL, user);
         i.putExtra(KEY_USERLIST, userList);
         hideProgressBar();
-        startActivity(i);
+        mRef = null;
+        startActivityForResult(i, START_MAIN_REQUEST_CODE);
     }
 
     public void getUserData(final String email) {
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email)).addValueEventListener(new ValueEventListener() {
+        ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!LOGGED_IN) {
@@ -114,11 +117,12 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("COULDNT RETRIEVE USER DATA");
             }
-        });
+        };
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email)).addValueEventListener(valueEventListener);
     }
 
     public void getUserlistData(final User user) {
-        mRef.child(USERS_CHILD + "/").addValueEventListener(new ValueEventListener() {
+        ValueEventListener userListListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!LOGGED_IN) {
@@ -135,7 +139,9 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("COULDNT RETRIEVE USER DATA");
             }
-        });
+        };
+
+        mRef.child(USERS_CHILD + "/").addValueEventListener(userListListener);
     }
 
     public void toast(String message) {
@@ -190,12 +196,17 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         if (resultCode != RESULT_OK) {
             return;
         }
-        String email = data.getStringExtra(KEY_EMAIL);
-        String password = data.getStringExtra(KEY_PASSWORD);
 
-        ((AutoCompleteTextView) findViewById(R.id.email)).setText(email);
-        ((TextView) findViewById(R.id.password)).setText(password);
-        authorize(email, password);
+        if (requestCode == REGISTER_REQUEST_CODE) {
+            String email = data.getStringExtra(KEY_EMAIL);
+            String password = data.getStringExtra(KEY_PASSWORD);
+
+            ((AutoCompleteTextView) findViewById(R.id.email)).setText(email);
+            ((TextView) findViewById(R.id.password)).setText(password);
+            authorize(email, password);
+        } else if (requestCode == START_MAIN_REQUEST_CODE) {
+            mRef = new Firebase(getString(R.string.url));
+        }
     }
 
     public void setRegisterButton() {
