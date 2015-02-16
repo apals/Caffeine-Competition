@@ -27,6 +27,7 @@ import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.fragments.GraphFragment;
 import edu.rosehulman.androidproject.fragments.HomeFragment;
 import edu.rosehulman.androidproject.fragments.UserListFragment;
+import edu.rosehulman.androidproject.models.DateCaffeinePoint;
 import edu.rosehulman.androidproject.models.Drink;
 import edu.rosehulman.androidproject.models.DrinkType;
 import edu.rosehulman.androidproject.models.User;
@@ -176,6 +177,8 @@ public class MainActivity extends ActionBarActivity {
         titleIndicator.setRadius(12);
         titleIndicator.setFillColor(getResources().getColor(R.color.blue));
         titleIndicator.setViewPager(mPager);
+
+        prePopulatePoints(USER);
     }
 
     @Override
@@ -322,5 +325,18 @@ public class MainActivity extends ActionBarActivity {
             }
         }
         return new User(username, email, 80, gender, userDrinkList);
+    }
+
+    public void prePopulatePoints(User user) {
+        long firstDrink = user.getDrinkHistory().get(user.getDrinkHistory().size() - 1).getDateTime().getTime();
+        long now = new Date().getTime();
+
+        while(firstDrink < now) {
+            Date nowDate = new Date();
+            nowDate.setTime(firstDrink);
+            user.addPoint(nowDate, user.getCaffeineLevel(nowDate));
+//            System.out.println(nowDate + " - " + user.getCaffeineLevel(nowDate));
+            firstDrink += HomeFragment.CALCULATE_INTERVAL;
+        }
     }
 }

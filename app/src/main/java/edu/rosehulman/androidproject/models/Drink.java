@@ -20,7 +20,7 @@ public class Drink implements Serializable, Comparable {
         mDateTime = date;
     }
 
-    public double getRemainingCaffeineFrom(Date date, int weight, String gender) {
+    public double getRemainingCaffeine(Date date, int weight, String gender) {
         long seconds = Math.abs((date).getTime() - getDateTime().getTime())/1000;
         long ms = Math.abs((date).getTime() - getDateTime().getTime());
         double bodyWater = 0.58;
@@ -40,7 +40,7 @@ public class Drink implements Serializable, Comparable {
     }
 
     public double getRemainingCaffeine(int weight, String gender) {
-        return getRemainingCaffeineFrom(new Date(), weight, gender);
+        return getRemainingCaffeine(new Date(), weight, gender);
     }
 
     public String getFormattedDate() {

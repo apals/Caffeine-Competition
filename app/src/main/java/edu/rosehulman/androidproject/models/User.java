@@ -37,17 +37,21 @@ public class User implements Comparable, Serializable {
 
 
     //TODO: make double or float (probably double since firebase stores doubles)
-    public double getCaffeineLevel() {
+    public double getCaffeineLevel(Date date) {
         double caffeineLevel = 0;
 
         for (int i = 0; i < mDrinkHistory.size(); i++) {
-            double caffeine = mDrinkHistory.get(i).getRemainingCaffeine(mWeight, mGender);
+            double caffeine = mDrinkHistory.get(i).getRemainingCaffeine(date, mWeight, mGender);
             if(mDrinkHistory.get(i).getSecondsPassed() < 3600*KEEP_HISTORY)
                 caffeineLevel += caffeine;
             else
                 mDrinkHistory.remove(mDrinkHistory.get(i));
         }
         return caffeineLevel;
+    }
+
+    public double getCaffeineLevel() {
+        return getCaffeineLevel(new Date());
     }
 
     public void drink(Drink drink) {
