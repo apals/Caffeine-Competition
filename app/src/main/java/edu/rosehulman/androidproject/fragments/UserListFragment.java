@@ -22,7 +22,7 @@ import edu.rosehulman.androidproject.models.User;
  */
 public class UserListFragment extends Fragment {
 
-    private static final long CALCULATE_INTERVAL = 1000;
+    private static final long CALCULATE_INTERVAL = 10000;
     private static UserListFragment instance;
     private UserListAdapter listAdapter;
     public double highestCaffeineLevel = 0;
