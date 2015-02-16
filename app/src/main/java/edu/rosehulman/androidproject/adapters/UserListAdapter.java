@@ -20,6 +20,7 @@ import edu.rosehulman.androidproject.GraphUtils;
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.activities.MainActivity;
 import edu.rosehulman.androidproject.models.DateCaffeinePoint;
+import edu.rosehulman.androidproject.models.Drink;
 import edu.rosehulman.androidproject.models.User;
 
 /**
@@ -84,6 +85,9 @@ public class UserListAdapter extends BaseExpandableListAdapter {
 
         ((TextView) convertView.findViewById(R.id.username)).setText(((User) getGroup(groupPosition)).getUsername());
         ((TextView) convertView.findViewById(R.id.caffeinelevel)).setText(String.format("%.2f", ((User) getGroup(groupPosition)).getCaffeineLevel()) + "‰");
+        List<Drink> drinkHistory = ((User) getGroup(groupPosition)).getDrinkHistory();
+        if(drinkHistory.size() > 0)
+            ((TextView) convertView.findViewById(R.id.subtext_last_drink)).setText("LAST DRINK: " + drinkHistory.get(drinkHistory.size() - 1).getDrinkType().getDrinkName());
         return convertView;
     }
 
