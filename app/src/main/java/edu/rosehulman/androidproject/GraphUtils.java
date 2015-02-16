@@ -54,6 +54,7 @@ public class GraphUtils {
         renderer.setBarSpacing(30);
 
         renderer.setZoomEnabled(false);
+        renderer.setZoomEnabled(false, false);
         renderer.setPanEnabled(false);
 
         return renderer;

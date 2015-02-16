@@ -94,10 +94,11 @@ public class HomeFragment extends Fragment {
                     ((MainActivity) getActivity()).setHighestCaffeineLevel(caffeineLevel);
                 }
             if (caffeineLevel > 0) {
-                MainActivity.USER.addPoint(new Date(), caffeineLevel);
+                //MainActivity.USER.addPoint(new Date(), caffeineLevel);
                 updateList();
             }
             //GraphFragment.getInstance().updateGraph();
+
             mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
         }
     };

@@ -39,7 +39,13 @@ public class MainActivity extends ActionBarActivity {
       * fix graphs in userlist and graphfragment
       * remove drinks after 48 hours (THIS IS DONE LOCALLY, BUT NOT SERVE SIDE)
       * use holder pattern in listadapters
-      * use expandablelistview
+      *
+      * polish add drink design
+      * prepopulate points list
+      * minor fixing graph appearance
+      * dynamically update user list fragment graphs
+      * check boxes color
+      * user list fragment small text should be last drink
       * */
 
     public static final int HOME_ID = 0;

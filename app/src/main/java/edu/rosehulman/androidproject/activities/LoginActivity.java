@@ -206,6 +206,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
     }
 
     public void hideProgressBar() {
+        //TODO: enable all buttons
         ((ProgressBar) findViewById(R.id.login_progressbar)).setVisibility(View.INVISIBLE);
     }
 }
