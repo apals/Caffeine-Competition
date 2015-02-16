@@ -173,7 +173,9 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
             }
         }
         User user = new User(username, email, 80, gender, userDrinkList);
-        prePopulatePoints(user);
+        if (user.getCaffeineLevel() > 0) {
+            prePopulatePoints(user);
+        }
         return user;
     }
 

@@ -88,6 +88,12 @@ public class MainActivity extends ActionBarActivity {
         childListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                if (!LoginActivity.LOGGED_IN) {
+                    return;
+                }
+                if (dataSnapshot.getChildrenCount() < 4) {
+                    return;
+                }
                 System.out.println("ON CHILD ADDED: " + dataSnapshot.getValue());
                 User user = createUserFromSnapShot(dataSnapshot);
                 boolean exists = false;
@@ -96,7 +102,7 @@ public class MainActivity extends ActionBarActivity {
                         exists = true;
                     }
                 }
-                if (!exists) { 
+                if (!exists) {
                     users.add(user);
                 }
                 UserListFragment.getInstance().updateList();
@@ -104,11 +110,14 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                if (!LoginActivity.LOGGED_IN) {
+                    return;
+                }
                 System.out.println("ON CHILD CHANGED: " + dataSnapshot.getValue());
+                User changedUser = createUserFromSnapShot(dataSnapshot);
                 if (dataSnapshot.getChildrenCount() < 4) {
                     return;
                 }
-                User changedUser = createUserFromSnapShot(dataSnapshot);
                 for (int i = 0; i < users.size(); i++) {
                     if (users.get(i).getEmail().equals(changedUser.getEmail())) {
                         System.out.println(changedUser.getDrinkHistory());
@@ -200,13 +209,14 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void logout() {
+        LoginActivity.LOGGED_IN = false;
         HomeFragment.getInstance().stopUpdating();
         UserListFragment.getInstance().stopUpdating();
         GraphFragment.getInstance().stopUpdating();
         USER = null;
         mRef.removeEventListener(childListener);
+        childListener = null;
         mRef = null;
-        LoginActivity.LOGGED_IN = false;
         finish();
     }
 
