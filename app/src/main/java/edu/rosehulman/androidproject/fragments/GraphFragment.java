@@ -20,7 +20,6 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import edu.rosehulman.androidproject.GraphUtils;
 import edu.rosehulman.androidproject.R;
@@ -33,14 +32,17 @@ import edu.rosehulman.androidproject.models.User;
  */
 public class GraphFragment extends Fragment {
 
-    private static final long UPDATE_GRAPH_INTERVAL = 1000; //ms
-    private static final long UPDATE_GRAPH_SLOW_INTERVAL = 10000; //ms
+    private static final long UPDATE_GRAPH_INTERVAL = 10000; //ms
+    private static final long UPDATE_GRAPH_SLOW_INTERVAL = 20000; //ms
     public static final double MAX_Y = 0.30;
     private GraphicalView mLineChart;
     private XYMultipleSeriesRenderer renderer;
     private XYMultipleSeriesDataset dataset;
     private View rootView;
     private ArrayList<CheckBox> checkBoxes;
+    private int[] colors;
+
+
 
     private static GraphFragment instance;
     private Handler mHandler = new Handler();
@@ -55,6 +57,8 @@ public class GraphFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         checkBoxes = new ArrayList<>();
+        colors = activity.getResources().getIntArray(R.array.colors);
+
     }
 
     @Override
@@ -63,7 +67,7 @@ public class GraphFragment extends Fragment {
 
         renderer = GraphUtils.getMultipleSeriesRenderer(getActivity());
         dataset = GraphUtils.getDataset(((MainActivity) getActivity()).getUsers());
-        mLineChart = ChartFactory.getTimeChartView(getActivity(), dataset, renderer, "HH-mm-ss"); //ChartFactory.getLineChartView(getActivity(), dataset, renderer);
+        mLineChart = ChartFactory.getTimeChartView(getActivity(), dataset, renderer, "HH:mm"); //ChartFactory.getLineChartView(getActivity(), dataset, renderer);
 
         mLineChart.setBackgroundColor(Color.WHITE);
 
@@ -77,9 +81,11 @@ public class GraphFragment extends Fragment {
         CheckBox button = new CheckBox(getActivity());
         button.setChecked(true);
         button.setText(user.getUsername());
-        button.setTextColor(getResources().getColor(R.color.blue));
-        button.setHighlightColor(getResources().getColor(R.color.blue));
         final int buttonIndex = checkBoxes.size();
+
+        button.setTextColor(colors[buttonIndex%colors.length]);
+        button.setHighlightColor(colors[buttonIndex%colors.length]);
+
         button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -90,7 +96,7 @@ public class GraphFragment extends Fragment {
                     //((XYSeriesRenderer) renderer.getSeriesRendererAt(buttonIndex)).addFillOutsideLine(fill);
 
                 } else {
-                    renderer.getSeriesRendererAt(buttonIndex).setColor(getResources().getColor(R.color.blue));
+                    renderer.getSeriesRendererAt(buttonIndex).setColor(colors[buttonIndex%colors.length]);
                     //XYSeriesRenderer.FillOutsideLine fill = new XYSeriesRenderer.FillOutsideLine(XYSeriesRenderer.FillOutsideLine.Type.BELOW);
                     //fill.setColor(getActivity().getResources().getColor(R.color.transparent_blue));
                     //((XYSeriesRenderer) renderer.getSeriesRendererAt(buttonIndex)).addFillOutsideLine(fill);
@@ -121,12 +127,15 @@ public class GraphFragment extends Fragment {
                 }
                 if (!finns) {
                     TimeSeries series = new TimeSeries(user.getUsername());
+                    ArrayList<DateCaffeinePoint> points = user.getPoints();
+                    for (int p = 0; p < points.size(); p++) {
+                        DateCaffeinePoint point = points.get(p);
+                        series.add(point.getDate(), point.getCaffeine());
+                    }
                     dataset.addSeries(series);
                     XYSeriesRenderer r = GraphUtils.getSeriesRenderer(getActivity());
+                    r.setColor(colors[i%colors.length]);
                     renderer.addSeriesRenderer(r);
-                    if (i != 0) {
-                        r.setColor(getResources().getColor(R.color.yellow));
-                    }
                     addUserCheckBox(user);
                 }
             }
@@ -155,8 +164,8 @@ public class GraphFragment extends Fragment {
     };
 
     public void startUpdating() {
-        mHandler.postDelayed(updateGraph, UPDATE_GRAPH_INTERVAL);
-        mHandler.postDelayed(updateGraphSlow, UPDATE_GRAPH_INTERVAL);
+        mHandler.postDelayed(updateGraph, 1000);
+        mHandler.postDelayed(updateGraphSlow, 1000);
     }
 
 
