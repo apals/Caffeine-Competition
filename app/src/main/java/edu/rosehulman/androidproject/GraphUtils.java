@@ -43,9 +43,6 @@ public class GraphUtils {
         renderer.setLabelsTextSize(context.getResources().getDimension(R.dimen.small_text_size));
         renderer.setAxisTitleTextSize(context.getResources().getDimension(R.dimen.small_text_size));
 
-        renderer.setXTitle("Time");
-        renderer.setYTitle("Caffeine");
-
         renderer.setYAxisMin(0);
         renderer.setYAxisMax(GraphFragment.MAX_Y, 0);
 
@@ -67,24 +64,12 @@ public class GraphUtils {
         r.setLineWidth(7);
         r.setPointStyle(PointStyle.CIRCLE);
 
-        //XYSeriesRenderer.FillOutsideLine fill = new XYSeriesRenderer.FillOutsideLine(XYSeriesRenderer.FillOutsideLine.Type.BELOW);
-        //fill.setColor(context.getResources().getColor(R.color.transparent_blue));
-        //r.addFillOutsideLine(fill);
-
         return r;
     }
 
-    public static XYMultipleSeriesDataset getDataset(List<User> users) {
+    public static XYMultipleSeriesDataset getDataset() {
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 
-        /*for(User user : users) {
-            TimeSeries series = new TimeSeries(user.getUsername());
-            for(DateCaffeinePoint point : user.getPoints()) {
-                series.add(point.getDate().getTime(), point.getCaffeine());
-            }
-            dataset.addSeries(series);
-
-        }*/
         return dataset;
     }
 }
