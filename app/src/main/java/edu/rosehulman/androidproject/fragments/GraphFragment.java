@@ -158,7 +158,7 @@ public class GraphFragment extends Fragment {
             if (newYBounds > MAX_Y) {
                 newYBounds = 0.1;
             }
-            renderer.setYAxisMax(newYBounds + 0.2, 0);
+            renderer.setYAxisMax(newYBounds + 0.05, 0);
             mHandler.postDelayed(updateGraphSlow, UPDATE_GRAPH_SLOW_INTERVAL);
         }
     };
