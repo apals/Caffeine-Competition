@@ -91,10 +91,7 @@ public class UserListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = context.getLayoutInflater().inflate(R.layout.userlist_row_layout_child, null);
-            final View a = convertView;
-        }
+        convertView = context.getLayoutInflater().inflate(R.layout.userlist_row_layout_child, null);
 
         XYMultipleSeriesDataset dataset = GraphUtils.getDataset((((MainActivity) context).getUsers()));
         TimeSeries series = new TimeSeries("lol");
