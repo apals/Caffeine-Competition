@@ -49,10 +49,7 @@ public class GraphUtils {
         renderer.setYAxisMin(0);
         renderer.setYAxisMax(GraphFragment.MAX_Y, 0);
 
-        /*for(User u : ((MainActivity) context).getUsers()) {
-            XYSeriesRenderer s = getSeriesRenderer(context);
-            renderer.addSeriesRenderer(s);
-        }*/
+        renderer.setShowLegend(false);
         renderer.setShowGrid(true);
         renderer.setBarSpacing(30);
 
