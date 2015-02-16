@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,7 +83,14 @@ public class AddDrinkActivity extends ActionBarActivity implements View.OnClickL
     public void onClick(View v) {
 
         String drinkName = ((EditText) findViewById(R.id.add_drink_edittext_name)).getText().toString();
-        Integer caffeineAmount = Integer.parseInt(((EditText) findViewById(R.id.add_drink_edittext_caffine_amount)).getText().toString());
+        String caffeineAmountString = ((EditText) findViewById(R.id.add_drink_edittext_caffine_amount)).getText().toString();
+
+        if (drinkName.equals("") || drinkName == null || caffeineAmountString == null || caffeineAmountString.equals("")) {
+            toast("You need to fill out the fields to add a drink.");
+            return;
+        }
+        int caffeineAmount = Integer.parseInt(caffeineAmountString);
+
         int oldTimesConsumed = 0;
 
         if (getPreferences(MODE_PRIVATE).contains(drinkName)) {
@@ -144,5 +152,9 @@ public class AddDrinkActivity extends ActionBarActivity implements View.OnClickL
         i.putExtra(KEY_CAFFEINE_AMOUNT, caffeineAmount);
         setResult(RESULT_OK, i);
         finish();
+    }
+
+    public void toast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

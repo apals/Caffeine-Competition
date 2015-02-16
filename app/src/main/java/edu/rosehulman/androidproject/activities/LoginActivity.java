@@ -42,6 +42,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
     public static final String KEY_EMAIL = "key_email";
     public static final String KEY_PASSWORD = "key_password";
     private static final String USERS_CHILD = "users";
+    public static final String KEY_USERLIST = "user_list";
     public static boolean LOGGED_IN = false;
 
     private Firebase mRef;
@@ -93,10 +94,11 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         );
     }
 
-    public void acceptLogin(User user) {
+    public void acceptLogin(User user, ArrayList<User> userList) {
         LOGGED_IN = true;
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
         i.putExtra(KEY_EMAIL, user);
+        i.putExtra(KEY_USERLIST, userList);
         hideProgressBar();
         startActivity(i);
     }
@@ -106,7 +108,28 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!LOGGED_IN) {
-                    acceptLogin(createUserFromSnapShot(dataSnapshot));
+                    getUserlistData(createUserFromSnapShot(dataSnapshot));
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("COULDNT RETRIEVE USER DATA");
+            }
+        });
+    }
+
+    public void getUserlistData(final User user) {
+        mRef.child(USERS_CHILD + "/").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!LOGGED_IN) {
+                    ArrayList<User> userList = new ArrayList<>();
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        userList.add(createUserFromSnapShot(data));
+                    }
+
+                    acceptLogin(user, userList);
                 }
             }
 

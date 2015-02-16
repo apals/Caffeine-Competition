@@ -79,7 +79,7 @@ public class MainActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_screen_slide);
         USER = (User) getIntent().getSerializableExtra(LoginActivity.KEY_EMAIL);
-        users = new ArrayList<>();
+        users = (ArrayList<User>) getIntent().getSerializableExtra(LoginActivity.KEY_USERLIST);
 
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));
@@ -87,52 +87,40 @@ public class MainActivity extends ActionBarActivity {
         this.mRef.child("users").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                System.out.println("on child added mainactivity child event listener");
+                System.out.println("ON CHILD ADDED: " + dataSnapshot.getValue());
                 User user = createUserFromSnapShot(dataSnapshot);
-                if (user.getUsername() == null) {
-                    return;
+                boolean exists = false;
+                for (int i = 0; i < users.size(); i++) {
+                    if (users.get(i).getEmail().equals(user.getEmail())) {
+                        exists = true;
+                    }
                 }
-                if (user.getUsername().equals(USER.getUsername())) {
-                    users.add(USER);
-                } else
+                if (!exists) {
                     users.add(user);
-                //GraphFragment.getInstance().addUserCheckBox(USER);
+                }
                 UserListFragment.getInstance().updateList();
-                //GraphFragment.getInstance().updateGraph();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                if (dataSnapshot.getChildrenCount() != 5) {
+                System.out.println("ON CHILD CHANGED: " + dataSnapshot.getValue());
+                if (dataSnapshot.getChildrenCount() < 4) {
                     return;
                 }
-                System.out.println(dataSnapshot.getValue());
                 User changedUser = createUserFromSnapShot(dataSnapshot);
-                if (USER == null) {
-                    return;
-                }
-                if (changedUser.getEmail().equals(USER.getEmail()))
-                    return;
-                
-                boolean alreadyExists = false;
                 for (int i = 0; i < users.size(); i++) {
                     if (users.get(i).getEmail().equals(changedUser.getEmail())) {
-                        for (Drink drink : changedUser.getDrinkHistory()) {
-                            if (!users.get(i).getDrinkHistory().contains(drink))
-                                users.get(i).getDrinkHistory().add(drink);
+                        System.out.println(changedUser.getDrinkHistory());
+                        if (changedUser.getDrinkHistory() == null) {
+                            users.get(i).setDrinkHistory(new ArrayList<Drink>());
+                        } else {
+                            users.get(i).setDrinkHistory(changedUser.getDrinkHistory());
                         }
-                        alreadyExists = true;
+                        // TODO: Repopulate users entire point history
                         break;
                     }
                 }
-
-                if (!alreadyExists) {
-                    users.add(changedUser);
-                }
-                //users.add(changedUser);
-                //Collections.sort(users);
                 UserListFragment.getInstance().updateList();
-                //GraphFragment.getInstance().updateGraph();
             }
 
             @Override
@@ -328,15 +316,17 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void prePopulatePoints(User user) {
-        long firstDrink = user.getDrinkHistory().get(user.getDrinkHistory().size() - 1).getDateTime().getTime();
-        long now = new Date().getTime();
+        if (user.getDrinkHistory().size() > 0) {
+            long firstDrink = user.getDrinkHistory().get(user.getDrinkHistory().size() - 1).getDateTime().getTime();
+            long now = new Date().getTime();
 
-        while(firstDrink < now) {
-            Date nowDate = new Date();
-            nowDate.setTime(firstDrink);
-            user.addPoint(nowDate, user.getCaffeineLevel(nowDate));
+            while(firstDrink < now) {
+                Date nowDate = new Date();
+                nowDate.setTime(firstDrink);
+                user.addPoint(nowDate, user.getCaffeineLevel(nowDate));
 //            System.out.println(nowDate + " - " + user.getCaffeineLevel(nowDate));
-            firstDrink += HomeFragment.CALCULATE_INTERVAL;
+                firstDrink += HomeFragment.CALCULATE_INTERVAL;
+            }
         }
     }
 }
