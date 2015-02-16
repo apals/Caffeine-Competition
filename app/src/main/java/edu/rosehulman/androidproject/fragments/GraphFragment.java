@@ -164,8 +164,8 @@ public class GraphFragment extends Fragment {
     };
 
     public void startUpdating() {
-        mHandler.postDelayed(updateGraph, 1000);
-        mHandler.postDelayed(updateGraphSlow, 1000);
+        mHandler.postDelayed(updateGraph, 1);
+        mHandler.postDelayed(updateGraphSlow, 1);
     }
 
 

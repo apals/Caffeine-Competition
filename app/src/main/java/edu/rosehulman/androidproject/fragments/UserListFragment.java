@@ -55,7 +55,7 @@ public class UserListFragment extends Fragment {
     }
 
     public void startUpdating() {
-        mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
+        mHandler.postDelayed(updateTask, 1);
     }
 
     private Runnable updateTask = new Runnable() {

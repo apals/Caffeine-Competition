@@ -82,8 +82,8 @@ public class HomeFragment extends Fragment {
     }
 
     public void startUpdating() {
-        mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
-        mHandler.postDelayed(updateTaskSlow, 3600*REMOVE_OLD_DRINK_INTERVAL);
+        mHandler.postDelayed(updateTask, 1);
+        mHandler.postDelayed(updateTaskSlow, 1);
     }
 
     private Runnable updateTask = new Runnable() {
