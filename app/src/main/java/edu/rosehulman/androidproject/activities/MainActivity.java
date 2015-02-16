@@ -35,18 +35,21 @@ import edu.rosehulman.androidproject.models.User;
 public class MainActivity extends ActionBarActivity {
 
      /* TODO:
-      * save login
-      * make user picture round?
-      * fix graphs in userlist and graphfragment
-      * remove drinks after 48 hours (THIS IS DONE LOCALLY, BUT NOT SERVE SIDE)
       * use holder pattern in listadapters
       *
       * polish add drink design
-      * prepopulate points list
-      * minor fixing graph appearance
-      * dynamically update user list fragment graphs
       * check boxes color
       * user list fragment small text should be last drink
+      * weight
+      * registeractivity gender option
+      * logout capital L
+      * fix graph y-resizing
+      * set max caffeinelevel 
+      *
+      * OPTIONAL:
+      * save login
+      * make user picture round?
+      * profile picture photo
       * */
 
     public static final int HOME_ID = 0;
