@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,7 +16,6 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
 import java.util.List;
 
-import edu.rosehulman.androidproject.ExpandAnimation;
 import edu.rosehulman.androidproject.GraphUtils;
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.activities.MainActivity;
