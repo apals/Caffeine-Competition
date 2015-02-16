@@ -54,7 +54,7 @@ public class User implements Comparable, Serializable {
     }
 
     public void drink(Drink drink) {
-        mDrinkHistory.add(0, drink);
+        mDrinkHistory.add(drink);
     }
     public ArrayList<Drink> getDrinkHistory() {
         return mDrinkHistory;
