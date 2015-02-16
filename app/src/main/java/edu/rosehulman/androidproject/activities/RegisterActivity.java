@@ -48,16 +48,7 @@ public class RegisterActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_register);
 
-        ((Switch) findViewById(R.id.register_switch)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    ((TextView) findViewById(R.id.register_switch_label)).setText("female");
-                } else {
-                    ((TextView) findViewById(R.id.register_switch_label)).setText("male");
-                }
-            }
-        });
+        final Switch switchman = ((Switch) findViewById(R.id.register_switch));
 
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));
@@ -70,7 +61,7 @@ public class RegisterActivity extends ActionBarActivity {
                     String email = ((AutoCompleteTextView) findViewById(R.id.register_email)).getText().toString();
                     String username = ((TextView) findViewById(R.id.register_username)).getText().toString();
                     String weight = ((TextView) findViewById(R.id.register_weight)).getText().toString();
-                    String gender = ((TextView) findViewById(R.id.register_switch_label)).getText().toString();
+                    String gender = switchman.isChecked() ? getString(R.string.female) : getString(R.string.male);
                     String password = ((TextView) findViewById(R.id.register_password)).getText().toString();
                     String repeatPassword = ((TextView) findViewById(R.id.register_repeat_password)).getText().toString();
 
