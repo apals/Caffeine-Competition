@@ -80,18 +80,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/switch_gender_text"
+                    android:textOff="@string/male"
+                    android:textOn="@string/female"
                     android:textSize="@dimen/small_text_size"
                     android:id="@+id/register_switch"
                     android:layout_gravity="left" />
-                <TextView
-                    android:id="@+id/register_switch_label"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/switch_label_text_standard"
-                    android:layout_marginLeft="30dp"
-                    android:textSize="@dimen/small_text_size"
-                    android:gravity="center_vertical"
-                    android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
             <EditText android:id="@+id/register_password"
