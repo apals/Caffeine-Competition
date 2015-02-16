@@ -99,7 +99,11 @@ public class MainActivity extends ActionBarActivity {
                 if (dataSnapshot.getChildrenCount() != 5) {
                     return;
                 }
+                System.out.println(dataSnapshot.getValue());
                 User changedUser = createUserFromSnapShot(dataSnapshot);
+                if (USER == null) {
+                    return;
+                }
                 if (changedUser.getEmail().equals(USER.getEmail()))
                     return;
                 
@@ -214,6 +218,7 @@ public class MainActivity extends ActionBarActivity {
         UserListFragment.getInstance().stopUpdating();
         GraphFragment.getInstance().stopUpdating();
         USER = null;
+        mRef = null;
         LoginActivity.LOGGED_IN = false;
         finish();
     }
