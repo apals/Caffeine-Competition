@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import edu.rosehulman.androidproject.R;
+import edu.rosehulman.androidproject.fragments.HomeFragment;
 import edu.rosehulman.androidproject.models.Drink;
 import edu.rosehulman.androidproject.models.DrinkType;
 import edu.rosehulman.androidproject.models.User;
@@ -174,7 +175,9 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
                 }
             }
         }
-        return new User(username, email, 80, gender, userDrinkList);
+        User user = new User(username, email, 80, gender, userDrinkList);
+        prePopulatePoints(user);
+        return user;
     }
 
     public void register() {
@@ -231,5 +234,24 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
     public void hideProgressBar() {
         //TODO: enable all buttons
         ((ProgressBar) findViewById(R.id.login_progressbar)).setVisibility(View.INVISIBLE);
+    }
+
+    public void prePopulatePoints(User user) {
+        if (user.getDrinkHistory().size() > 0) {
+            long firstDrink = user.getDrinkHistory().get(user.getDrinkHistory().size() - 1).getDateTime().getTime();
+            long now = new Date().getTime();
+            long now = new Date().getTime();
+
+            while(firstDrink < now) {
+                Date nowDate = new Date();
+                nowDate.setTime(firstDrink);
+                double caffeineLevel = user.getCaffeineLevel(nowDate);
+                if (caffeineLevel > 0) {
+                    user.addPoint(nowDate, caffeineLevel);
+                }
+//            System.out.println(nowDate + " - " + user.getCaffeineLevel(nowDate));
+                firstDrink += HomeFragment.CALCULATE_INTERVAL*10;
+            }
+        }
     }
 }
