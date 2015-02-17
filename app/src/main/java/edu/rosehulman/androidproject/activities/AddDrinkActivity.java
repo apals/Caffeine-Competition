@@ -53,7 +53,11 @@ public class AddDrinkActivity extends ActionBarActivity implements View.OnClickL
         mCommonDrinkTypes = new ArrayList<CommonDrink>();
 
         SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        putStandardDrinks(prefs);
+
         Map<String, String> drinks = (Map<String, String>) prefs.getAll();
+
+
 
         for (Map.Entry<String, String> entry : drinks.entrySet()) {
             String drinkName = entry.getKey();
@@ -77,6 +81,28 @@ public class AddDrinkActivity extends ActionBarActivity implements View.OnClickL
         mListView = (ListView) findViewById(R.id.drink_list);
         mAdapter = new CommonDrinkAdapter(this, R.layout.common_drink_list_row_layout, mCommonDrinkTypes);
         mListView.setAdapter(mAdapter);
+    }
+
+    private void putStandardDrinks(SharedPreferences prefs) {
+        SharedPreferences.Editor editor = prefs.edit();
+        DrinkType standardDrinks[] = new DrinkType[] {new DrinkType("Coffee", 100), new DrinkType("Espresso", 120), new DrinkType("Energy Drink", 150), new DrinkType("Double Espresso", 200)};
+
+        for (Map.Entry<String, String> entry : ((Map<String, String>) prefs.getAll()).entrySet()) {
+            if(entry.getKey().equals(standardDrinks[0].getDrinkName()))
+                return;
+        }
+
+        for(int i = 0; i < standardDrinks.length; i++) {
+            JSONObject json = null;
+            try {
+                json = new JSONObject("{\"caffeineAmount\":\"" + standardDrinks[i].getCaffeineAmount() + "\",\"timesConsumed\":\"" + 1 + "\"}");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            editor.putString(standardDrinks[i].getDrinkName(), json.toString());
+        }
+        editor.apply();
+        editor.commit();
     }
 
     @Override
