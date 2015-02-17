@@ -40,8 +40,6 @@ public class MainActivity extends ActionBarActivity {
       * polish add drink design
       * check boxes color
       * fix graph y-resizing
-      * set max caffeinelevel
-      * Hindra folk från att få mer än 30 promille
       *
       * OPTIONAL:
       * save login

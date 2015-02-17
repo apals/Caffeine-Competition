@@ -33,7 +33,6 @@ public class User implements Comparable, Serializable {
     }
 
 
-    //TODO: make double or float (probably double since firebase stores doubles)
     public double getCaffeineLevel(Date date) {
         double caffeineLevel = 0;
 
@@ -44,6 +43,9 @@ public class User implements Comparable, Serializable {
             else
                 mDrinkHistory.remove(mDrinkHistory.get(i));
         }
+
+        //No user should have a caffeine level over 30
+        caffeineLevel = (caffeineLevel > 30) ? 30 : caffeineLevel;
         return caffeineLevel;
     }
 
