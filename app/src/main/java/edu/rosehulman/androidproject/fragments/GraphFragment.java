@@ -154,11 +154,11 @@ public class GraphFragment extends Fragment {
     private Runnable updateGraphSlow = new Runnable() {
         public void run() {
             System.out.println("Updating Y Bounds");
-            double newYBounds = ((MainActivity) getActivity()).getHighestCaffeineLevel();
+            double newYBounds = ((MainActivity) getActivity()).getHighestCaffeineLevel() + 0.05;
             if (newYBounds > MAX_Y) {
-                newYBounds = 0.1;
+                newYBounds = MAX_Y;
             }
-            renderer.setYAxisMax(newYBounds + 0.05, 0);
+            renderer.setYAxisMax(newYBounds, 0);
             mHandler.postDelayed(updateGraphSlow, UPDATE_GRAPH_SLOW_INTERVAL);
         }
     };
