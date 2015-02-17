@@ -49,10 +49,7 @@ public class MainActivity extends ActionBarActivity {
       * profile picture photo
       * */
 
-    public static final int HOME_ID = 0;
-    public static final int LIST_ID = 1;
-    public static final int GRAPH_ID = 2;
-
+    private static final int USER_MODEL_CHILDREN = 5;
     private static final int NUM_PAGES = 3;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -91,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
                 if (!LoginActivity.LOGGED_IN) {
                     return;
                 }
-                if (dataSnapshot.getChildrenCount() < 4) {
+                if (dataSnapshot.getChildrenCount() < USER_MODEL_CHILDREN) {
                     return;
                 }
                 //System.out.println("ON CHILD ADDED: " + dataSnapshot.getValue());
@@ -113,7 +110,7 @@ public class MainActivity extends ActionBarActivity {
                 if (!LoginActivity.LOGGED_IN) {
                     return;
                 }
-                if (dataSnapshot.getChildrenCount() < 4) {
+                if (dataSnapshot.getChildrenCount() < USER_MODEL_CHILDREN) {
                     return;
                 }
                 //System.out.println("ON CHILD CHANGED: " + dataSnapshot.getValue());

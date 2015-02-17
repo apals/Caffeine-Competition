@@ -254,7 +254,9 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         if (user.getDrinkHistory().size() > 0) {
             long firstDrink = user.getDrinkHistory().get(user.getDrinkHistory().size() - 1).getDateTime().getTime();
             long now = new Date().getTime();
-
+            Date curDate = new Date();
+            curDate.setTime(firstDrink);
+            user.addPoint(curDate, 0);
             while(firstDrink < now) {
                 Date nowDate = new Date();
                 nowDate.setTime(firstDrink);

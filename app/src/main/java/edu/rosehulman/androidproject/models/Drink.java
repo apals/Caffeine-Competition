@@ -9,9 +9,7 @@ import edu.rosehulman.androidproject.fragments.HomeFragment;
  * Created by palssoa on 1/25/2015.
  */
 public class Drink implements Serializable, Comparable {
-
-    private static final double CAFFEINE_HALF_LIFE = 5.7; //Caffeine half-life in hours
-    private static final int START_PERIOD = 60; //Seconds
+    private static final int START_PERIOD = 60*10; //Seconds
     private DrinkType mDrinkType;
     private Date mDateTime;
 
