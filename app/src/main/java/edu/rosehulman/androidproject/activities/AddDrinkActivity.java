@@ -1,12 +1,16 @@
 package edu.rosehulman.androidproject.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -82,6 +86,8 @@ public class AddDrinkActivity extends ActionBarActivity implements View.OnClickL
         mAdapter = new CommonDrinkAdapter(this, R.layout.common_drink_list_row_layout, mCommonDrinkTypes);
         mListView.setAdapter(mAdapter);
     }
+
+
 
     private void putStandardDrinks(SharedPreferences prefs) {
         SharedPreferences.Editor editor = prefs.edit();
@@ -182,5 +188,9 @@ public class AddDrinkActivity extends ActionBarActivity implements View.OnClickL
 
     public void toast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    public ArrayList<CommonDrink> getDrinks() {
+        return mCommonDrinkTypes;
     }
 }
