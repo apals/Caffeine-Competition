@@ -144,7 +144,8 @@ public class RegisterActivity extends ActionBarActivity {
         if (requestCode == TAKE_PHOTO_ACTIVITY_REQUEST) {
             Log.d("LOG", "back from taking a photo");
             // TODO: Get and show the bitmap
-            mBitmap = BitmapFactory.decodeFile(PhotoUtils.getPhotoPath());
+            Bitmap thumbnail = BitmapFactory.decodeFile(PhotoUtils.getPhotoPath());
+            mBitmap = Bitmap.createScaledBitmap(thumbnail, 64, 64, true);
             ((ImageView) findViewById(R.id.mImageView)).setImageBitmap(mBitmap);
 
         }
