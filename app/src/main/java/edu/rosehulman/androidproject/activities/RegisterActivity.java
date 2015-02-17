@@ -3,8 +3,6 @@ package edu.rosehulman.androidproject.activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -36,6 +34,7 @@ import edu.rosehulman.androidproject.R;
 public class RegisterActivity extends ActionBarActivity {
     private static final String USERS_CHILD = "users";
     private static final int TAKE_PHOTO_ACTIVITY_REQUEST = 1;
+    private static final int IMAGE_SIZE = 256;
 
     private Bitmap mBitmap;
 
@@ -145,9 +144,29 @@ public class RegisterActivity extends ActionBarActivity {
             Log.d("LOG", "back from taking a photo");
             // TODO: Get and show the bitmap
             Bitmap thumbnail = BitmapFactory.decodeFile(PhotoUtils.getPhotoPath());
-            mBitmap = Bitmap.createScaledBitmap(thumbnail, 64, 64, true);
-            ((ImageView) findViewById(R.id.mImageView)).setImageBitmap(mBitmap);
+            Bitmap newThumb;
+            if (thumbnail.getWidth() >= thumbnail.getHeight()){
 
+                newThumb = Bitmap.createBitmap(
+                        thumbnail,
+                        thumbnail.getWidth()/2 - thumbnail.getHeight()/2,
+                        0,
+                        thumbnail.getHeight(),
+                        thumbnail.getHeight()
+                );
+
+            }else{
+
+                newThumb = Bitmap.createBitmap(
+                        thumbnail,
+                        0,
+                        thumbnail.getHeight()/2 - thumbnail.getWidth()/2,
+                        thumbnail.getWidth(),
+                        thumbnail.getWidth()
+                );
+            }
+            mBitmap = Bitmap.createScaledBitmap(newThumb, IMAGE_SIZE, IMAGE_SIZE, true);
+            ((ImageView) findViewById(R.id.mImageView)).setImageBitmap(mBitmap);
         }
     }
 
@@ -161,8 +180,7 @@ public class RegisterActivity extends ActionBarActivity {
         PhotoUtils.setPhotoPath(uri.getPath());
     }
 
-    public String encodeTobase64(Bitmap image)
-    {
+    public String encodeTobase64(Bitmap image) {
         Bitmap immagex=image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);

@@ -162,14 +162,16 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 
         String username = (String) userData.get("username");
         String email = (String) userData.get("email");
+        int weight = Integer.parseInt((String) userData.get("weight"));
+        String gender = (String) userData.get("gender");
+
         String bmpBase64 = (String) userData.get("picture");
-        String gender = ((String) userData.get("gender"));
+
         ArrayList<Drink> userDrinkList = new ArrayList<>();
-        for(DataSnapshot d : dataSnapshot.getChildren()) {
+        for (DataSnapshot d : dataSnapshot.getChildren()) {
             if (d.getKey().equals("drinkHistory")) {
-                for(DataSnapshot child: d.getChildren()) {
+                for (DataSnapshot child : d.getChildren()) {
                     HashMap<String, Object> drink = (HashMap<String, Object>) child.getValue();
-//                    double a = (double) drink.get("remainingCaffeine");
                     Date date = new Date((long) drink.get("dateTime"));
 
                     HashMap drinkType = (HashMap) drink.get("drinkType");

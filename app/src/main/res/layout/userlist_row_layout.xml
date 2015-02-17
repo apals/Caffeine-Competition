@@ -12,10 +12,11 @@
 
         <ImageView
             android:id="@+id/userlist_profile_pic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/ic_launcher"
-            android:layout_gravity="center_vertical|left"/>
+            android:layout_gravity="center_vertical|left"
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="wrap_content"
