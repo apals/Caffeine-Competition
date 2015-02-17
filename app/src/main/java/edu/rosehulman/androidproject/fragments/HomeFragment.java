@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -48,6 +52,7 @@ public class HomeFragment extends Fragment {
 
 
     private Handler mHandler = new Handler();
+    ImageView img;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,6 +79,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        img = ((ImageView) rootView.findViewById(R.id.profile_picture));
+
         return rootView;
     }
 
@@ -86,8 +93,18 @@ public class HomeFragment extends Fragment {
         mHandler.postDelayed(updateTaskSlow, 1);
     }
 
+    public Bitmap decodeBase64(String input)
+    {
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+    }
+
     private Runnable updateTask = new Runnable() {
         public void run() {
+
+            if(img != null)
+                img.setImageBitmap(decodeBase64(MainActivity.USER.getmPictureBase64()));
+
             double caffeineLevel = MainActivity.USER.getCaffeineLevel();
             updateCaffeineLevelTextView(caffeineLevel);
                 if (caffeineLevel > ((MainActivity) getActivity()).getHighestCaffeineLevel()) {

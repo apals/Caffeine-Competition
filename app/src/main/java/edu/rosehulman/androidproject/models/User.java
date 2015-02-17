@@ -19,13 +19,15 @@ public class User implements Comparable, Serializable {
     private int mWeight;
     private String mGender;
     private String mEmail;
+    private String mPictureBase64;
 
-    public User(String username, String email, int weight, String gender, ArrayList<Drink> drinkHistory) {
+    public User(String username, String email, int weight, String gender, ArrayList<Drink> drinkHistory, String picture) {
         mEmail = email;
         mWeight = weight;
         mGender = gender;
         mUsername = username;
         mDrinkHistory = drinkHistory;
+        mPictureBase64 = picture;
     }
 
     public String getUsername() {
@@ -112,5 +114,13 @@ public class User implements Comparable, Serializable {
 
     public String getGender() {
         return mGender;
+    }
+
+    public String getmPictureBase64() {
+        return mPictureBase64;
+    }
+
+    public void setmPictureBase64(String mPictureBase64) {
+        this.mPictureBase64 = mPictureBase64;
     }
 }

@@ -1,5 +1,7 @@
 package edu.rosehulman.androidproject.activities;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,6 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,7 +40,6 @@ public class MainActivity extends ActionBarActivity {
       *
       * Fix prepopulation av drink history points på drink remove och resume app
       *
-      * polish add drink design
       * check boxes color
       * fix graph y-resizing
       *
@@ -92,7 +94,7 @@ public class MainActivity extends ActionBarActivity {
                 if (dataSnapshot.getChildrenCount() < 4) {
                     return;
                 }
-                System.out.println("ON CHILD ADDED: " + dataSnapshot.getValue());
+                //System.out.println("ON CHILD ADDED: " + dataSnapshot.getValue());
                 User user = createUserFromSnapShot(dataSnapshot);
                 boolean exists = false;
                 for (int i = 0; i < users.size(); i++) {
@@ -114,7 +116,7 @@ public class MainActivity extends ActionBarActivity {
                 if (dataSnapshot.getChildrenCount() < 4) {
                     return;
                 }
-                System.out.println("ON CHILD CHANGED: " + dataSnapshot.getValue());
+                //System.out.println("ON CHILD CHANGED: " + dataSnapshot.getValue());
                 User changedUser = createUserFromSnapShot(dataSnapshot);
                 boolean exists = false;
                 for (int i = 0; i < users.size(); i++) {
@@ -299,6 +301,9 @@ public class MainActivity extends ActionBarActivity {
         String email = (String) userData.get("email");
         int weight = Integer.parseInt((String) userData.get("weight"));
         String gender = (String) userData.get("gender");
+
+        String bmpBase64 = (String) userData.get("picture");
+
         ArrayList<Drink> userDrinkList = new ArrayList<>();
         for (DataSnapshot d : dataSnapshot.getChildren()) {
             if (d.getKey().equals("drinkHistory")) {
@@ -315,6 +320,6 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         }
-        return new User(username, email, weight, gender, userDrinkList);
+        return new User(username, email, weight, gender, userDrinkList, bmpBase64);
     }
 }

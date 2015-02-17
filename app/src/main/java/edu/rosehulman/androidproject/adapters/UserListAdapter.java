@@ -2,9 +2,13 @@ package edu.rosehulman.androidproject.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -81,13 +85,20 @@ public class UserListAdapter extends BaseExpandableListAdapter {
             convertView = context.getLayoutInflater().inflate(R.layout.userlist_row_layout, null);
             final View a = convertView;
         }
-
+        ImageView img =((ImageView) convertView.findViewById(R.id.userlist_profile_pic));
+        img.setImageBitmap(decodeBase64(((User) getGroup(groupPosition)).getmPictureBase64()));
         ((TextView) convertView.findViewById(R.id.username)).setText(((User) getGroup(groupPosition)).getUsername());
         ((TextView) convertView.findViewById(R.id.caffeinelevel)).setText(String.format("%.2f", ((User) getGroup(groupPosition)).getCaffeineLevel()) + "‰");
         List<Drink> drinkHistory = ((User) getGroup(groupPosition)).getDrinkHistory();
         if(drinkHistory.size() > 0)
             ((TextView) convertView.findViewById(R.id.subtext_last_drink)).setText(context.getString(R.string.last_drink) + drinkHistory.get(drinkHistory.size() - 1).getDrinkType().getDrinkName());
         return convertView;
+    }
+
+    public Bitmap decodeBase64(String input)
+    {
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
     @Override

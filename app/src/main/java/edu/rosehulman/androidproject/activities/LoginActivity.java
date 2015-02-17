@@ -8,6 +8,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Base64;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
@@ -100,7 +101,6 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         i.putExtra(KEY_EMAIL, user);
         i.putExtra(KEY_USERLIST, userList);
         hideProgressBar();
-        mRef = null;
         startActivityForResult(i, START_MAIN_REQUEST_CODE);
     }
 
@@ -154,12 +154,15 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         return email;
     }
 
+
+
+
     public User createUserFromSnapShot(DataSnapshot dataSnapshot) {
         HashMap<String, Object> userData = ((HashMap<String, Object>) dataSnapshot.getValue());
 
         String username = (String) userData.get("username");
         String email = (String) userData.get("email");
-        //int weight = Integer.parseInt((String) userData.get("weight"));
+        String bmpBase64 = (String) userData.get("picture");
         String gender = ((String) userData.get("gender"));
         ArrayList<Drink> userDrinkList = new ArrayList<>();
         for(DataSnapshot d : dataSnapshot.getChildren()) {
@@ -178,7 +181,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
                 }
             }
         }
-        User user = new User(username, email, 80, gender, userDrinkList);
+        User user = new User(username, email, 80, gender, userDrinkList, bmpBase64);
         if (user.getCaffeineLevel() > 0) {
             prePopulatePoints(user);
         }
@@ -200,6 +203,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         if (requestCode == REGISTER_REQUEST_CODE) {
             String email = data.getStringExtra(KEY_EMAIL);
             String password = data.getStringExtra(KEY_PASSWORD);
+
 
             ((AutoCompleteTextView) findViewById(R.id.email)).setText(email);
             ((TextView) findViewById(R.id.password)).setText(password);
