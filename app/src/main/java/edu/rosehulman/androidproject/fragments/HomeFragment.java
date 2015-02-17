@@ -146,11 +146,11 @@ public class HomeFragment extends Fragment {
                 data.getExtras().getInt(AddDrinkActivity.KEY_CAFFEINE_AMOUNT)), new Date());
         MainActivity.USER.drink(d);
 
+        Collections.sort(MainActivity.USER.getDrinkHistory());
         updateDataBase(MainActivity.USER.getDrinkHistory());
         UserListFragment.getInstance().updateList();
         //GraphFragment.getInstance().updateGraph();
 
-        Collections.sort(MainActivity.USER.getDrinkHistory());
         updateList();
     }
 
