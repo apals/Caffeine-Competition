@@ -60,7 +60,6 @@ public class UserListFragment extends Fragment {
     private Runnable updateTask = new Runnable() {
         public void run() {
             ArrayList<User> userList = ((MainActivity) getActivity()).getUsers();
-            ((MainActivity) getActivity()).setHighestCaffeineLevel(0);
             for (int i = 0; i < userList.size(); i++) {
                 User user = userList.get(i);
                 double caffeineLevel = user.getCaffeineLevel();

@@ -40,15 +40,11 @@ public class User implements Comparable, Serializable {
 
         for (int i = 0; i < mDrinkHistory.size(); i++) {
             double caffeine = mDrinkHistory.get(i).getRemainingCaffeine(date, mWeight, mGender);
-            if(mDrinkHistory.get(i).getSecondsPassed() < 3600*KEEP_HISTORY)
-                caffeineLevel += caffeine;
-            else
-                mDrinkHistory.remove(mDrinkHistory.get(i));
+            caffeineLevel += caffeine;
         }
 
         //No user should have a caffeine level over 30
-        caffeineLevel = (caffeineLevel > 30) ? 30 : caffeineLevel;
-        return caffeineLevel;
+        return (caffeineLevel > 30) ? 30 : caffeineLevel;
     }
 
     public double getCaffeineLevel() {
@@ -122,5 +118,9 @@ public class User implements Comparable, Serializable {
 
     public void setmPictureBase64(String mPictureBase64) {
         this.mPictureBase64 = mPictureBase64;
+    }
+
+    public void removeAllPoints() {
+        points = new ArrayList<>();
     }
 }

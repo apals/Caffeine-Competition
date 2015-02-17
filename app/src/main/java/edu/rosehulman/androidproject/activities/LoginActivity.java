@@ -23,10 +23,12 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
 import edu.rosehulman.androidproject.R;
+import edu.rosehulman.androidproject.UserUtils;
 import edu.rosehulman.androidproject.fragments.HomeFragment;
 import edu.rosehulman.androidproject.models.Drink;
 import edu.rosehulman.androidproject.models.DrinkType;
@@ -44,9 +46,11 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
     public static final String KEY_PASSWORD = "key_password";
     private static final String USERS_CHILD = "users";
     public static final String KEY_USERLIST = "user_list";
+    public static final String KEY_HIGHEST_CAFFEINE = "highest_caffeine";
     public static boolean LOGGED_IN = false;
 
     private Firebase mRef;
+    private double highestCaffeineLevel = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +104,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
         i.putExtra(KEY_EMAIL, user);
         i.putExtra(KEY_USERLIST, userList);
+        i.putExtra(KEY_HIGHEST_CAFFEINE, highestCaffeineLevel);
         hideProgressBar();
         startActivityForResult(i, START_MAIN_REQUEST_CODE);
     }
@@ -185,7 +190,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         }
         User user = new User(username, email, 80, gender, userDrinkList, bmpBase64);
         if (user.getCaffeineLevel() > 0) {
-            prePopulatePoints(user);
+            setHighestCaffeineLevel(UserUtils.prePopulatePoints(user, getHighestCaffeineLevel()));
         }
         return user;
     }
@@ -252,23 +257,11 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         ((ProgressBar) findViewById(R.id.login_progressbar)).setVisibility(View.INVISIBLE);
     }
 
-    public void prePopulatePoints(User user) {
-        if (user.getDrinkHistory().size() > 0) {
-            long firstDrink = user.getDrinkHistory().get(user.getDrinkHistory().size() - 1).getDateTime().getTime();
-            long now = new Date().getTime();
-            Date curDate = new Date();
-            curDate.setTime(firstDrink);
-            user.addPoint(curDate, 0);
-            while(firstDrink < now) {
-                Date nowDate = new Date();
-                nowDate.setTime(firstDrink);
-                double caffeineLevel = user.getCaffeineLevel(nowDate);
-                if (caffeineLevel > 0) {
-                    user.addPoint(nowDate, caffeineLevel);
-                }
-//            System.out.println(nowDate + " - " + user.getCaffeineLevel(nowDate));
-                firstDrink += HomeFragment.CALCULATE_INTERVAL*10;
-            }
-        }
+    public double getHighestCaffeineLevel() {
+        return highestCaffeineLevel;
+    }
+
+    public void setHighestCaffeineLevel(double highestCaffeineLevel) {
+        this.highestCaffeineLevel = highestCaffeineLevel;
     }
 }

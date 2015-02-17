@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import edu.rosehulman.androidproject.R;
+import edu.rosehulman.androidproject.UserUtils;
 import edu.rosehulman.androidproject.fragments.GraphFragment;
 import edu.rosehulman.androidproject.fragments.HomeFragment;
 import edu.rosehulman.androidproject.fragments.UserListFragment;
@@ -79,6 +80,8 @@ public class MainActivity extends ActionBarActivity {
         USER = (User) getIntent().getSerializableExtra(LoginActivity.KEY_EMAIL);
         users = (ArrayList<User>) getIntent().getSerializableExtra(LoginActivity.KEY_USERLIST);
 
+        setHighestCaffeineLevel((double) getIntent().getSerializableExtra(LoginActivity.KEY_HIGHEST_CAFFEINE));
+
         Firebase.setAndroidContext(this);
         this.mRef2 = new Firebase(getString(R.string.url));
 
@@ -118,11 +121,20 @@ public class MainActivity extends ActionBarActivity {
                 boolean exists = false;
                 for (int i = 0; i < users.size(); i++) {
                     if (users.get(i).getEmail().equals(changedUser.getEmail())) {
-                        System.out.println(changedUser.getDrinkHistory());
                         if (changedUser.getDrinkHistory() == null) {
                             users.get(i).setDrinkHistory(new ArrayList<Drink>());
                         } else {
+                            // REPOPULATE POINT HISTORY ON REMOVAL
+                            boolean repopulate = false;
+                            if (users.get(i).getDrinkHistory().size() > changedUser.getDrinkHistory().size()) {
+                                repopulate = true;
+                            }
                             users.get(i).setDrinkHistory(changedUser.getDrinkHistory());
+                            if (repopulate) {
+                                users.get(i).removeAllPoints();
+                                setHighestCaffeineLevel(UserUtils.prePopulatePoints(users.get(i), getHighestCaffeineLevel()));
+                                GraphFragment.getInstance().exchangeSeries(users.get(i));
+                            }
                         }
                         // TODO: Repopulate users entire point history
                         exists = true;

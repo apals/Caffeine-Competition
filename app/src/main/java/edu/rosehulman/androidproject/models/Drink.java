@@ -19,10 +19,13 @@ public class Drink implements Serializable, Comparable {
     }
 
     public double getRemainingCaffeine(Date date, int weight, String gender) {
-        long seconds = Math.abs((date).getTime() - getDateTime().getTime())/1000;
+        long seconds = ((date).getTime() - getDateTime().getTime())/1000;
+        if (seconds < 0) {
+            return 0;
+        }
         long ms = Math.abs((date).getTime() - getDateTime().getTime());
         double bodyWater = 0.58;
-        if (gender == "female") {
+        if (gender.equals("female")) {
             bodyWater = 0.49;
         }
         double caffeine = ((0.806 * (getDrinkType().getCaffeineAmount() / 18) * 1.2)/((bodyWater*weight))) - (0.015*(seconds/360D));

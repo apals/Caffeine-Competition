@@ -16,6 +16,7 @@ import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
@@ -91,15 +92,8 @@ public class GraphFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!isChecked) {
                     renderer.getSeriesRendererAt(buttonIndex).setColor(Color.TRANSPARENT);
-                    //XYSeriesRenderer.FillOutsideLine fill = new XYSeriesRenderer.FillOutsideLine(XYSeriesRenderer.FillOutsideLine.Type.BELOW);
-                    //fill.setColor(Color.TRANSPARENT);
-                    //((XYSeriesRenderer) renderer.getSeriesRendererAt(buttonIndex)).addFillOutsideLine(fill);
-
                 } else {
                     renderer.getSeriesRendererAt(buttonIndex).setColor(colors[buttonIndex%colors.length]);
-                    //XYSeriesRenderer.FillOutsideLine fill = new XYSeriesRenderer.FillOutsideLine(XYSeriesRenderer.FillOutsideLine.Type.BELOW);
-                    //fill.setColor(getActivity().getResources().getColor(R.color.transparent_blue));
-                    //((XYSeriesRenderer) renderer.getSeriesRendererAt(buttonIndex)).addFillOutsideLine(fill);
                 }
                 mLineChart.repaint();
 
@@ -127,6 +121,7 @@ public class GraphFragment extends Fragment {
                 }
                 if (!finns) {
                     TimeSeries series = new TimeSeries(user.getUsername());
+
                     ArrayList<DateCaffeinePoint> points = user.getPoints();
                     for (int p = 0; p < points.size(); p++) {
                         DateCaffeinePoint point = points.get(p);
@@ -150,6 +145,21 @@ public class GraphFragment extends Fragment {
             mHandler.postDelayed(updateGraph, UPDATE_GRAPH_INTERVAL);
         }
     };
+
+
+    public void exchangeSeries(User user) {
+        for (int j = 0; j < dataset.getSeries().length; j++) {
+            TimeSeries ts = (TimeSeries) dataset.getSeriesAt(j);
+            if (ts.getTitle().equals(user.getUsername())) {
+                ts.clear();
+                for (int i = 0; i < user.getPoints().size(); i++) {
+                    DateCaffeinePoint point = user.getPoints().get(i);
+                    ts.add(point.getDate(), point.getCaffeine());
+                }
+            }
+        }
+
+    }
 
     private Runnable updateGraphSlow = new Runnable() {
         public void run() {
