@@ -18,7 +18,6 @@ import java.util.List;
 
 import edu.rosehulman.androidproject.GraphUtils;
 import edu.rosehulman.androidproject.R;
-import edu.rosehulman.androidproject.activities.MainActivity;
 import edu.rosehulman.androidproject.models.DateCaffeinePoint;
 import edu.rosehulman.androidproject.models.Drink;
 import edu.rosehulman.androidproject.models.User;
@@ -87,7 +86,7 @@ public class UserListAdapter extends BaseExpandableListAdapter {
         ((TextView) convertView.findViewById(R.id.caffeinelevel)).setText(String.format("%.2f", ((User) getGroup(groupPosition)).getCaffeineLevel()) + "‰");
         List<Drink> drinkHistory = ((User) getGroup(groupPosition)).getDrinkHistory();
         if(drinkHistory.size() > 0)
-            ((TextView) convertView.findViewById(R.id.subtext_last_drink)).setText("LAST DRINK: " + drinkHistory.get(drinkHistory.size() - 1).getDrinkType().getDrinkName());
+            ((TextView) convertView.findViewById(R.id.subtext_last_drink)).setText(context.getString(R.string.last_drink) + drinkHistory.get(drinkHistory.size() - 1).getDrinkType().getDrinkName());
         return convertView;
     }
 
@@ -95,8 +94,8 @@ public class UserListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         convertView = context.getLayoutInflater().inflate(R.layout.userlist_row_layout_child, null);
 
-        XYMultipleSeriesDataset dataset = GraphUtils.getDataset((((MainActivity) context).getUsers()));
-        TimeSeries series = new TimeSeries("lol");
+        XYMultipleSeriesDataset dataset = GraphUtils.getDataset();
+        TimeSeries series = new TimeSeries("");
         for(DateCaffeinePoint d : ((User) getGroup(groupPosition)).getPoints()) {
             series.add(d.getDate(), d.getCaffeine());
         }

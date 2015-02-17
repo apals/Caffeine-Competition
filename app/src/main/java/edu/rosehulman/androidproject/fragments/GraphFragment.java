@@ -66,7 +66,7 @@ public class GraphFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_graph, container, false);
 
         renderer = GraphUtils.getMultipleSeriesRenderer(getActivity());
-        dataset = GraphUtils.getDataset(((MainActivity) getActivity()).getUsers());
+        dataset = GraphUtils.getDataset();
         mLineChart = ChartFactory.getTimeChartView(getActivity(), dataset, renderer, "HH:mm"); //ChartFactory.getLineChartView(getActivity(), dataset, renderer);
 
         mLineChart.setBackgroundColor(Color.WHITE);

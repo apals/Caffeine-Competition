@@ -19,7 +19,6 @@ import com.firebase.client.FirebaseError;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -27,7 +26,6 @@ import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.fragments.GraphFragment;
 import edu.rosehulman.androidproject.fragments.HomeFragment;
 import edu.rosehulman.androidproject.fragments.UserListFragment;
-import edu.rosehulman.androidproject.models.DateCaffeinePoint;
 import edu.rosehulman.androidproject.models.Drink;
 import edu.rosehulman.androidproject.models.DrinkType;
 import edu.rosehulman.androidproject.models.User;
@@ -41,7 +39,6 @@ public class MainActivity extends ActionBarActivity {
       *
       * polish add drink design
       * check boxes color
-      * weight
       * fix graph y-resizing
       * set max caffeinelevel
       * Hindra folk från att få mer än 30 promille

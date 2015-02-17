@@ -6,27 +6,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
-import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.client.AuthData;
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
 import edu.rosehulman.androidproject.R;
-import edu.rosehulman.androidproject.models.Drink;
-import edu.rosehulman.androidproject.models.DrinkType;
-import edu.rosehulman.androidproject.models.User;
 
 /**
  * A register screen that offers registration
