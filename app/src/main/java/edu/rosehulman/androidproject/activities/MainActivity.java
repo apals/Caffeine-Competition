@@ -37,11 +37,14 @@ public class MainActivity extends ActionBarActivity {
      /* TODO:
       * use holder pattern in listadapters
       *
+      * Fix prepopulation av drink history points på drink remove och resume app
+      *
       * polish add drink design
       * check boxes color
       * weight
       * fix graph y-resizing
-      * set max caffeinelevel 
+      * set max caffeinelevel
+      * Hindra folk från att få mer än 30 promille
       *
       * OPTIONAL:
       * save login
@@ -58,7 +61,7 @@ public class MainActivity extends ActionBarActivity {
     private PagerAdapter mPagerAdapter;
 
     //TODO: Remove reference, use login activitys ref
-    private Firebase mRef;
+    private Firebase mRef2;
     ChildEventListener childListener;
 
     //TODO: null checks on mUser when talking to firebase
@@ -83,7 +86,7 @@ public class MainActivity extends ActionBarActivity {
         users = (ArrayList<User>) getIntent().getSerializableExtra(LoginActivity.KEY_USERLIST);
 
         Firebase.setAndroidContext(this);
-        this.mRef = new Firebase(getString(R.string.url));
+        this.mRef2 = new Firebase(getString(R.string.url));
 
         childListener = new ChildEventListener() {
             @Override
@@ -154,7 +157,7 @@ public class MainActivity extends ActionBarActivity {
             }
         };
 
-        this.mRef.child("users").addChildEventListener(childListener);
+        this.mRef2.child("users").addChildEventListener(childListener);
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -219,9 +222,9 @@ public class MainActivity extends ActionBarActivity {
         UserListFragment.getInstance().stopUpdating();
         GraphFragment.getInstance().stopUpdating();
         USER = null;
-        mRef.removeEventListener(childListener);
+        mRef2.removeEventListener(childListener);
         childListener = null;
-        mRef = null;
+        mRef2 = null;
         setResult(RESULT_OK);
         finish();
     }
@@ -238,7 +241,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public Firebase getFirebaseReference() {
-        return mRef;
+        return mRef2;
     }
 
     @Override
