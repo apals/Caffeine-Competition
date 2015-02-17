@@ -146,7 +146,7 @@ public class HomeFragment extends Fragment {
                 data.getExtras().getInt(AddDrinkActivity.KEY_CAFFEINE_AMOUNT)), new Date());
         MainActivity.USER.drink(d);
 
-        Collections.sort(MainActivity.USER.getDrinkHistory());
+
         updateDataBase(MainActivity.USER.getDrinkHistory());
         UserListFragment.getInstance().updateList();
         //GraphFragment.getInstance().updateGraph();
@@ -155,6 +155,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateDataBase(ArrayList<Drink> drinkList) {
+        Collections.sort(MainActivity.USER.getDrinkHistory());
         ((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getEmail() + "/drinkHistory").setValue(drinkList);
     }
 
