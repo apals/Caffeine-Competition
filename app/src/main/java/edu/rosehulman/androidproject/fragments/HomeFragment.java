@@ -165,7 +165,7 @@ public class HomeFragment extends Fragment {
 
     public void updateList() {
         mDrinkAdapter.notifyDataSetChanged();
-    }   
+    }
 
     public void showRemoveDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
