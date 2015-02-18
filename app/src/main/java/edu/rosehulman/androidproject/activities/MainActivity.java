@@ -46,8 +46,6 @@ public class MainActivity extends ActionBarActivity {
       *
       * OPTIONAL:
       * save login
-      * make user picture round?
-      * profile picture photo
       * */
 
     private static final int USER_MODEL_CHILDREN = 6;
@@ -313,7 +311,7 @@ public class MainActivity extends ActionBarActivity {
 
         String bmpBase64 = (String) userData.get("picture");
 
-        ArrayList<Drink> userDrinkList = n  ew ArrayList<>();
+        ArrayList<Drink> userDrinkList = new ArrayList<>();
         for (DataSnapshot d : dataSnapshot.getChildren()) {
             if (d.getKey().equals("drinkHistory")) {
                 for (DataSnapshot child : d.getChildren()) {

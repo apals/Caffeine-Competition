@@ -167,7 +167,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 
         String username = (String) userData.get("username");
         String email = (String) userData.get("email");
-        int weight = Integer.parseInt((String) userData.get("weight"));
+//        int weight = Integer.parseInt((String) userData.get("weight"));
         String gender = (String) userData.get("gender");
 
         String bmpBase64 = (String) userData.get("picture");
@@ -188,7 +188,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
                 }
             }
         }
-        User user = new User(username, email, weight, gender, userDrinkList, bmpBase64);
+        User user = new User(username, email, 80, gender, userDrinkList, bmpBase64);
         if (user.getCaffeineLevel() > 0) {
             setHighestCaffeineLevel(UserUtils.prePopulatePoints(user, getHighestCaffeineLevel()));
         }

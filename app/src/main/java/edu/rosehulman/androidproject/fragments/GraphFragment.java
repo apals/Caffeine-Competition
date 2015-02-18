@@ -43,8 +43,6 @@ public class GraphFragment extends Fragment {
     private ArrayList<CheckBox> checkBoxes;
     private int[] colors;
 
-
-
     private static GraphFragment instance;
     private Handler mHandler = new Handler();
 
@@ -78,14 +76,13 @@ public class GraphFragment extends Fragment {
     }
 
     public void addUserCheckBox(User user) {
-
         CheckBox button = new CheckBox(getActivity());
         button.setChecked(true);
         button.setText(user.getUsername());
         final int buttonIndex = checkBoxes.size();
 
-        button.setTextColor(colors[(buttonIndex*3)%colors.length]);
-        button.setHighlightColor(colors[(buttonIndex*3)%colors.length]);
+        button.setTextColor(colors[(buttonIndex*7)%colors.length]);
+        button.setHighlightColor(colors[(buttonIndex*7)%colors.length]);
 
         button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -93,7 +90,7 @@ public class GraphFragment extends Fragment {
                 if (!isChecked) {
                     renderer.getSeriesRendererAt(buttonIndex).setColor(Color.TRANSPARENT);
                 } else {
-                    renderer.getSeriesRendererAt(buttonIndex).setColor(colors[(buttonIndex*3)%colors.length]);
+                    renderer.getSeriesRendererAt(buttonIndex).setColor(colors[(buttonIndex*7)%colors.length]);
                 }
                 mLineChart.repaint();
 
@@ -101,8 +98,8 @@ public class GraphFragment extends Fragment {
         });
         checkBoxes.add(button);
         ((LinearLayout) rootView.findViewById(R.id.linearlayout_scrollview)).addView(button);
-
     }
+
     private Runnable updateGraph = new Runnable() {
         public void run() {
             if (dataset == null || mLineChart == null)
@@ -128,7 +125,7 @@ public class GraphFragment extends Fragment {
                     }
                     dataset.addSeries(series);
                     XYSeriesRenderer r = GraphUtils.getSeriesRenderer(getActivity());
-                    r.setColor(colors[(i*3)%colors.length]);
+                    r.setColor(colors[(i*7)%colors.length]);
                     renderer.addSeriesRenderer(r);
                     addUserCheckBox(user);
                 }
@@ -175,9 +172,7 @@ public class GraphFragment extends Fragment {
         mHandler.postDelayed(updateGraphSlow, 1);
     }
 
-
     public void stopUpdating() {
         mHandler.removeCallbacksAndMessages(null);
     }
-
 }
