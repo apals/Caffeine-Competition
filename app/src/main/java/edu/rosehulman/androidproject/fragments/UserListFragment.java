@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import edu.rosehulman.androidproject.R;
@@ -70,6 +71,7 @@ public class UserListFragment extends Fragment {
                     user.addPoint(new Date(), caffeineLevel);
                 }
             }
+            Collections.sort(userList);
             updateList();
             mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
         }

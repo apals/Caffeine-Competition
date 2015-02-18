@@ -21,14 +21,16 @@ public class User implements Comparable, Serializable {
     private String mGender;
     private String mEmail;
     private String mPictureBase64;
+    private int mId;
 
-    public User(String username, String email, int weight, String gender, ArrayList<Drink> drinkHistory, String picture) {
+    public User(String username, String email, int weight, String gender, ArrayList<Drink> drinkHistory, String picture, int id) {
         mEmail = email;
         mWeight = weight;
         mGender = gender;
         mUsername = username;
         mDrinkHistory = drinkHistory;
         mPictureBase64 = picture;
+        mId = id;
     }
 
     public String getUsername() {
@@ -70,7 +72,7 @@ public class User implements Comparable, Serializable {
     @Override
     public int compareTo(Object another) {
         double compare = ((User) another).getCaffeineLevel() - getCaffeineLevel();
-        return (int)Math.round(compare);
+        return (int) compare;
     }
 
 
@@ -123,5 +125,9 @@ public class User implements Comparable, Serializable {
 
     public void removeAllPoints() {
         points = new ArrayList<>();
+    }
+
+    public int getId() {
+        return mId;
     }
 }

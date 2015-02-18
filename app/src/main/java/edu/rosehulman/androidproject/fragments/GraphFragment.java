@@ -16,7 +16,6 @@ import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
@@ -57,7 +56,6 @@ public class GraphFragment extends Fragment {
         super.onAttach(activity);
         checkBoxes = new ArrayList<>();
         colors = activity.getResources().getIntArray(R.array.colors);
-
     }
 
     @Override
@@ -81,8 +79,8 @@ public class GraphFragment extends Fragment {
         button.setText(user.getUsername());
         final int buttonIndex = checkBoxes.size();
 
-        button.setTextColor(colors[(buttonIndex*7)%colors.length]);
-        button.setHighlightColor(colors[(buttonIndex*7)%colors.length]);
+        button.setTextColor(colors[(buttonIndex * 7) % colors.length]);
+        button.setHighlightColor(colors[(buttonIndex * 7) % colors.length]);
 
         button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -90,7 +88,7 @@ public class GraphFragment extends Fragment {
                 if (!isChecked) {
                     renderer.getSeriesRendererAt(buttonIndex).setColor(Color.TRANSPARENT);
                 } else {
-                    renderer.getSeriesRendererAt(buttonIndex).setColor(colors[(buttonIndex*7)%colors.length]);
+                    renderer.getSeriesRendererAt(buttonIndex).setColor(colors[(buttonIndex * 7) % colors.length]);
                 }
                 mLineChart.repaint();
 
@@ -125,7 +123,7 @@ public class GraphFragment extends Fragment {
                     }
                     dataset.addSeries(series);
                     XYSeriesRenderer r = GraphUtils.getSeriesRenderer(getActivity());
-                    r.setColor(colors[(i*7)%colors.length]);
+                    r.setColor(colors[(i * 7) % colors.length]);
                     renderer.addSeriesRenderer(r);
                     addUserCheckBox(user);
                 }
@@ -134,7 +132,7 @@ public class GraphFragment extends Fragment {
             for (int i = 0; i < users.size(); i++) {
                 ArrayList<DateCaffeinePoint> points = users.get(i).getPoints();
                 if (points.size() != 0) {
-                    ((TimeSeries) dataset.getSeriesAt(i)).add(points.get(points.size() - 1).getDate(), points.get(points.size() - 1).getCaffeine());
+                    ((TimeSeries) dataset.getSeriesAt(users.get(i).getId())).add(points.get(points.size() - 1).getDate(), points.get(points.size() - 1).getCaffeine());
                 }
             }
             mLineChart.repaint();
@@ -143,16 +141,14 @@ public class GraphFragment extends Fragment {
     };
 
     public void exchangeSeries(User user) {
-        for (int j = 0; j < dataset.getSeries().length; j++) {
-            TimeSeries ts = (TimeSeries) dataset.getSeriesAt(j);
-            if (ts.getTitle().equals(user.getUsername())) {
-                ts.clear();
-                for (int i = 0; i < user.getPoints().size(); i++) {
-                    DateCaffeinePoint point = user.getPoints().get(i);
-                    ts.add(point.getDate(), point.getCaffeine());
-                }
-            }
+        TimeSeries ts = (TimeSeries) dataset.getSeriesAt(user.getId());
+        ts.clear();
+        for (int i = 0; i < user.getPoints().size(); i++) {
+            DateCaffeinePoint point = user.getPoints().get(i);
+            ts.add(point.getDate(), point.getCaffeine());
         }
+
+
     }
 
     private Runnable updateGraphSlow = new Runnable() {
