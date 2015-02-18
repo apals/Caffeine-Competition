@@ -41,7 +41,7 @@
 
         <Button
             android:id="@+id/add_drink_button_custom"
-            android:text="@string/add"
+            android:text="@string/drink"
             style="@style/button"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"/>
