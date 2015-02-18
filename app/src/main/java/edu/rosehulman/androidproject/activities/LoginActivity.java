@@ -48,6 +48,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
     public static final String KEY_USERLIST = "user_list";
     public static final String KEY_HIGHEST_CAFFEINE = "highest_caffeine";
     public static boolean LOGGED_IN = false;
+    private ArrayList<User> userList = new ArrayList<>();
 
     private Firebase mRef;
     private double highestCaffeineLevel = 0;
@@ -131,7 +132,6 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!LOGGED_IN) {
-                    ArrayList<User> userList = new ArrayList<>();
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         userList.add(createUserFromSnapShot(data));
                     }
@@ -188,7 +188,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
                 }
             }
         }
-        User user = new User(username, email, 80, gender, userDrinkList, bmpBase64);
+        User user = new User(username, email, 80, gender, userDrinkList, bmpBase64, userList.size());
         if (user.getCaffeineLevel() > 0) {
             setHighestCaffeineLevel(UserUtils.prePopulatePoints(user, getHighestCaffeineLevel()));
         }

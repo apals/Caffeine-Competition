@@ -81,8 +81,8 @@ public class GraphFragment extends Fragment {
         button.setText(user.getUsername());
         final int buttonIndex = checkBoxes.size();
 
-        button.setTextColor(colors[(buttonIndex*7)%colors.length]);
-        button.setHighlightColor(colors[(buttonIndex*7)%colors.length]);
+        button.setTextColor(colors[(buttonIndex * 7) % colors.length]);
+        button.setHighlightColor(colors[(buttonIndex * 7) % colors.length]);
 
         button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -90,7 +90,7 @@ public class GraphFragment extends Fragment {
                 if (!isChecked) {
                     renderer.getSeriesRendererAt(buttonIndex).setColor(Color.TRANSPARENT);
                 } else {
-                    renderer.getSeriesRendererAt(buttonIndex).setColor(colors[(buttonIndex*7)%colors.length]);
+                    renderer.getSeriesRendererAt(buttonIndex).setColor(colors[(buttonIndex * 7) % colors.length]);
                 }
                 mLineChart.repaint();
 
@@ -125,7 +125,7 @@ public class GraphFragment extends Fragment {
                     }
                     dataset.addSeries(series);
                     XYSeriesRenderer r = GraphUtils.getSeriesRenderer(getActivity());
-                    r.setColor(colors[(i*7)%colors.length]);
+                    r.setColor(colors[(i * 7) % colors.length]);
                     renderer.addSeriesRenderer(r);
                     addUserCheckBox(user);
                 }
@@ -134,7 +134,8 @@ public class GraphFragment extends Fragment {
             for (int i = 0; i < users.size(); i++) {
                 ArrayList<DateCaffeinePoint> points = users.get(i).getPoints();
                 if (points.size() != 0) {
-                    ((TimeSeries) dataset.getSeriesAt(i)).add(points.get(points.size() - 1).getDate(), points.get(points.size() - 1).getCaffeine());
+                    System.out.println("ADDING POINT: " + users.get(i).getUsername() + " has user id " + users.get(i).getId());
+                    ((TimeSeries) dataset.getSeriesAt(users.get(i).getId())).add(points.get(points.size() - 1).getDate(), points.get(points.size() - 1).getCaffeine());
                 }
             }
             mLineChart.repaint();
@@ -143,15 +144,12 @@ public class GraphFragment extends Fragment {
     };
 
     public void exchangeSeries(User user) {
-        for (int j = 0; j < dataset.getSeries().length; j++) {
-            TimeSeries ts = (TimeSeries) dataset.getSeriesAt(j);
-            if (ts.getTitle().equals(user.getUsername())) {
-                ts.clear();
-                for (int i = 0; i < user.getPoints().size(); i++) {
-                    DateCaffeinePoint point = user.getPoints().get(i);
-                    ts.add(point.getDate(), point.getCaffeine());
-                }
-            }
+        System.out.println("CHANGING SERIES FOR: " + user.getUsername() + " has user id " + user.getId());
+        TimeSeries ts = (TimeSeries) dataset.getSeriesAt(user.getId());
+        ts.clear();
+        for (int i = 0; i < user.getPoints().size(); i++) {
+            DateCaffeinePoint point = user.getPoints().get(i);
+            ts.add(point.getDate(), point.getCaffeine());
         }
     }
 

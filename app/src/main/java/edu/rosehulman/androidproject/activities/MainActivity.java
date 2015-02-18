@@ -55,6 +55,7 @@ public class MainActivity extends ActionBarActivity {
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
 
+
     //TODO: Remove reference, use login activitys ref
     private Firebase mRef2;
     ChildEventListener childListener;
@@ -329,6 +330,6 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         }
-        return new User(username, email, weight, gender, userDrinkList, bmpBase64);
+        return new User(username, email, weight, gender, userDrinkList, bmpBase64, users.size());
     }
 }
