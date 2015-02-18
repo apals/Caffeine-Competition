@@ -156,12 +156,16 @@ public class HomeFragment extends Fragment {
 
     private void updateDataBase(ArrayList<Drink> drinkList) {
         Collections.sort(MainActivity.USER.getDrinkHistory());
-        ((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getEmail() + "/drinkHistory").setValue(drinkList);
+        if (MainActivity.USER.getDrinkHistory().size() > 0) {
+            ((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getEmail() + "/drinkHistory").setValue(drinkList);
+        } else {
+            ((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getEmail() + "/drinkHistory").setValue("");
+        }
     }
 
     public void updateList() {
         mDrinkAdapter.notifyDataSetChanged();
-    }
+    }   
 
     public void showRemoveDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
