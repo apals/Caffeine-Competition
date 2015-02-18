@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class User implements Comparable, Serializable {
     private static final long KEEP_HISTORY = 48; //Hours to keep drink history
+    private static final double MAX_CAFFEINE_LEVEL = 0.3;
 
     private ArrayList<Drink> mDrinkHistory;
     private String mUsername;
@@ -43,8 +44,8 @@ public class User implements Comparable, Serializable {
             caffeineLevel += caffeine;
         }
 
-        //No user should have a caffeine level over 30
-        return (caffeineLevel > 30) ? 30 : caffeineLevel;
+        //No user should have a caffeine level over MAX_CAFFEINE_LEVEL3
+        return (caffeineLevel > MAX_CAFFEINE_LEVEL) ? MAX_CAFFEINE_LEVEL : caffeineLevel;
     }
 
     public double getCaffeineLevel() {

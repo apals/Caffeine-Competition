@@ -91,8 +91,8 @@ public class RegisterActivity extends ActionBarActivity {
         ((TextView) findViewById(R.id.register_email)).setText(user + "@test.com");
         ((TextView) findViewById(R.id.register_username)).setText(user);
         ((TextView) findViewById(R.id.register_weight)).setText("80");
-        ((TextView) findViewById(R.id.register_password)).setText("80");
-        ((TextView) findViewById(R.id.register_repeat_password)).setText("80");
+        ((TextView) findViewById(R.id.register_password)).setText("1");
+        ((TextView) findViewById(R.id.register_repeat_password)).setText("1");
     }
 
 
