@@ -40,6 +40,8 @@ public class MainActivity extends ActionBarActivity {
       * use holder pattern in listadapters
       *
       * Fix prepopulation av drink history points på drink remove och resume app
+      * move firebase to strings.xml easily changeable to increase code readability
+      * also move sharedprefs keys to there
       *
       * check boxes color
       * fix graph y-resizing
