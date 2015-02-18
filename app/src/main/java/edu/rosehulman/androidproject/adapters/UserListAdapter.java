@@ -29,20 +29,16 @@ import edu.rosehulman.androidproject.models.User;
 /**
  * A simple implementation of list adapter.
  */
-public class UserListAdapter extends BaseExpandableListAdapter {
 
+public class UserListAdapter extends BaseExpandableListAdapter {
     private Activity context;
     private GraphicalView mLineChart;
     private List<User> users;
-
-
 
     public UserListAdapter(Context context, List<User> objects) {
         this.context = (Activity) context;
         this.users = objects;
     }
-
-
 
     @Override
     public int getGroupCount() {
@@ -85,13 +81,25 @@ public class UserListAdapter extends BaseExpandableListAdapter {
             convertView = context.getLayoutInflater().inflate(R.layout.userlist_row_layout, null);
             final View a = convertView;
         }
-        ImageView img =((ImageView) convertView.findViewById(R.id.userlist_profile_pic));
+        ImageView img = ((ImageView) convertView.findViewById(R.id.userlist_profile_pic));
         img.setImageBitmap(decodeBase64(((User) getGroup(groupPosition)).getmPictureBase64()));
         ((TextView) convertView.findViewById(R.id.username)).setText(((User) getGroup(groupPosition)).getUsername());
         ((TextView) convertView.findViewById(R.id.caffeinelevel)).setText(String.format("%.2f", ((User) getGroup(groupPosition)).getCaffeineLevel()) + "‰");
         List<Drink> drinkHistory = ((User) getGroup(groupPosition)).getDrinkHistory();
         if(drinkHistory.size() > 0)
             ((TextView) convertView.findViewById(R.id.subtext_last_drink)).setText(context.getString(R.string.last_drink) + drinkHistory.get(0).getDrinkType().getDrinkName());
+
+        if (users.get(groupPosition).getCaffeineLevel() == 0) {
+            img.setAlpha(0.1F);
+            ((TextView) convertView.findViewById(R.id.subtext_last_drink)).setAlpha(0.1F);
+            ((TextView) convertView.findViewById(R.id.username)).setAlpha(0.1F);
+            ((TextView) convertView.findViewById(R.id.caffeinelevel)).setAlpha(0.1F);
+        } else {
+            img.setAlpha(1.0F);
+            ((TextView) convertView.findViewById(R.id.subtext_last_drink)).setAlpha(1.0F);
+            ((TextView) convertView.findViewById(R.id.username)).setAlpha(1.0F);
+            ((TextView) convertView.findViewById(R.id.caffeinelevel)).setAlpha(1.0F);
+        }
         return convertView;
     }
 

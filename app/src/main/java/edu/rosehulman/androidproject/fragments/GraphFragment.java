@@ -84,8 +84,8 @@ public class GraphFragment extends Fragment {
         button.setText(user.getUsername());
         final int buttonIndex = checkBoxes.size();
 
-        button.setTextColor(colors[buttonIndex%colors.length]);
-        button.setHighlightColor(colors[buttonIndex%colors.length]);
+        button.setTextColor(colors[(buttonIndex*3)%colors.length]);
+        button.setHighlightColor(colors[(buttonIndex*3)%colors.length]);
 
         button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -93,7 +93,7 @@ public class GraphFragment extends Fragment {
                 if (!isChecked) {
                     renderer.getSeriesRendererAt(buttonIndex).setColor(Color.TRANSPARENT);
                 } else {
-                    renderer.getSeriesRendererAt(buttonIndex).setColor(colors[buttonIndex%colors.length]);
+                    renderer.getSeriesRendererAt(buttonIndex).setColor(colors[(buttonIndex*3)%colors.length]);
                 }
                 mLineChart.repaint();
 
@@ -128,7 +128,7 @@ public class GraphFragment extends Fragment {
                     }
                     dataset.addSeries(series);
                     XYSeriesRenderer r = GraphUtils.getSeriesRenderer(getActivity());
-                    r.setColor(colors[i%colors.length]);
+                    r.setColor(colors[(i*3)%colors.length]);
                     renderer.addSeriesRenderer(r);
                     addUserCheckBox(user);
                 }

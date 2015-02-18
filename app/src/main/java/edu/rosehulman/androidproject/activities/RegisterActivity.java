@@ -24,6 +24,7 @@ import com.firebase.client.FirebaseError;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Random;
 
 import edu.rosehulman.androidproject.PhotoUtils;
 import edu.rosehulman.androidproject.R;
@@ -82,6 +83,16 @@ public class RegisterActivity extends ActionBarActivity {
                 }
             }
         });
+
+
+        // TODO: remove temp
+        Random rand = new Random();
+        String user = "user" + rand.nextInt(9999);
+        ((TextView) findViewById(R.id.register_email)).setText(user + "@test.com");
+        ((TextView) findViewById(R.id.register_username)).setText(user);
+        ((TextView) findViewById(R.id.register_weight)).setText("80");
+        ((TextView) findViewById(R.id.register_password)).setText("80");
+        ((TextView) findViewById(R.id.register_repeat_password)).setText("80");
     }
 
 
