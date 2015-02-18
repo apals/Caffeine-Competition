@@ -72,7 +72,11 @@ public class User implements Comparable, Serializable {
     @Override
     public int compareTo(Object another) {
         double compare = ((User) another).getCaffeineLevel() - getCaffeineLevel();
-        return (int) compare;
+        if(compare < 0)
+            return -1;
+        if(compare == 0)
+            return 0;
+        return 1;
     }
 
 
