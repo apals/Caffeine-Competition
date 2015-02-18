@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 
 import edu.rosehulman.androidproject.R;
@@ -71,19 +70,14 @@ public class UserListFragment extends Fragment {
                     user.addPoint(new Date(), caffeineLevel);
                 }
             }
-            System.out.println("INNAN SORT " + userList);
-            Collections.sort(userList);
-            System.out.println("EFTER SORT " + userList);
             updateList();
             mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
         }
     };
 
     public void updateList() {
-        if(listAdapter != null) {
-            System.out.println("NOTIFYAR DATA SET CHANGED " );
+        if(listAdapter != null)
             listAdapter.notifyDataSetChanged();
-        }
     }
 
     @Override
