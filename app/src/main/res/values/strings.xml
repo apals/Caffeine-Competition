@@ -35,4 +35,5 @@
     <string name="female">Female</string>
     <string name="male">Male</string>
     <string name="last_drink">"Drinking: "</string>
+    <string name="take_photo">Take photo!</string>
 </resources>

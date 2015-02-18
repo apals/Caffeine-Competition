@@ -14,27 +14,12 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
-
-
         <LinearLayout
             android:id="@+id/email_register_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="vertical">
-
-            <Button android:id="@+id/take_photo"
-                android:onClick="takePhoto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="take photo lol" />
-
-            <ImageView
-                android:scaleType="fitXY"
-                android:id="@+id/mImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/nobody"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -43,6 +28,21 @@
                 android:textStyle="bold"
                 android:textSize="24dp"
                 android:textColor="@color/blue"/>
+
+            <ImageView
+                android:id="@+id/mImageView"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:src="@drawable/nobody"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp" />
+
+            <Button android:id="@+id/take_photo" style="@style/button"
+                android:onClick="takePhoto"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="@string/take_photo"
+                android:layout_gravity="center_horizontal" />
 
             <ProgressBar
                 android:layout_width="wrap_content"

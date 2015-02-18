@@ -313,7 +313,7 @@ public class MainActivity extends ActionBarActivity {
 
         String bmpBase64 = (String) userData.get("picture");
 
-        ArrayList<Drink> userDrinkList = new ArrayList<>();
+        ArrayList<Drink> userDrinkList = n  ew ArrayList<>();
         for (DataSnapshot d : dataSnapshot.getChildren()) {
             if (d.getKey().equals("drinkHistory")) {
                 for (DataSnapshot child : d.getChildren()) {

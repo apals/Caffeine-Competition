@@ -27,14 +27,13 @@ public class UserUtils {
             while(firstDrink < now) {
                 Date nowDate = new Date();
                 nowDate.setTime(firstDrink);
-                System.out.println("prutt nowDate: " + nowDate);
                 double caffeineLevel = user.getCaffeineLevel(nowDate);
                 if (caffeineLevel > highestCaffeineLevel) {
                     highestCaffeineLevel = caffeineLevel;
                 }
                 if (caffeineLevel > 0) {
                     user.addPoint(nowDate, caffeineLevel);
-                    System.out.println("prutt " + nowDate + " - " + caffeineLevel);
+//                    System.out.println("prutt " + nowDate + " - " + caffeineLevel);
                 }
                 firstDrink += HomeFragment.CALCULATE_INTERVAL*10;
             }
