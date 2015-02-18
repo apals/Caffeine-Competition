@@ -114,7 +114,7 @@ public class MainActivity extends ActionBarActivity {
                 if (dataSnapshot.getChildrenCount() < USER_MODEL_CHILDREN) {
                     return;
                 }
-                //System.out.println("ON CHILD CHANGED: " + dataSnapshot.getValue());
+                System.out.println("ON CHILD CHANGED: " + dataSnapshot.getValue());
                 User changedUser = createUserFromSnapShot(dataSnapshot);
                 boolean exists = false;
                 for (int i = 0; i < users.size(); i++) {
