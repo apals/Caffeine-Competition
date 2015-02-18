@@ -35,7 +35,7 @@ public class GraphFragment extends Fragment {
 
     private static final long UPDATE_GRAPH_INTERVAL = 10000; //ms
     private static final long UPDATE_GRAPH_SLOW_INTERVAL = 20000; //ms
-    public static final double MAX_Y = 0.30;
+    public static final double MAX_Y = 0.35;
     private GraphicalView mLineChart;
     private XYMultipleSeriesRenderer renderer;
     private XYMultipleSeriesDataset dataset;
@@ -109,7 +109,6 @@ public class GraphFragment extends Fragment {
                 return;
             ArrayList<User> users = ((MainActivity) getActivity()).getUsers();
 
-
             for (int i = 0; i < users.size(); i++) {
                 User user = users.get(i);
                 boolean finns = false;
@@ -146,7 +145,6 @@ public class GraphFragment extends Fragment {
         }
     };
 
-
     public void exchangeSeries(User user) {
         for (int j = 0; j < dataset.getSeries().length; j++) {
             TimeSeries ts = (TimeSeries) dataset.getSeriesAt(j);
@@ -158,7 +156,6 @@ public class GraphFragment extends Fragment {
                 }
             }
         }
-
     }
 
     private Runnable updateGraphSlow = new Runnable() {

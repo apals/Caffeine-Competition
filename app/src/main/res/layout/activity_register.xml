@@ -22,16 +22,19 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="vertical">
+
             <Button android:id="@+id/take_photo"
                 android:onClick="takePhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="take photo lol" />
 
-            <ImageView android:id="@+id/mImageView"
+            <ImageView
+                android:scaleType="fitXY"
+                android:id="@+id/mImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/nobody"/>
 
             <TextView
                 android:layout_width="wrap_content"

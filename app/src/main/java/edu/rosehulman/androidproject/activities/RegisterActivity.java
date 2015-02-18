@@ -3,6 +3,7 @@ package edu.rosehulman.androidproject.activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -67,11 +68,11 @@ public class RegisterActivity extends ActionBarActivity {
                     String gender = switchman.isChecked() ? getString(R.string.female) : getString(R.string.male);
                     String password = ((TextView) findViewById(R.id.register_password)).getText().toString();
                     String repeatPassword = ((TextView) findViewById(R.id.register_repeat_password)).getText().toString();
-                    //Bitmap bitmap = ((BitmapDrawable) ((ImageView) findViewById(R.id.mImageView)).getDrawable()).getBitmap();
+                    Bitmap bitmap = ((BitmapDrawable) ((ImageView) findViewById(R.id.mImageView)).getDrawable()).getBitmap();
 
                     if (password.equals(repeatPassword)) {
                         if (email.length() > 0 && username.length() > 0 && weight.length() > 0) {
-                            register(email, username, weight, gender, password, mBitmap);
+                            register(email, username, weight, gender, password, bitmap);
                         } else {
                             toast(getString(R.string.not_all_fields_filled_out_message));
                         }
@@ -82,6 +83,8 @@ public class RegisterActivity extends ActionBarActivity {
             }
         });
     }
+
+
 
     private void register(final String email, final String username, final String weight, final String gender, final String password, final Bitmap bitmap) {
         showProgressBar();
@@ -155,7 +158,7 @@ public class RegisterActivity extends ActionBarActivity {
                         thumbnail.getHeight()
                 );
 
-            }else{
+            } else{
 
                 newThumb = Bitmap.createBitmap(
                         thumbnail,

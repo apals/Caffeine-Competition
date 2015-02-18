@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment {
     };
 
     private void updateCaffeineLevelTextView(double caffeineLevel) {
-        ((TextView) rootView.findViewById(R.id.fragment_home_textview_caffeine_level)).setText("CAFFEINELEVEL: " + String.format("%.2f", caffeineLevel) + "‰");//setText(getString(R.string.caffeine_level, caffeineLevel));
+        ((TextView) rootView.findViewById(R.id.fragment_home_textview_caffeine_level)).setText("CAFFEINE LEVEL: " + String.format("%.2f", caffeineLevel) + "‰");//setText(getString(R.string.caffeine_level, caffeineLevel));
     }
 
     @Override

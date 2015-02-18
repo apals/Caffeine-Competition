@@ -71,7 +71,6 @@ public class UserListFragment extends Fragment {
                 }
             }
             updateList();
-            //GraphFragment.getInstance().updateGraph();
             mHandler.postDelayed(updateTask, CALCULATE_INTERVAL);
         }
     };

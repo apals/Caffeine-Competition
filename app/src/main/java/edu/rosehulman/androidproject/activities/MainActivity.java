@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
       * profile picture photo
       * */
 
-    private static final int USER_MODEL_CHILDREN = 5;
+    private static final int USER_MODEL_CHILDREN = 6;
     private static final int NUM_PAGES = 3;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;

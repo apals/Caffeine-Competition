@@ -34,6 +34,5 @@
     <string name="no_drinks">No drinks</string>
     <string name="female">Female</string>
     <string name="male">Male</string>
-    <string name="last_drink">"LAST DRINK: "</string>
-
+    <string name="last_drink">"Drinking: "</string>
 </resources>

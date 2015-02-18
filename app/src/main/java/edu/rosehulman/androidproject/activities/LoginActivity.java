@@ -188,7 +188,7 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
                 }
             }
         }
-        User user = new User(username, email, 80, gender, userDrinkList, bmpBase64);
+        User user = new User(username, email, weight, gender, userDrinkList, bmpBase64);
         if (user.getCaffeineLevel() > 0) {
             setHighestCaffeineLevel(UserUtils.prePopulatePoints(user, getHighestCaffeineLevel()));
         }

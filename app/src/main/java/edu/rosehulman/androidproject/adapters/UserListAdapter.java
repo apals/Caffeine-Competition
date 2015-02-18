@@ -91,7 +91,7 @@ public class UserListAdapter extends BaseExpandableListAdapter {
         ((TextView) convertView.findViewById(R.id.caffeinelevel)).setText(String.format("%.2f", ((User) getGroup(groupPosition)).getCaffeineLevel()) + "‰");
         List<Drink> drinkHistory = ((User) getGroup(groupPosition)).getDrinkHistory();
         if(drinkHistory.size() > 0)
-            ((TextView) convertView.findViewById(R.id.subtext_last_drink)).setText(context.getString(R.string.last_drink) + drinkHistory.get(drinkHistory.size() - 1).getDrinkType().getDrinkName());
+            ((TextView) convertView.findViewById(R.id.subtext_last_drink)).setText(context.getString(R.string.last_drink) + drinkHistory.get(0).getDrinkType().getDrinkName());
         return convertView;
     }
 
