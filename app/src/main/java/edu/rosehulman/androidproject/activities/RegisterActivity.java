@@ -154,6 +154,8 @@ public class RegisterActivity extends ActionBarActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != RESULT_OK)
+            return;
         if (requestCode == TAKE_PHOTO_ACTIVITY_REQUEST) {
             Log.d("LOG", "back from taking a photo");
             // TODO: Get and show the bitmap
