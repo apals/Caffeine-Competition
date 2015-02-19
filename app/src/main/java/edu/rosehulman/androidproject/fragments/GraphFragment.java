@@ -77,7 +77,7 @@ public class GraphFragment extends Fragment {
         CheckBox button = new CheckBox(getActivity());
         button.setChecked(true);
         button.setText(user.getUsername());
-        final int buttonIndex = checkBoxes.size();
+        final int buttonIndex = user.getId();
 
         button.setTextColor(colors[(buttonIndex * 7) % colors.length]);
         button.setHighlightColor(colors[(buttonIndex * 7) % colors.length]);
@@ -126,7 +126,7 @@ public class GraphFragment extends Fragment {
                     }
                     serieses[user.getId()] = series;
                     XYSeriesRenderer r = GraphUtils.getSeriesRenderer(getActivity());
-                    r.setColor(colors[(i * 7) % colors.length]);
+                    r.setColor(colors[(user.getId() * 7) % colors.length]);
                     renderers[user.getId()] = r;
                     addUserCheckBox(user);
                 }

@@ -36,7 +36,7 @@ import edu.rosehulman.androidproject.R;
 public class RegisterActivity extends ActionBarActivity {
     private static final String USERS_CHILD = "users";
     private static final int TAKE_PHOTO_ACTIVITY_REQUEST = 1;
-    private static final int IMAGE_SIZE = 1024;
+    private static final int IMAGE_SIZE = 256;
 
     private Bitmap mBitmap;
 
@@ -86,13 +86,13 @@ public class RegisterActivity extends ActionBarActivity {
 
 
         // TODO: remove temp
-        Random rand = new Random();
-        String user = "user" + rand.nextInt(9999);
-        ((TextView) findViewById(R.id.register_email)).setText(user + "@test.com");
-        ((TextView) findViewById(R.id.register_username)).setText(user);
-        ((TextView) findViewById(R.id.register_weight)).setText("80");
-        ((TextView) findViewById(R.id.register_password)).setText("1");
-        ((TextView) findViewById(R.id.register_repeat_password)).setText("1");
+//        Random rand = new Random();
+//        String user = "user" + rand.nextInt(9999);
+//        ((TextView) findViewById(R.id.register_email)).setText(user + "@test.com");
+//        ((TextView) findViewById(R.id.register_username)).setText(user);
+//        ((TextView) findViewById(R.id.register_weight)).setText("80");
+//        ((TextView) findViewById(R.id.register_password)).setText("1");
+//        ((TextView) findViewById(R.id.register_repeat_password)).setText("1");
     }
 
 

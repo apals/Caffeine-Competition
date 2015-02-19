@@ -69,8 +69,8 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         Firebase.setAndroidContext(this);
         this.mRef = new Firebase(getString(R.string.url));
 
-        ((AutoCompleteTextView) findViewById(R.id.email)).setText("test@test.com");
-        ((TextView) findViewById(R.id.password)).setText("1");
+//        ((AutoCompleteTextView) findViewById(R.id.email)).setText("test@test.com");
+//        ((TextView) findViewById(R.id.password)).setText("1");
 
         findViewById(R.id.email_sign_in_button).setOnClickListener(this);
         setRegisterButton();
