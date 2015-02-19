@@ -103,17 +103,20 @@ public class GraphFragment extends Fragment {
             if (dataset == null || mLineChart == null)
                 return;
             ArrayList<User> users = ((MainActivity) getActivity()).getUsers();
-
+            TimeSeries[] serieses = new TimeSeries[users.size()];
+            XYSeriesRenderer[] renderers = new XYSeriesRenderer[users.size()];
             for (int i = 0; i < users.size(); i++) {
                 User user = users.get(i);
-                boolean finns = false;
+                boolean exists = false;
                 for (CheckBox box : checkBoxes) {
                     if (box.getText().toString().equals(user.getUsername())) {
-                        finns = true;
+                        exists = true;
                         break;
                     }
                 }
-                if (!finns) {
+                if (!exists) {
+                    System.out.println("********************************");
+                    System.out.println("CREATING SERIES FOR USER: INDEX IN LIST: " + i + ", ID: " + user.getId() + ", USERNAME: " + user.getUsername());
                     TimeSeries series = new TimeSeries(user.getUsername());
 
                     ArrayList<DateCaffeinePoint> points = user.getPoints();
@@ -121,17 +124,29 @@ public class GraphFragment extends Fragment {
                         DateCaffeinePoint point = points.get(p);
                         series.add(point.getDate(), point.getCaffeine());
                     }
-                    dataset.addSeries(series);
+                    serieses[user.getId()] = series;
                     XYSeriesRenderer r = GraphUtils.getSeriesRenderer(getActivity());
                     r.setColor(colors[(i * 7) % colors.length]);
-                    renderer.addSeriesRenderer(r);
+                    renderers[user.getId()] = r;
                     addUserCheckBox(user);
+                }
+            }
+            for(int j = 0; j < serieses.length; j++) {
+                if(dataset.getSeriesCount() == users.size())
+                    break;
+                if(serieses[j] != null) {
+                    System.out.println(serieses[j] + " " + renderers[j]);
+                    dataset.addSeries(serieses[j]);
+                    renderer.addSeriesRenderer(renderers[j]);
                 }
             }
 
             for (int i = 0; i < users.size(); i++) {
                 ArrayList<DateCaffeinePoint> points = users.get(i).getPoints();
                 if (points.size() != 0) {
+                    System.out.println("********************************");
+                    System.out.println("INDEX IN LIST: " + i + ", " + ", ID: " + users.get(i).getId() + ", USERNAME: " + users.get(i).getUsername());
+                    System.out.println("POINT: " + points.get(points.size() - 1).getDate() + ", " + points.get(points.size() - 1).getCaffeine());
                     ((TimeSeries) dataset.getSeriesAt(users.get(i).getId())).add(points.get(points.size() - 1).getDate(), points.get(points.size() - 1).getCaffeine());
                 }
             }
