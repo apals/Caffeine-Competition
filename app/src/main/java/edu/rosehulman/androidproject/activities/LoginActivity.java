@@ -160,9 +160,6 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
         return email;
     }
 
-
-
-
     public User createUserFromSnapShot(DataSnapshot dataSnapshot) {
         HashMap<String, Object> userData = ((HashMap<String, Object>) dataSnapshot.getValue());
 

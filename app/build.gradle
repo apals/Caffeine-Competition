@@ -42,6 +42,4 @@ dependencies {
     compile 'com.google.android.gms:play-services:6.5.87'
     compile 'com.firebase:firebase-client-android:2.2.0'
     compile 'com.google.code.gson:gson:1.7.2'
-
-
 }

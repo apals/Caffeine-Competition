@@ -33,7 +33,7 @@ public class UserUtils {
                 }
                 if (caffeineLevel > 0) {
                     user.addPoint(nowDate, caffeineLevel);
-//                    System.out.println("prutt " + nowDate + " - " + caffeineLevel);
+//                    System.out.println(nowDate + " - " + caffeineLevel);
                 }
                 firstDrink += HomeFragment.CALCULATE_INTERVAL*10;
             }
