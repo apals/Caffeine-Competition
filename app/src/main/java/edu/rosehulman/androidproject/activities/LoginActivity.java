@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
+import edu.rosehulman.androidproject.DataPassHolder;
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.UserUtils;
 import edu.rosehulman.androidproject.fragments.HomeFragment;
@@ -104,9 +105,14 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
     public void acceptLogin(User user, ArrayList<User> userList) {
         LOGGED_IN = true;
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
-        i.putExtra(KEY_EMAIL, user);
-        i.putExtra(KEY_USERLIST, userList);
-        i.putExtra(KEY_HIGHEST_CAFFEINE, highestCaffeineLevel);
+        //i.putExtra(KEY_EMAIL, user);
+        //i.putExtra(KEY_USERLIST, userList);
+        //i.putExtra(KEY_HIGHEST_CAFFEINE, highestCaffeineLevel);
+
+        DataPassHolder.setData(KEY_EMAIL, user);
+        DataPassHolder.setData(KEY_USERLIST, userList);
+        DataPassHolder.setData(KEY_HIGHEST_CAFFEINE, highestCaffeineLevel);
+
         hideProgressBar();
         startActivityForResult(i, START_MAIN_REQUEST_CODE);
     }

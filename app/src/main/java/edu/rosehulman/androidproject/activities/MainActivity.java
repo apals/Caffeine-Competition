@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import edu.rosehulman.androidproject.DataPassHolder;
 import edu.rosehulman.androidproject.R;
 import edu.rosehulman.androidproject.UserUtils;
 import edu.rosehulman.androidproject.fragments.GraphFragment;
@@ -77,10 +78,10 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(false);
 
         setContentView(R.layout.activity_screen_slide);
-        USER = (User) getIntent().getSerializableExtra(LoginActivity.KEY_EMAIL);
-        users = (ArrayList<User>) getIntent().getSerializableExtra(LoginActivity.KEY_USERLIST);
+        USER = (User) DataPassHolder.getData(LoginActivity.KEY_EMAIL);//(User) getIntent().getSerializableExtra(LoginActivity.KEY_EMAIL);
+        users = (ArrayList<User>) DataPassHolder.getData(LoginActivity.KEY_USERLIST);//(ArrayList<User>) getIntent().getSerializableExtra(LoginActivity.KEY_USERLIST);
 
-        setHighestCaffeineLevel((double) getIntent().getSerializableExtra(LoginActivity.KEY_HIGHEST_CAFFEINE));
+        setHighestCaffeineLevel((Double) DataPassHolder.getData(LoginActivity.KEY_HIGHEST_CAFFEINE)); //(double) getIntent().getSerializableExtra(LoginActivity.KEY_HIGHEST_CAFFEINE));
 
         Firebase.setAndroidContext(this);
         this.mRef2 = new Firebase(getString(R.string.url));
