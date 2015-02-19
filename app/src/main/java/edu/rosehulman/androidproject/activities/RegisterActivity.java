@@ -36,7 +36,7 @@ import edu.rosehulman.androidproject.R;
 public class RegisterActivity extends ActionBarActivity {
     private static final String USERS_CHILD = "users";
     private static final int TAKE_PHOTO_ACTIVITY_REQUEST = 1;
-    private static final int IMAGE_SIZE = 128;
+    private static final int IMAGE_SIZE = 1024;
 
     private Bitmap mBitmap;
 
