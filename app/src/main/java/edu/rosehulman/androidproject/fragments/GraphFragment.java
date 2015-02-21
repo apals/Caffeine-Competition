@@ -130,6 +130,8 @@ public class GraphFragment extends Fragment {
                 }
             }
             for(int j = 0; j < serieses.length; j++) {
+                if(dataset.getSeriesCount() == users.size())
+                    break;
                 if(serieses[j] != null) {
                     System.out.println(serieses[j] + " " + renderers[j]);
                     dataset.addSeries(serieses[j]);
