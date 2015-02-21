@@ -72,7 +72,7 @@ public class AddDrinkActivity extends ActionBarActivity implements View.OnClickL
                 e.printStackTrace();
             }
             try {
-                mCommonDrinkTypes.add(new CommonDrink(new DrinkType(drinkName, jsonObject.getInt("caffeineAmount")), jsonObject.getInt("timesConsumed")));
+                mCommonDrinkTypes.add(new CommonDrink(new DrinkType(drinkName, jsonObject.getInt(getString(R.string.SHAREDPREFS_KEY_CAFFEINEAMOUNT))), jsonObject.getInt(getString(R.string.SHAREDPREFS_KEY_TIMES_CONSUMED))));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -162,7 +162,7 @@ public class AddDrinkActivity extends ActionBarActivity implements View.OnClickL
         int oldTimesConsumed = 0;
 
         try {
-            oldTimesConsumed = new JSONObject(getPreferences(MODE_PRIVATE).getString(drinkName, null)).getInt("timesConsumed");
+            oldTimesConsumed = new JSONObject(getPreferences(MODE_PRIVATE).getString(drinkName, null)).getInt(getString(R.string.SHAREDPREFS_KEY_TIMES_CONSUMED));
         } catch (JSONException e) {
             e.printStackTrace();
         }

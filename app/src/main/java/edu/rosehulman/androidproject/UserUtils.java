@@ -19,7 +19,6 @@ public class UserUtils {
     public static double prePopulatePoints(User user, double highestCaffeineLevel) {
         if (user.getDrinkHistory().size() > 0) {
             long firstDrink = user.getDrinkHistory().get(user.getDrinkHistory().size() - 1).getDateTime().getTime();
-            System.out.println("FIRST DRINK: " + user.getDrinkHistory().get(user.getDrinkHistory().size() - 1).getDateTime());
             long now = new Date().getTime();
             Date curDate = new Date();
             curDate.setTime(firstDrink);
@@ -33,7 +32,6 @@ public class UserUtils {
                 }
                 if (caffeineLevel > 0) {
                     user.addPoint(nowDate, caffeineLevel);
-//                    System.out.println("prutt " + nowDate + " - " + caffeineLevel);
                 }
                 firstDrink += HomeFragment.CALCULATE_INTERVAL*10;
             }

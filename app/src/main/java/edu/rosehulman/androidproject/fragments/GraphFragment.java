@@ -115,8 +115,6 @@ public class GraphFragment extends Fragment {
                     }
                 }
                 if (!exists) {
-                    System.out.println("********************************");
-                    System.out.println("CREATING SERIES FOR USER: INDEX IN LIST: " + i + ", ID: " + user.getId() + ", USERNAME: " + user.getUsername());
                     TimeSeries series = new TimeSeries(user.getUsername());
 
                     ArrayList<DateCaffeinePoint> points = user.getPoints();
@@ -132,8 +130,6 @@ public class GraphFragment extends Fragment {
                 }
             }
             for(int j = 0; j < serieses.length; j++) {
-                if(dataset.getSeriesCount() == users.size())
-                    break;
                 if(serieses[j] != null) {
                     System.out.println(serieses[j] + " " + renderers[j]);
                     dataset.addSeries(serieses[j]);
@@ -144,9 +140,6 @@ public class GraphFragment extends Fragment {
             for (int i = 0; i < users.size(); i++) {
                 ArrayList<DateCaffeinePoint> points = users.get(i).getPoints();
                 if (points.size() != 0) {
-                    System.out.println("********************************");
-                    System.out.println("INDEX IN LIST: " + i + ", " + ", ID: " + users.get(i).getId() + ", USERNAME: " + users.get(i).getUsername());
-                    System.out.println("POINT: " + points.get(points.size() - 1).getDate() + ", " + points.get(points.size() - 1).getCaffeine());
                     ((TimeSeries) dataset.getSeriesAt(users.get(i).getId())).add(points.get(points.size() - 1).getDate(), points.get(points.size() - 1).getCaffeine());
                 }
             }
@@ -168,7 +161,6 @@ public class GraphFragment extends Fragment {
 
     private Runnable updateGraphSlow = new Runnable() {
         public void run() {
-            System.out.println("Updating Y Bounds");
             double newYBounds = ((MainActivity) getActivity()).getHighestCaffeineLevel() + 0.05;
             if (newYBounds > MAX_Y) {
                 newYBounds = MAX_Y;

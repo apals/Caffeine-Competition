@@ -129,12 +129,12 @@ public class RegisterActivity extends ActionBarActivity {
     }
 
     public void createUser(String email, String username, String weight, String gender, Bitmap bitmap) {
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/drinkHistory").setValue("");
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/email").setValue(cleanEmail(email));
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/username").setValue(username);
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/weight").setValue(weight);
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/gender").setValue(gender);
-        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + "/picture").setValue(encodeTobase64(bitmap));
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + getString(R.string.KEY_DRINK_HISTORY)).setValue("");
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + getString(R.string.KEY_EMAIL)).setValue(cleanEmail(email));
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + getString(R.string.KEY_USERNAME)).setValue(username);
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + getString(R.string.KEY_WEIGHT)).setValue(weight);
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + getString(R.string.KEY_GENDER)).setValue(gender);
+        mRef.child(USERS_CHILD + "/" + cleanEmail(email) + getString(R.string.KEY_PICTURE)).setValue(encodeTobase64(bitmap));
 
     }
 

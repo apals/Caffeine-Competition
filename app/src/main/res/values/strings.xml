@@ -36,4 +36,20 @@
     <string name="male">Male</string>
     <string name="last_drink">"Drinking: "</string>
     <string name="take_photo">Take photo!</string>
+    <string name="KEY_DATETIME">dateTime</string>
+    <string name="KEY_DRINKTYPE">drinkType</string>
+    <string name="KEY_CAFFEINE_AMOUNT">caffeineAmount</string>
+    <string name="KEY_DRINKNAME">drinkName</string>
+    <string name="not_already_a_user">"Not already a user? "</string>
+    <string name="register">Register!</string>
+    <string name="KEY_USERNAME">username</string>
+    <string name="KEY_EMAIL">email</string>
+    <string name="KEY_WEIGHT">weight</string>
+    <string name="KEY_GENDER">gender</string>
+    <string name="KEY_PICTURE">picture</string>
+    <string name="KEY_USERS">users</string>
+    <string name="KEY_TIMES_CONSUMED">timesConsumed</string>
+    <string name="SHAREDPREFS_KEY_CAFFEINEAMOUNT">caffeineAmount</string>
+    <string name="SHAREDPREFS_KEY_TIMES_CONSUMED">timesConsumed</string>
+    <string name="KEY_DRINK_HISTORY">drinkHistory</string>
 </resources>

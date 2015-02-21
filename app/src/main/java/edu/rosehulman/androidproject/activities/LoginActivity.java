@@ -172,23 +172,23 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
     public User createUserFromSnapShot(DataSnapshot dataSnapshot) {
         HashMap<String, Object> userData = ((HashMap<String, Object>) dataSnapshot.getValue());
 
-        String username = (String) userData.get("username");
-        String email = (String) userData.get("email");
-        int weight = Integer.parseInt((String) userData.get("weight"));
-        String gender = (String) userData.get("gender");
+        String username = (String) userData.get(getString(R.string.KEY_USERNAME));
+        String email = (String) userData.get(getString(R.string.KEY_EMAIL));
+        int weight = Integer.parseInt((String) userData.get(getString(R.string.KEY_WEIGHT)));
+        String gender = (String) userData.get(getString(R.string.KEY_GENDER));
 
-        String bmpBase64 = (String) userData.get("picture");
+        String bmpBase64 = (String) userData.get(getString(R.string.KEY_PICTURE));
 
         ArrayList<Drink> userDrinkList = new ArrayList<>();
         for (DataSnapshot d : dataSnapshot.getChildren()) {
             if (d.getKey().equals("drinkHistory")) {
                 for (DataSnapshot child : d.getChildren()) {
                     HashMap<String, Object> drink = (HashMap<String, Object>) child.getValue();
-                    Date date = new Date((long) drink.get("dateTime"));
+                    Date date = new Date((long) drink.get(getString(R.string.KEY_DATETIME)));
 
-                    HashMap drinkType = (HashMap) drink.get("drinkType");
-                    double caffeineAmount = (double) drinkType.get("caffeineAmount");
-                    String drinkName = (String) drinkType.get("drinkName");
+                    HashMap drinkType = (HashMap) drink.get(getString(R.string.KEY_DRINKTYPE));
+                    double caffeineAmount = (double) drinkType.get(getString(R.string.KEY_CAFFEINE_AMOUNT));
+                    String drinkName = (String) drinkType.get(getString(R.string.KEY_DRINKNAME));
                     DrinkType dr = new DrinkType(drinkName, caffeineAmount);
                     Drink newDrink = new Drink(dr, date);
                     userDrinkList.add(newDrink);
@@ -229,8 +229,8 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 
     public void setRegisterButton() {
         SpannableStringBuilder sb = new SpannableStringBuilder();
-        String regularText = "Not already a user? ";
-        String clickableText = "Register!";
+        String regularText = getString(R.string.not_already_a_user);
+        String clickableText = getString(R.string.register);
         sb.append(regularText);
         sb.append(clickableText);
         sb.setSpan(new MyClickableSpan(),

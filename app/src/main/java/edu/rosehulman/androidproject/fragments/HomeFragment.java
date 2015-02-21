@@ -157,9 +157,9 @@ public class HomeFragment extends Fragment {
     private void updateDataBase(ArrayList<Drink> drinkList) {
         Collections.sort(MainActivity.USER.getDrinkHistory());
         if (MainActivity.USER.getDrinkHistory().size() > 0) {
-            ((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getEmail() + "/drinkHistory").setValue(drinkList);
+            ((MainActivity) getActivity()).getFirebaseReference().child(getString(R.string.KEY_USERS) + "/" + MainActivity.USER.getEmail() + "/" + getString(R.string.KEY_DRINK_HISTORY)).setValue(drinkList);
         } else {
-            ((MainActivity) getActivity()).getFirebaseReference().child("users" + "/" + MainActivity.USER.getEmail() + "/drinkHistory").setValue("");
+            ((MainActivity) getActivity()).getFirebaseReference().child(getString(R.string.KEY_USERS) + "/" + MainActivity.USER.getEmail() + "/" + getString(R.string.KEY_DRINK_HISTORY)).setValue("");
         }
     }
 
